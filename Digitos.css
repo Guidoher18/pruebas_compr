@@ -2,8 +2,16 @@
     background-color: green;
     height:50vh;
     margin:25vh auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 form{
     display:none;
+}
+
+#Marco>p{
+    text-align:center;
+    font-size: 30vh;
 }
