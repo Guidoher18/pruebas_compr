@@ -1,37 +1,49 @@
-#Response{
+
+
+#Test{
+    background-color: lightblue;
+    height:50vh;
+    margin-left: auto!important;
+    margin-right: auto!important;
+    margin-top: 19vh;
+    display:flex;
+}
+
+p{
+    width: inherit;
+    height: inherit;
+    margin-bottom:0px !important;
+    justify-content:center;
+    align-items:center;
+    display:flex;
+}
+
+#Response {
+    margin-left: auto!important;
+    margin-right: auto!important;
+    display:none;
+    justify-content:center;
+    align-items:center;
     background-color: orange;
     height:50vh;
     margin-top: 19vh;
-}
-
-#Test{
-    background-color: blue;
-    height:50vh;
-    margin:25vh auto !important;
-    /*display:none!important;*/
-}
-
-#Response, button{
-    margin-left: auto!important;
-    margin-right: auto!important;
-    display:none!important;
-    justify-content:center;
-    align-items:center;
+    font-size: 30vh;
 }
 
 form, #alert{
     display:none;
 }
 
-button{
+#Entendido, #Siguiente{
     height:10vh;
     font-size: 2em!important;
-    margin-top: 1vh!important;
-    margin-bottom: 1vh!important;
-}
-
-#Response>p, #Test>p{
-    /*font-size: 30vh;*/
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    margin-left: auto!important;
+    margin-right: auto!important;
+    justify-content:center;
+    align-items:center;
+    display: flex;
 }
 
 #alert, #Test>p{

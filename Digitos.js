@@ -101,6 +101,7 @@ $(document).ready(function(){
                 case 58: muestro_tecla(e.key)
                 break;
                 case 13:
+                    clic_boton();
                     $('#alert').html('El presente ejercicio corresponde a la serie de ' + convertir_a_letra(Serie) + ' números.');
                     $('#alert').show();
                 break;
@@ -115,9 +116,11 @@ $(document).ready(function(){
         //b: función a la que redirige el boton
         
         $('#Test').css('font-size', '2em');
-        $('#Test').html('<p>'+ Consigna + '</p><p><a class="btn btn-info col-md-4" id="Entendido">Entendido</a></p>');
-        $('#Test').css('display', 'block');
-        
+        $('#Test').html('<p>'+ Consigna + '</p>');
+        $('button').html('Entendido');
+        $('button').attr('id', 'Entendido');
+
+                 
         $('#Entendido').on('click', function(){
             if (Modalidad == 'directo' && Numero_de_Tarea == 6)
             {
@@ -127,6 +130,7 @@ $(document).ready(function(){
             {
                 TRc = new moment();
             }
+            $('#Entendido').css('display','none');
             Consigna_Secuencia(a, b, c);
         });
     };
@@ -313,6 +317,17 @@ $(document).ready(function(){
         
         var Recuerdo = function(){
             $('#Test>p').html('Recuerdo');
+            setTimeout(function(){
+                $('#Test>p').html('');
+                $('#Test').css('display','none');
+                
+                $('#Response').css('display','flex');
+                
+                $('#Entendido').attr('id','Siguiente');
+                $('#Siguiente').html('Siguiente');    
+                $('#Siguiente').css('display','flex');
+                Habilitar_Respuesta = 1;
+            },2000);
         };
 
 
