@@ -119,8 +119,7 @@ $(document).ready(function(){
         $('#Test').html('<p>'+ Consigna + '</p>');
         $('button').html('Entendido');
         $('button').attr('id', 'Entendido');
-
-                 
+        
         $('#Entendido').on('click', function(){
             if (Modalidad == 'directo' && Numero_de_Tarea == 6)
             {
@@ -133,6 +132,11 @@ $(document).ready(function(){
             $('#Entendido').css('display','none');
             Consigna_Secuencia(a, b, c);
         });
+        
+        (this).addEventListener('keyup', function (e) {
+            if (e.keyCode === 13) {
+                clic_boton();
+            }});
     };
 
     var Consigna_Secuencia = function(Consigna, Consigna_2, Serie_de_Cifras){
