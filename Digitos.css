@@ -1,17 +1,39 @@
-#Marco{
-    background-color: green;
+#Response{
+    background-color: orange;
     height:50vh;
-    margin:25vh auto;
-    display:flex;
+    margin-top: 19vh;
+}
+
+#Test{
+    background-color: blue;
+    height:50vh;
+    margin:25vh auto !important;
+    /*display:none!important;*/
+}
+
+#Response, button{
+    margin-left: auto!important;
+    margin-right: auto!important;
+    display:none!important;
     justify-content:center;
     align-items:center;
 }
 
-form{
+form, #alert{
     display:none;
 }
 
-#Marco>p{
+button{
+    height:10vh;
+    font-size: 2em!important;
+    margin-top: 1vh!important;
+    margin-bottom: 1vh!important;
+}
+
+#Response>p, #Test>p{
+    /*font-size: 30vh;*/
+}
+
+#alert, #Test>p{
     text-align:center;
-    font-size: 30vh;
 }
