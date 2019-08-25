@@ -1,7 +1,7 @@
 
 
 #Test{
-    background-color: lightblue;
+    /*background-color: lightblue; */
     height:50vh;
     margin-left: auto!important;
     margin-right: auto!important;
@@ -24,7 +24,9 @@ p{
     display:none;
     justify-content:center;
     align-items:center;
-    background-color: orange;
+    /*background-color: orange;
+    border: 2px solid #000;
+    border-radius:0.25rem; */
     height:50vh;
     margin-top: 19vh;
     font-size: 30vh;
@@ -34,8 +36,8 @@ form, #alert{
     display:none;
 }
 
-#Entendido, #Siguiente{
-    height:10vh;
+#Aceptar, #Siguiente{
+    /*height:10vh;*/
     font-size: 2em!important;
     margin-top: 1vh;
     margin-bottom: 1vh;
@@ -44,6 +46,12 @@ form, #alert{
     justify-content:center;
     align-items:center;
     display: flex;
+    border-color:transparent !important;
+}
+
+#Aceptar:hover, #Siguiente:hover{
+    background-color: #28a745 !important;
+    color: #fff !important;
 }
 
 #alert, #Test>p{
