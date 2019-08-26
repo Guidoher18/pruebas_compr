@@ -100,6 +100,7 @@ $(document).ready(function () {
             $('button').html('Siguiente');
             $('#Siguiente').css('display', 'flex');
             $('#Siguiente').on('click', function () {
+                $('#Siguiente').css('display', 'none');    
                 switch (Modalidad) {
                     case "Directo": Itinerario_DD(Numero_de_Tarea);
                         break;
@@ -122,15 +123,14 @@ $(document).ready(function () {
         }, 300);
     }
 
-   /* $('#Siguiente').on('click', function () {
-        switch (Modalidad) {
-            case "Directo": Itinerario_DD(Numero_de_Tarea);
-                break;
-            case "Letra": Itinerario_DL(Numero_de_Tarea);
-                break;
-        }
-    });*/
-
+    /* $('#Siguiente').on('click', function () {
+         switch (Modalidad) {
+             case "Directo": Itinerario_DD(Numero_de_Tarea);
+                 break;
+             case "Letra": Itinerario_DL(Numero_de_Tarea);
+                 break;
+         }
+     });*/
 
 
     var Consigna_Boton = function (Consigna, Consigna_2, Consigna_3, Serie_de_Cifras) {
@@ -139,7 +139,7 @@ $(document).ready(function () {
         //b: Tercera consigna
         //c: Serie de números
 
-        $('#Test').css('font-size', '2em');
+        $('#Test').css('font-size', '2.8125vw');
         $('#Test>p').html(Consigna);
 
         //Registro del TR
@@ -158,17 +158,17 @@ $(document).ready(function () {
 
     };
 
-        //Cuando se presiona ENTER hace clic en el button
-        $(document).keypress(function (e) {
-            switch (e) {
-                default: break;
-                case 13: clic_boton();
-                    break;
-            }
-        });
+    //Cuando se presiona ENTER hace clic en el button
+    $(document).keypress(function (e) {
+        switch (e) {
+            default: break;
+            case 13: clic_boton();
+                break;
+        }
+    });
 
     var Consigna_Secuencia = function (Consigna_2, Consigna_3, Serie_de_Cifras) {
-        $('#Test').css('font-size', '2em');
+        $('#Test').css('font-size', '2.8125vw');
         $('#Test>p').html(Consigna_2);
         setTimeout(function () {
             $('#Test>p').html(Consigna_3);
@@ -183,7 +183,7 @@ $(document).ready(function () {
     var Consigna_Respuesta = function (Consigna, Serie_de_Cifras) {
         Habilitar_Respuesta = 0;
         $('#Response').css('display', 'none');
-        $('#Test').css('font-size', '2em');
+        $('#Test').css('font-size', '2.8125vw');
         $('#Test>p').html(Consigna);
         $('#Test').css('display', 'flex');
         setTimeout(function () {
