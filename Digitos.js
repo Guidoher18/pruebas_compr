@@ -7,11 +7,11 @@ $(document).ready(function () {
 
     var Modalidad = '';      //'Directo' | 'Letra' 
 
-    var Demostracion = 0;    //Se utiliza para cuando se muestra el ejemplo
+    var Demostracion_Correcta = 0;    //Se utiliza para cuando se muestra el ejemplo
 
     var Habilitar_Respuesta = 0;  //Permite habilitar el #Response y el button
 
-    var Numero_de_Tarea = 0; //Permite seguir el Itinerario
+    var Numero_de_Tarea = 1; //Permite seguir el Itinerario
     var Serie = 0;
 
     var Conteo_de_Tecleo = 0;
@@ -33,37 +33,47 @@ $(document).ready(function () {
     //Para que responda el sujeto...
     //Función que escribe en el div sólo los números que se teclean cuando está habilitada la respuesta. En tal caso y si presiona Enter verifica si tecleo todas las cifras esperadas (= a la serie) 
     $(document).keypress(function (e) {
-        if (Conteo_de_Tecleo < Serie && Habilitar_Respuesta == 1) {
-            switch (e.keyCode) {
-                case 48: muestro_tecla(e.key)
-                    break;
-                case 49: muestro_tecla(e.key)
-                    break;
-                case 50: muestro_tecla(e.key)
-                    break;
-                case 51: muestro_tecla(e.key)
-                    break;
-                case 52: muestro_tecla(e.key)
-                    break;
-                case 53: muestro_tecla(e.key)
-                    break;
-                case 54: muestro_tecla(e.key)
-                    break;
-                case 55: muestro_tecla(e.key)
-                    break;
-                case 56: muestro_tecla(e.key)
-                    break;
-                case 57: muestro_tecla(e.key)
-                    break;
-                case 58: muestro_tecla(e.key)
-                    break;
-                case 13:
-                    clic_boton();
-                    $('#alert').html('El presente ejercicio corresponde a la serie de ' + convertir_a_letra(Serie) + ' números.');
-                    $('#alert').show();
-                    break;
-                default: break;
-            };
+        switch (Habilitar_Respuesta) {
+            case 1: if (Conteo_de_Tecleo < Serie) {
+                switch (e.keyCode) {
+                    case 48: muestro_tecla(e.key)
+                        break;
+                    case 49: muestro_tecla(e.key)
+                        break;
+                    case 50: muestro_tecla(e.key)
+                        break;
+                    case 51: muestro_tecla(e.key)
+                        break;
+                    case 52: muestro_tecla(e.key)
+                        break;
+                    case 53: muestro_tecla(e.key)
+                        break;
+                    case 54: muestro_tecla(e.key)
+                        break;
+                    case 55: muestro_tecla(e.key)
+                        break;
+                    case 56: muestro_tecla(e.key)
+                        break;
+                    case 57: muestro_tecla(e.key)
+                        break;
+                    case 58: muestro_tecla(e.key)
+                        break;
+                    case 13:
+                        $('#alert').html('El presente ejercicio corresponde a la serie de ' + convertir_a_letra(Serie) + ' números.');
+                        $('#alert').show();
+                        setTimeout(function () {
+                            $('#alert').fadeOut('slow');
+                        }
+                            , 4000);
+                        break;
+                    default: break;
+                };
+            }
+                break;
+            case 0: if (e.keyCode == 13 && $('#Aceptar').attr('display') !== 'none') {
+                clic_boton();
+            }
+                break;
         }
     })
 
@@ -76,7 +86,7 @@ $(document).ready(function () {
                 break;
             case 4: return "cuatro";
                 break;
-            case 5: return "dos";
+            case 5: return "cinco";
                 break;
             case 6: return "seis";
                 break;
@@ -96,18 +106,17 @@ $(document).ready(function () {
         Conteo_de_Tecleo = Conteo_de_Tecleo + 1;
 
         if (Conteo_de_Tecleo == Serie && Habilitar_Respuesta == 1) {
-            $('button').attr('id', 'Siguiente');
-            $('button').html('Siguiente');
+            Habilitar_Respuesta = 0;
             $('#Siguiente').css('display', 'flex');
-            $('#Siguiente').on('click', function () {
-                $('#Siguiente').css('display', 'none');    
-                switch (Modalidad) {
-                    case "Directo": Itinerario_DD(Numero_de_Tarea);
-                        break;
-                    case "Letra": Itinerario_DL(Numero_de_Tarea);
-                        break;
-                }
-            });
+        }
+    }
+
+    function Siguiente_Tarea() {
+        switch (Modalidad) {
+            case "Directo": Itinerario_DD(Numero_de_Tarea);
+                break;
+            case "Letra": Itinerario_DL(Numero_de_Tarea);
+                break;
         }
     }
 
@@ -139,11 +148,36 @@ $(document).ready(function () {
         //b: Tercera consigna
         //c: Serie de números
 
+        $('button').show();
         $('#Test').css('font-size', '2.8125vw');
         $('#Test>p').html(Consigna);
 
+        $('button').on('click', function () {
+            switch ($('button').attr('id')) {
+
+                case 'Siguiente': $('#Siguiente').css('display', 'none');
+                    if ($('#Alert').attr('display') !== 'none') {
+                        $('#alert').fadeOut('fast');
+                    }
+                    Respuesta = $('#Response>p').html();
+                    Siguiente_Tarea();
+                    break;
+
+                case 'Aceptar': if (Modalidad == 'Directo' && Numero_de_Tarea == 6) {
+                    TRa = new moment();
+                }
+                    if (Modalidad == 'Letra' && Numero_de_Tarea == 6) {
+                        TRc = new moment();
+                    }
+
+                    $('#Aceptar').css('display', 'none');
+                    Consigna_Secuencia(Consigna_2, Consigna_3, Serie_de_Cifras);
+                    break;
+            }
+        });
+
         //Registro del TR
-        $('#Aceptar').on('click', function () {
+        /*$('#Aceptar').on('click', function () {
             if (Modalidad == 'Directo' && Numero_de_Tarea == 6) {
                 TRa = new moment();
             }
@@ -153,36 +187,41 @@ $(document).ready(function () {
 
             $('#Aceptar').css('display', 'none');
             Consigna_Secuencia(Consigna_2, Consigna_3, Serie_de_Cifras);
-        });
+        });*/
 
 
     };
 
-    //Cuando se presiona ENTER hace clic en el button
-    $(document).keypress(function (e) {
-        switch (e) {
-            default: break;
-            case 13: clic_boton();
-                break;
-        }
-    });
-
     var Consigna_Secuencia = function (Consigna_2, Consigna_3, Serie_de_Cifras) {
-        $('#Test').css('font-size', '2.8125vw');
-        $('#Test>p').html(Consigna_2);
+        if (Consigna_3 == null) {
+            $('#Test').css('font-size', '30vh');
+            Consigna_Simple(Consigna_2, Serie_de_Cifras);
+        }
+        else {
+            $('#Test').css('font-size', '2.8125vw');
+            $('#Test>p').html(Consigna_2);
+            setTimeout(function () {
+                Consigna_Simple(Consigna_3, Serie_de_Cifras);
+            }, 1000);
+        }
+    };
+
+    var Consigna_Simple = function (Consigna, Serie_de_Cifras) {
         setTimeout(function () {
-            $('#Test>p').html(Consigna_3);
+            $('#Test').css('font-size', '2.8125vw');
+            $('#Test>p').html(Consigna);
             setTimeout(function () {
                 $('#Test>p').html("");
                 $('#Test').css('font-size', '30vh');
                 Secuencia(Serie_de_Cifras);
             }, 10000);
         }, 4000);
-    };
+    }
 
     var Consigna_Respuesta = function (Consigna, Serie_de_Cifras) {
         Habilitar_Respuesta = 0;
         $('#Response').css('display', 'none');
+        $('#Response>p').html('');
         $('#Test').css('font-size', '2.8125vw');
         $('#Test>p').html(Consigna);
         $('#Test').css('display', 'flex');
@@ -361,18 +400,25 @@ $(document).ready(function () {
     }
 
     var Recuerdo = function () {
-        switch (Demostracion) {
+        Conteo_de_Tecleo = 0;
+        switch (Demostracion_Correcta) {
             default: $('#Test>p').html('Recuerdo');
                 setTimeout(function () {
                     $('#Test>p').html('');
                     $('#Test').css('display', 'none');
                     $('#Response').css('display', 'flex');
+
+                    if (Numero_de_Tarea == 2 || Numero_de_Tarea == 6) {
+                        $('button').removeAttr('id');
+                        $('button').attr('id', 'Siguiente');
+                        $('button').html('Siguiente');
+                    }
+
                     Habilitar_Respuesta = 1;
                 }, 2000);
-            case 1: setTimeout(function () {
-                $('#Siguiente').click();
-            }, 2000);
-
+                break;
+            case 1: Siguiente_Tarea();
+                break;
         }
     };
 
@@ -385,15 +431,118 @@ $(document).ready(function () {
                 break;
 
             case 2: Consigna_Respuesta('¿Cuál era la serie de números que aparecieron?', '1,4');
-                Demostracion = 1;
+                Demostracion_Correcta = 1;
                 Numero_de_Tarea += 1;
                 break;
 
-            case 3:
-                Demostracion = 0;
-                alert('case #3');
+            case 3: Demostracion_Correcta = 0;
+                Consigna_Simple('Ahora van a aparecer una serie de tres números </br> y tendrás que recordarlos en el mismo orden en que aparecieron', '9,4,3');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 4: Demostracion_Correcta = 1;
+                Consigna_Respuesta('¿Cuál era la serie de números que aparecieron?', '9,4,3');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 3
+            case 5: Demostracion_Correcta = 0;
+                $('button').removeAttr('id');
+                $('button').attr('id', 'Aceptar');
+                $('button').html('Aceptar');
+                Consigna_Boton('Esa fue la práctica. Ahora vamos a comenzar con la tarea.', 'Comenzaremos con la serie de tres números', null, '3,4,7');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 6: Respuesta1 = Respuesta;          //Almaceno la Respuesta
+                Correccion(Respuesta1, '347');       //Corrijo
+                Respuesta = '';
+                Secuencia('1,3,9');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 7: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '139');
+                Respuesta = '';
+                Secuencia('8,1,6');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 4
+            case 8: Respuesta3 = Respuesta;
+
+                Correccion(Respuesta3, '385');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3);
+
+                if (Errores < 2) {
+                    Respuesta = '';
+
+                    Errores = 0;
+                    Respuesta1 = "";
+                    Respuesta2 = "";
+                    Respuesta3 = "";
+
+                    Consigna_Simple('Vamos a arrancar con las series de cuatro números', '7,6,1,3');
+                    //Respuesta = '';
+                    Numero_de_Tarea += 1;
+                    break
+                    ;
+                }
+
+                else {
+                    SalidaDD();
+                    break;
+                }
+
+
         }
     }
+
+    //Corrige las respuestas
+    var Correccion = function(a,b){  
+        if(a != b)
+        {
+            Errores +=1;
+        }
+        else
+        {
+            Puntaje +=1;
+        }
+    };
+
+     //Almacena las respuestas de la serie DD
+     var Guardar_Datos_Brutos_DD = function(a, b, c){       
+        Datos_Brutos = Datos_Brutos + "Serie " + a.length + "," + a + ","+ b + "," + c + ";";    
+    };
+
+    var SalidaDD = function(){
+        //Almaceno los valores en los Inputs
+        $('#Respuesta_DD').val(Datos_Brutos);
+        $('#Puntaje_DD').val(Puntaje);
+        TRb = new moment();
+        var Duration = moment.duration(TRb.diff(TRa)).as('milliseconds');
+        var w = Duration.toString();
+        $('#DD_TR').val(w);
+
+        //Reinicio las Variables 
+
+        Numero_de_Tarea = 1;  
+        Serie = 0;
+        
+        Conteo_de_Tecleo = 0;
+        
+        Errores = 0;
+        Respuesta1 = "";
+        Respuesta2 = "";
+        Respuesta3 = "";
+        
+        Puntaje = 0;
+        Datos_Brutos = "";
+
+        Itinerario_DL(1);
+    };
+
+
 
     Itinerario_DD(1);
 
