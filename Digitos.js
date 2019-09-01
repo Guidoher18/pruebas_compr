@@ -33,45 +33,142 @@ $(document).ready(function () {
     //Para que responda el sujeto...
     //Función que escribe en el div sólo los números que se teclean cuando está habilitada la respuesta. En tal caso y si presiona Enter verifica si tecleo todas las cifras esperadas (= a la serie) 
     $(document).keypress(function (e) {
-        switch (Habilitar_Respuesta) {
-            case 1: if (Conteo_de_Tecleo < Serie) {
-                switch (e.keyCode) {
-                    case 48: muestro_tecla(e.key)
+        switch (Modalidad) {
+            case 'Directo':
+                switch (Habilitar_Respuesta) {
+                    case 1: if (Conteo_de_Tecleo < Serie) {
+                        switch (e.keyCode) {
+                            case 48: muestro_tecla(e.key);
+                                break;
+                            case 49: muestro_tecla(e.key);
+                                break;
+                            case 50: muestro_tecla(e.key);
+                                break;
+                            case 51: muestro_tecla(e.key);
+                                break;
+                            case 52: muestro_tecla(e.key);
+                                break;
+                            case 53: muestro_tecla(e.key);
+                                break;
+                            case 54: muestro_tecla(e.key);
+                                break;
+                            case 55: muestro_tecla(e.key);
+                                break;
+                            case 56: muestro_tecla(e.key);
+                                break;
+                            case 57: muestro_tecla(e.key);
+                                break;
+                            case 13: $('#Alert').html('El presente ejercicio corresponde a la serie de ' + convertir_a_letra(Serie) + ' números.');
+                                $('#Alert').show();
+                                setTimeout(function () {
+                                    $('#Alert').fadeOut('slow');
+                                }
+                                    , 4000);
+                                break;
+                            default: break;
+                        };
+                    }
                         break;
-                    case 49: muestro_tecla(e.key)
+                    case 0: if (e.keyCode == 13 && $('button').css('display') == 'flex') {
+                        clic_boton();
+                    }
                         break;
-                    case 50: muestro_tecla(e.key)
-                        break;
-                    case 51: muestro_tecla(e.key)
-                        break;
-                    case 52: muestro_tecla(e.key)
-                        break;
-                    case 53: muestro_tecla(e.key)
-                        break;
-                    case 54: muestro_tecla(e.key)
-                        break;
-                    case 55: muestro_tecla(e.key)
-                        break;
-                    case 56: muestro_tecla(e.key)
-                        break;
-                    case 57: muestro_tecla(e.key)
-                        break;
-                    case 58: muestro_tecla(e.key)
-                        break;
-                    case 13: $('#Alert').html('El presente ejercicio corresponde a la serie de ' + convertir_a_letra(Serie) + ' números.');
-                        $('#Alert').show();
-                        setTimeout(function () {
-                            $('#Alert').fadeOut('slow');
-                        }
-                            , 4000);
-                        break;
-                    default: break;
-                };
-            }
+                }
                 break;
-            case 0: if (e.keyCode == 13 && $('button').css('display') == 'flex') {
-                clic_boton();
-            }
+            case 'Letra':
+                switch (Habilitar_Respuesta) {
+                    case 1: if (Conteo_de_Tecleo < Serie) {
+                        switch (e.keyCode) {
+                            case 48: muestro_tecla(e.key);
+                                break;
+                            case 49: muestro_tecla(e.key);
+                                break;
+                            case 50: muestro_tecla(e.key);
+                                break;
+                            case 51: muestro_tecla(e.key);
+                                break;
+                            case 52: muestro_tecla(e.key);
+                                break;
+                            case 53: muestro_tecla(e.key);
+                                break;
+                            case 54: muestro_tecla(e.key);
+                                break;
+                            case 55: muestro_tecla(e.key);
+                                break;
+                            case 56: muestro_tecla(e.key);
+                                break;
+                            case 57: muestro_tecla(e.key);
+                                break;
+                            case 65: muestro_tecla(e.key);
+                                break;
+                            case 66: muestro_tecla(e.key);
+                                break;
+                            case 67: muestro_tecla(e.key);
+                                break;
+                            case 68: muestro_tecla(e.key);
+                                break;
+                            case 69: muestro_tecla(e.key);
+                                break;
+                            case 70: muestro_tecla(e.key);
+                                break;
+                            case 71: muestro_tecla(e.key);
+                                break;
+                            case 72: muestro_tecla(e.key);
+                                break;
+                            case 73: muestro_tecla(e.key);
+                                break;
+                            case 74: muestro_tecla(e.key);
+                                break;
+                            case 75: muestro_tecla(e.key);
+                                break;
+                            case 76: muestro_tecla(e.key);
+                                break;
+                            case 77: muestro_tecla(e.key);
+                                break;
+                            case 78: muestro_tecla(e.key);
+                                break;
+                            case 79: muestro_tecla(e.key);
+                                break;
+                            case 80: muestro_tecla(e.key);
+                                break;
+                            case 81: muestro_tecla(e.key);
+                                break;
+                            case 82: muestro_tecla(e.key);
+                                break;
+                            case 83: muestro_tecla(e.key);
+                                break;
+                            case 84: muestro_tecla(e.key);
+                                break;
+                            case 85: muestro_tecla(e.key);
+                                break;
+                            case 86: muestro_tecla(e.key);
+                                break;
+                            case 87: muestro_tecla(e.key);
+                                break;
+                            case 88: muestro_tecla(e.key);
+                                break;
+                            case 89: muestro_tecla(e.key);
+                                break;
+                            case 90: muestro_tecla(e.key);
+                                break;
+                            case 192: muestro_tecla(e.key);
+                                break;
+                            case 13: $('#Alert').html('El presente ejercicio corresponde a la serie de ' + convertir_a_letra(Serie) + ' ítems.');
+                                $('#Alert').show();
+                                setTimeout(function () {
+                                    $('#Alert').fadeOut('slow');
+                                }
+                                    , 4000);
+                                break;
+                            default: break;
+                        };
+                    }
+                        break;
+                    case 0: if (e.keyCode == 13 && $('button').css('display') == 'flex') {
+                        clic_boton();
+                    }
+                        break;
+                }
                 break;
         }
     })
@@ -459,7 +556,7 @@ $(document).ready(function () {
     var Itinerario_DD = function (a) {
         Modalidad = 'Directo';
         switch (a) {
-            case 1: Consigna_Boton('Te vamos a presentar una serie de números de a uno por vez. <br> Tu objetivo es intentar retener la serie de números. <br> Luego de que aparezca la palabra "recuerdo" deberás escribir, con tu teclado, la serie de números que se te presentó, en el mismo orden en el que aparecieron.', 'Vamos a hacer unos ensayos de prueba', 'Va a aparecer una serie de dos números y tendrás que recordarlos en el mismo orden en que aparecieron. <br> Cuando veas la palabra "recuerdo", deberás escribir la serie de números.', '1,4');
+            case 1: Consigna_Boton('Te vamos a presentar una serie de números de a uno por vez. <br> Tu objetivo es intentar retener la serie de números. <br> Luego de que aparezca la palabra "recuerdo" deberás escribir, con tu teclado, la serie de números que se te presentó, en el mismo orden en el que aparecieron.', 'Vamos a hacer unos ensayos de prueba', 'Va a aparecer una serie de dos números y tendrás que recordarlos en el mismo orden en que aparecieron. <br> Cuando veas la palabra "recuerdo" deberás escribir, con tu teclado, la serie de números.', '1,4');
                 Numero_de_Tarea += 1;
                 break;
 
@@ -701,14 +798,197 @@ $(document).ready(function () {
         Itinerario_DL(1);
     };
 
+    function Itinerario_DL(a) {
+        Modalidad = 'Directo';
+        switch (a) {
+            case 1: Consigna_Boton('Te vamos a presentar una serie de letras y números de a uno por vez. <br> Tu objetivo es intentar retener la serie. <br> Luego de que aparezca la palabra "recuerdo" deberás escribir, con tu teclado, primero las letras en orden alfabético y luego los dígitos en orden ascendente.', 'Vamos a hacer unos ensayos de prueba', 'Va a aparecer una serie de dos letras y números y tendrás que recordarlos y escribir, con tu teclado, primero las letras y luego los números.', '6,S');
+                Numero_de_Tarea += 1;
+                break;
 
+            case 2: Consigna_Respuesta('¿Cuál era la serie correcta que hay que recordar?', 'S,6');
+                Demostracion_Correcta = 1;
+                Numero_de_Tarea += 1;
+                break;
+
+            case 3: Demostracion_Correcta = 0;
+                Consigna_Simple('Ahora van a aparecer una serie de tres letras y números </br> y tendrás que recordarlos ordenados, primero las letras, en orden alfabético, y luego los números, en orden ascendente.', '5,R,P');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 4: Demostracion_Correcta = 1;
+                Consigna_Respuesta('¿Cuál era la serie de ítems que aparecieron?', 'P,R,5');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 3
+            case 5: Demostracion_Correcta = 0;
+                $('button').removeAttr('id');
+                $('button').attr('id', 'Aceptar');
+                $('button').html('Aceptar');
+                Consigna_Boton('Esa fue la práctica. Ahora vamos a empezar con la tarea. </br> Recuerda: Primero las letras y luego los números.', 'Comenzaremos con una serie de dos ítems', null, 'J,6');
+                Numero_de_Tarea += 1;
+                break;
+//--------------------------------------------------------------------------
+            case 6: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '347');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('1,3,9');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 7: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '139');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('8,1,6');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 4
+            case 8: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '816');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de cuatro números', '7,6,1,3');
+                break;
+
+            case 9: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '7613');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('5,4,8,2');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 10: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '5482');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('4,9,3,1');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 5
+            case 11: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '4931');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de cinco números', '2,8,6,4,1');
+                break;
+
+            case 12: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '28641');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('4,3,1,9,5');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 13: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '43195');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('6,9,3,4,8');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 6
+            case 14: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '69348');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de seis números', '1,5,3,2,4,8');
+                break;
+
+            case 15: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '153248');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('9,1,5,3,7,2');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 16: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '915372');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('8,3,9,4,1,7');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 7
+            case 17: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '839417');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de siete números', '5,7,3,9,2,6,8');
+                break;
+
+            case 18: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '5739268');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('9,7,1,4,6,2,5');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 19: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '9714625');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('4,6,2,9,1,8,3');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 8
+            case 20: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '4629183');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de ocho números', '4,9,5,6,2,8,1,3');
+                break;
+
+            case 21: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '49562813');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('8,6,2,4,3,1,5,9');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 22: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '86243159');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('1,9,6,4,5,7,3,2');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 9
+            case 23: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '19645732');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de nueve números', '7,3,8,9,5,2,4,6,1');
+                break;
+
+            case 24: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '738952461');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('2,7,5,3,8,4,9,1,6');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 25: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '275384916');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('6,4,1,9,5,2,7,3,2');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 26: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '641952732');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, null, null);
+                break;
+        }
+
+    }
 
     Itinerario_DD(1);
 
 
-    function Itinerario_DL(a) {
-        alert("DL" + a.toString());
-    }
+
 
 
 
@@ -721,40 +1001,3 @@ $(document).ready(function () {
 
 
 });
-
-
-/*
-
-Cuando Muestro el Test Habilitar_Respuesta = 0
-
-Cuando habilito la respuesta =1
-Serie tiene que tomar la serie
-
-muestro el cuadro y el boton +     display:flex!important;
-
-Habilitar_Respuesta = 1;
-$('#Response'.css('display', 'flex!important')
-$('button'.css('display', 'flex!important')
-
-*/
-
-
-
-
-
-
-
-
-
-//var x = [1,3,5];
-//Mostrar(x);
-
-
-
-
-
-
-
-
-
-
