@@ -78,7 +78,7 @@ $(document).ready(function () {
             case 'Letra':
                 switch (Habilitar_Respuesta) {
                     case 1: if (Conteo_de_Tecleo < Serie) {
-                        switch (e.keyCode) {
+                        switch (e.keyCode) {               //KeyCode 48 a 57 = de 0 a 9
                             case 48: muestro_tecla(e.key);
                                 break;
                             case 49: muestro_tecla(e.key);
@@ -99,7 +99,7 @@ $(document).ready(function () {
                                 break;
                             case 57: muestro_tecla(e.key);
                                 break;
-                            case 65: muestro_tecla(e.key);
+                            case 65: muestro_tecla(e.key); //KeyCode 65 a 90 = de A a Z
                                 break;
                             case 66: muestro_tecla(e.key);
                                 break;
@@ -151,8 +151,63 @@ $(document).ready(function () {
                                 break;
                             case 90: muestro_tecla(e.key);
                                 break;
-                            case 192: muestro_tecla(e.key);
+                            case 97: muestro_tecla(e.key); //KeyCode 97 a 122 = "a" a "z"
                                 break;
+                            case 98: muestro_tecla(e.key);
+                                break;
+                            case 99: muestro_tecla(e.key);
+                                break;
+                            case 100: muestro_tecla(e.key);
+                                break;
+                            case 101: muestro_tecla(e.key);
+                                break;
+                            case 102: muestro_tecla(e.key);
+                                break;
+                            case 103: muestro_tecla(e.key);
+                                break;
+                            case 104: muestro_tecla(e.key);
+                                break;
+                            case 105: muestro_tecla(e.key);
+                                break;
+                            case 106: muestro_tecla(e.key);
+                                break;
+                            case 107: muestro_tecla(e.key);
+                                break;
+                            case 108: muestro_tecla(e.key);
+                                break;
+                            case 109: muestro_tecla(e.key);
+                                break;
+                            case 110: muestro_tecla(e.key);
+                                break;
+                            case 111: muestro_tecla(e.key);
+                                break;
+                            case 112: muestro_tecla(e.key);
+                                break;
+                            case 113: muestro_tecla(e.key);
+                                break;
+                            case 114: muestro_tecla(e.key);
+                                break;
+                            case 115: muestro_tecla(e.key);
+                                break;
+                            case 116: muestro_tecla(e.key);
+                                break;
+                            case 117: muestro_tecla(e.key);
+                                break;
+                            case 118: muestro_tecla(e.key);
+                                break;
+                            case 119: muestro_tecla(e.key);
+                                break;
+                            case 120: muestro_tecla(e.key);
+                                break;
+                            case 121: muestro_tecla(e.key);
+                                break;
+                            case 122: muestro_tecla(e.key);
+                                break;
+                            case 209: muestro_tecla(e.key); //KeyCode 209 = Ñ
+                                break;
+                            case 241: muestro_tecla(e.key); //KeyCode 241 = ñ
+                                break;
+                            //ENTER
                             case 13: $('#Alert').html('El presente ejercicio corresponde a la serie de ' + convertir_a_letra(Serie) + ' ítems.');
                                 $('#Alert').show();
                                 setTimeout(function () {
@@ -197,14 +252,20 @@ $(document).ready(function () {
 
     //Permite mostrar la tecla presionada, sumado a las ya presionadas. Si hace clic en "Siguiente" pasa a la próxima serie.
     function muestro_tecla(tecla) {
-        var a = $('#Response>p').html() + tecla;
-        $('#Response>p').html(a);
-        Conteo_de_Tecleo = Conteo_de_Tecleo + 1;
+        var parametro = tecla;
+        switch (Modalidad) {
+            case 'Letra': parametro = parametro.toUpperCase();
+            case 'Directo': var a = $('#Response>p').html() + parametro;
+                $('#Response>p').html(a);
+                Conteo_de_Tecleo = Conteo_de_Tecleo + 1;
 
-        if (Conteo_de_Tecleo == Serie && Habilitar_Respuesta == 1) {
-            Habilitar_Respuesta = 0;
-            $('#Siguiente').css('display', 'flex');
+                if (Conteo_de_Tecleo == Serie && Habilitar_Respuesta == 1) {
+                    Habilitar_Respuesta = 0;
+                    $('#Siguiente').css('display', 'flex');
+                }
+                break;
         }
+
     }
 
     function Siguiente_Tarea() {
@@ -295,8 +356,6 @@ $(document).ready(function () {
 
         }
     });
-
-
 
     var Consigna_Secuencia = function (Consigna_2, Consigna_3, Serie_de_Cifras) {
         if (Consigna_3 == null) {
@@ -553,6 +612,36 @@ $(document).ready(function () {
         $('#Test').css('display', 'flex');
     }
 
+    //Correccion_n: es la cifra con la que se corregira la respuesta obtenida. Por ej. '341'
+    //Secuencia: es la nueva secuencia a mostrar. Por ej. '5,6,4'
+    function Itinerario_Cifra1(Correccion_n, Secuencia_n) {
+        Respuesta1 = Respuesta;
+        jux(Respuesta1, Correccion_n, Secuencia_n);
+    }
+
+    function Itinerario_Cifra2(Correccion_n, Secuencia_n) {
+        Respuesta2 = Respuesta;
+        jux(Respuesta2, Correccion_n, Secuencia_n);
+    }
+
+    function jux(Respuesta, Correccion_n, Secuencia_n) {
+        Correccion(Respuesta, Correccion_n);
+        Respuesta = '';
+        Ocultar_Response();
+        Secuencia(Secuencia_n);
+        Numero_de_Tarea += 1;
+    }
+
+    //Respuesta_n: Corresponde al nombre de la variable Respuesta3
+    //Correccion_n: es la cifra con la que se corregira la respuesta obtenida. Por ej. '341'
+    //Consigna: Es la consigna nueva que se mostrará
+    //Secuencia: es la nueva secuencia a mostrar. Por ej. '5,6,4'
+    function Itinerario_Cifra3(Correccion_n, Consigna, Secuencia_n) {
+        Respuesta3 = Respuesta;
+        Correccion(Respuesta3, Correccion_n);
+        Guardar_Datos_Brutos(Respuesta1, Respuesta2, Respuesta3, Consigna, Secuencia_n);
+    }
+
     var Itinerario_DD = function (a) {
         Modalidad = 'Directo';
         switch (a) {
@@ -584,157 +673,73 @@ $(document).ready(function () {
                 Numero_de_Tarea += 1;
                 break;
 
-            case 6: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '347');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('1,3,9');
-                Numero_de_Tarea += 1;
+            case 6: Itinerario_Cifra1('347', '1,3,9');
                 break;
 
-            case 7: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '139');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('8,1,6');
-                Numero_de_Tarea += 1;
+            case 7: Itinerario_Cifra2('139', '8,1,6');
                 break;
 
             //Serie 4
-            case 8: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '816');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de cuatro números', '7,6,1,3');
+            case 8: Itinerario_Cifra3('816', 'Ahora vamos a pasar a una serie de cuatro números', '7,6,1,3');
                 break;
 
-            case 9: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '7613');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('5,4,8,2');
-                Numero_de_Tarea += 1;
+            case 9: Itinerario_Cifra1('7613', '5,4,8,2');
                 break;
 
-            case 10: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '5482');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('4,9,3,1');
-                Numero_de_Tarea += 1;
+            case 10: Itinerario_Cifra2('5482', '4,9,3,1');
                 break;
 
             //Serie 5
-            case 11: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '4931');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de cinco números', '2,8,6,4,1');
+            case 11: Itinerario_Cifra3('4931', 'Ahora vamos a pasar a una serie de cinco números', '2,8,6,4,1');
                 break;
 
-            case 12: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '28641');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('4,3,1,9,5');
-                Numero_de_Tarea += 1;
+            case 12: Itinerario_Cifra1('28641', '4,3,1,9,5');
                 break;
 
-            case 13: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '43195');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('6,9,3,4,8');
-                Numero_de_Tarea += 1;
+            case 13: Itinerario_Cifra2('43195', '6,9,3,4,8');
                 break;
 
             //Serie 6
-            case 14: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '69348');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de seis números', '1,5,3,2,4,8');
+            case 14: Itinerario_Cifra3('69348', 'Ahora vamos a pasar a una serie de seis números', '1,5,3,2,4,8');
                 break;
 
-            case 15: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '153248');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('9,1,5,3,7,2');
-                Numero_de_Tarea += 1;
+            case 15: Itinerario_Cifra1('153248', '9,1,5,3,7,2');
                 break;
 
-            case 16: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '915372');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('8,3,9,4,1,7');
-                Numero_de_Tarea += 1;
+            case 16: Itinerario_Cifra2('915372', '8,3,9,4,1,7');
                 break;
 
             //Serie 7
-            case 17: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '839417');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de siete números', '5,7,3,9,2,6,8');
+            case 17: Itinerario_Cifra3('839417', 'Ahora vamos a pasar a una serie de siete números', '5,7,3,9,2,6,8');
                 break;
 
-            case 18: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '5739268');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('9,7,1,4,6,2,5');
-                Numero_de_Tarea += 1;
+            case 18: Itinerario_Cifra1('5739268', '9,7,1,4,6,2,5');
                 break;
 
-            case 19: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '9714625');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('4,6,2,9,1,8,3');
-                Numero_de_Tarea += 1;
+            case 19: Itinerario_Cifra2('9714625', '4,6,2,9,1,8,3');
                 break;
 
             //Serie 8
-            case 20: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '4629183');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de ocho números', '4,9,5,6,2,8,1,3');
+            case 20: Itinerario_Cifra3('4629183', 'Ahora vamos a pasar a una serie de ocho números', '4,9,5,6,2,8,1,3');
                 break;
 
-            case 21: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '49562813');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('8,6,2,4,3,1,5,9');
-                Numero_de_Tarea += 1;
+            case 21: Itinerario_Cifra1('49562813', '8,6,2,4,3,1,5,9');
                 break;
 
-            case 22: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '86243159');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('1,9,6,4,5,7,3,2');
-                Numero_de_Tarea += 1;
+            case 22: Itinerario_Cifra2('86243159', '1,9,6,4,5,7,3,2');
                 break;
 
             //Serie 9
-            case 23: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '19645732');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de nueve números', '7,3,8,9,5,2,4,6,1');
+            case 23: Itinerario_Cifra3('19645732', 'Ahora vamos a pasar a una serie de nueve números', '7,3,8,9,5,2,4,6,1');
                 break;
 
-            case 24: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '738952461');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('2,7,5,3,8,4,9,1,6');
-                Numero_de_Tarea += 1;
+            case 24: Itinerario_Cifra1('738952461', '2,7,5,3,8,4,9,1,6');
                 break;
 
-            case 25: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '275384916');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('6,4,1,9,5,2,7,3,2');
-                Numero_de_Tarea += 1;
+            case 25: Itinerario_Cifra2('275384916', '6,4,1,9,5,2,7,3,2');
                 break;
 
-            case 26: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '641952732');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, null, null);
+            case 26: Itinerario_Cifra3('641952732', null, null);
                 break;
         }
     }
@@ -750,7 +755,7 @@ $(document).ready(function () {
     };
 
     //Almacena las respuestas de la serie DD
-    var Guardar_Datos_Brutos_DD = function (R1, R2, R3, Consigna_nueva, Cifra_nueva) {
+    var Guardar_Datos_Brutos = function (R1, R2, R3, Consigna_nueva, Cifra_nueva) {
         Datos_Brutos = Datos_Brutos + "Serie " + R1.length + "," + R1 + "," + R2 + "," + R3 + ";";
 
         if (Errores < 2 && Serie != 9) {
@@ -767,7 +772,12 @@ $(document).ready(function () {
         }
 
         else {
-            SalidaDD();
+            switch (Modalidad) {
+                case 'Directo': SalidaDD();
+                    break;
+                case 'Letra': SalidaDL();
+                    break;
+            }
         }
     };
 
@@ -798,10 +808,21 @@ $(document).ready(function () {
         Itinerario_DL(1);
     };
 
+    var SalidaDL = function(){
+        //Almaceno los valores en los Inputs
+            $('#Respuesta_DL').val(Datos_Brutos);
+            $('#Puntaje_DL').val(Puntaje);
+            TRd = new moment();
+            var Duration = moment.duration(TRd.diff(TRc)).as('milliseconds');
+            var a = Duration.toString();
+            $('#TR_DL').val(a);
+            $('#Submit').click();
+    };
+
     function Itinerario_DL(a) {
-        Modalidad = 'Directo';
+        Modalidad = 'Letra';
         switch (a) {
-            case 1: Consigna_Boton('Te vamos a presentar una serie de letras y números de a uno por vez. <br> Tu objetivo es intentar retener la serie. <br> Luego de que aparezca la palabra "recuerdo" deberás escribir, con tu teclado, primero las letras en orden alfabético y luego los dígitos en orden ascendente.', 'Vamos a hacer unos ensayos de prueba', 'Va a aparecer una serie de dos letras y números y tendrás que recordarlos y escribir, con tu teclado, primero las letras y luego los números.', '6,S');
+            case 1: Consigna_Boton('Te vamos a presentar una serie de letras y números </br> de a uno por vez. Tu objetivo es intentar retener la serie. <br> Luego de que aparezca la palabra "recuerdo" deberás escribir, con tu teclado, primero las letras en orden alfabético </br>y luego los dígitos en orden ascendente.', 'Vamos a hacer unos ensayos de prueba', 'Va a aparecer una serie de dos, letras y números, y tendrás que recordarlos y escribir con tu teclado, primero las letras y luego los números.', '6,S');
                 Numero_de_Tarea += 1;
                 break;
 
@@ -820,7 +841,7 @@ $(document).ready(function () {
                 Numero_de_Tarea += 1;
                 break;
 
-            //Serie 3
+            //Serie 2
             case 5: Demostracion_Correcta = 0;
                 $('button').removeAttr('id');
                 $('button').attr('id', 'Aceptar');
@@ -828,176 +849,76 @@ $(document).ready(function () {
                 Consigna_Boton('Esa fue la práctica. Ahora vamos a empezar con la tarea. </br> Recuerda: Primero las letras y luego los números.', 'Comenzaremos con una serie de dos ítems', null, 'J,6');
                 Numero_de_Tarea += 1;
                 break;
-//--------------------------------------------------------------------------
-            case 6: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '347');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('1,3,9');
-                Numero_de_Tarea += 1;
+
+            case 6: Itinerario_Cifra1('J6', '4,C');
                 break;
 
-            case 7: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '139');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('8,1,6');
-                Numero_de_Tarea += 1;
+            case 7: Itinerario_Cifra2('C4', 'L,2');
+                break;
+
+            //Serie 3
+            case 8: Itinerario_Cifra3('L2', 'Ahora vamos a pasar a una serie de tres ítems', '7,M,3');
+                break;
+
+            case 9: Itinerario_Cifra1('M37', '4,S,E');
+                break;
+
+            case 10: Itinerario_Cifra2('ES4', 'M,8,T');
                 break;
 
             //Serie 4
-            case 8: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '816');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de cuatro números', '7,6,1,3');
+            case 11: Itinerario_Cifra3('MT8', 'Ahora vamos a pasar a una serie de cuatro ítems', 'P,6,K,2');
                 break;
 
-            case 9: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '7613');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('5,4,8,2');
-                Numero_de_Tarea += 1;
+            case 12: Itinerario_Cifra1('KP26', 'F,3,N,6');
                 break;
 
-            case 10: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '5482');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('4,9,3,1');
-                Numero_de_Tarea += 1;
+            case 13: Itinerario_Cifra2('FN36', 'C,7,T,9');
                 break;
 
             //Serie 5
-            case 11: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '4931');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de cinco números', '2,8,6,4,1');
+            case 14: Itinerario_Cifra3('CT79', 'Ahora vamos a pasar a una serie de cinco ítems', 'K,3,H,5,Q');
                 break;
 
-            case 12: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '28641');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('4,3,1,9,5');
-                Numero_de_Tarea += 1;
+            case 15: Itinerario_Cifra1('HKQ35', '8,S,3,M,2');
                 break;
 
-            case 13: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '43195');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('6,9,3,4,8');
-                Numero_de_Tarea += 1;
+            case 16: Itinerario_Cifra2('MS238', '2,T,7,J,4');
                 break;
 
             //Serie 6
-            case 14: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '69348');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de seis números', '1,5,3,2,4,8');
+            case 17: Itinerario_Cifra3('JT247', 'Ahora vamos a pasar a una serie de seis ítems', 'E,8,T,4,Q,1');
                 break;
 
-            case 15: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '153248');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('9,1,5,3,7,2');
-                Numero_de_Tarea += 1;
+            case 18: Itinerario_Cifra1('EQT148', 'C,7,N,3,R,5');
                 break;
 
-            case 16: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '915372');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('8,3,9,4,1,7');
-                Numero_de_Tarea += 1;
+            case 19: Itinerario_Cifra2('CNR357', '4,M,7,H,5,T');
                 break;
 
             //Serie 7
-            case 17: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '839417');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de siete números', '5,7,3,9,2,6,8');
+            case 20: Itinerario_Cifra3('HMT457', 'Ahora vamos a pasar a una serie de siete ítems', 'Q,9,R,5,N,3,L');
                 break;
 
-            case 18: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '5739268');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('9,7,1,4,6,2,5');
-                Numero_de_Tarea += 1;
+            case 21: Itinerario_Cifra1('LNQR359', '9,H,2,S,5,F,4');
                 break;
 
-            case 19: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '9714625');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('4,6,2,9,1,8,3');
-                Numero_de_Tarea += 1;
+            case 22: Itinerario_Cifra2('FHS2459', 'M,7,D,4,H,3,R');
                 break;
 
             //Serie 8
-            case 20: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '4629183');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de ocho números', '4,9,5,6,2,8,1,3');
+            case 23: Itinerario_Cifra3('DHMR347', 'Ahora vamos a pasar a una serie de ocho ítems', '3,K,7,F,9,S,4,D');
                 break;
 
-            case 21: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '49562813');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('8,6,2,4,3,1,5,9');
-                Numero_de_Tarea += 1;
+            case 24: Itinerario_Cifra1('DFKS3479', 'E,3,T,2,C,6,L,5');
                 break;
 
-            case 22: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '86243159');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('1,9,6,4,5,7,3,2');
-                Numero_de_Tarea += 1;
+            case 25: Itinerario_Cifra2('CELT2356', '6,S,8,H,1,M,2,X');
                 break;
 
-            //Serie 9
-            case 23: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '19645732');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de nueve números', '7,3,8,9,5,2,4,6,1');
-                break;
-
-            case 24: Respuesta1 = Respuesta;
-                Correccion(Respuesta1, '738952461');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('2,7,5,3,8,4,9,1,6');
-                Numero_de_Tarea += 1;
-                break;
-
-            case 25: Respuesta2 = Respuesta;
-                Correccion(Respuesta2, '275384916');
-                Respuesta = '';
-                Ocultar_Response();
-                Secuencia('6,4,1,9,5,2,7,3,2');
-                Numero_de_Tarea += 1;
-                break;
-
-            case 26: Respuesta3 = Respuesta;
-                Correccion(Respuesta3, '641952732');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, null, null);
+            case 26: Itinerario_Cifra3('HMSX1268', null, null);
                 break;
         }
-
     }
-
     Itinerario_DD(1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
