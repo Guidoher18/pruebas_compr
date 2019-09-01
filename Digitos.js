@@ -1,17 +1,16 @@
 $(document).ready(function () {
     var audio = document.getElementById("audio");
-    //CHEQUEAR VARIABLES ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 
     //Variables Generales para el Test de las Series ppdd
-    var Respuesta = '';      //Almacena la respuesta del Sujeto
+    var Respuesta = '';                 //Almacena la respuesta del Sujeto
 
-    var Modalidad = '';      //'Directo' | 'Letra' 
+    var Modalidad = '';                 //'Directo' | 'Letra' 
 
-    var Demostracion_Correcta = 0;    //Se utiliza para cuando se muestra el ejemplo
+    var Demostracion_Correcta = 0;      //Se utiliza para cuando se muestra el ejemplo
 
-    var Habilitar_Respuesta = 0;  //Permite habilitar el #Response y el button
+    var Habilitar_Respuesta = 0;        //Permite habilitar el #Response y el button
 
-    var Numero_de_Tarea = 1; //Permite seguir el Itinerario
+    var Numero_de_Tarea = 1;            //Permite seguir el Itinerario
     var Serie = 0;
 
     var Conteo_de_Tecleo = 0;
@@ -289,15 +288,6 @@ $(document).ready(function () {
         }, 300);
     }
 
-    /* $('#Siguiente').on('click', function () {
-         switch (Modalidad) {
-             case "Directo": Itinerario_DD(Numero_de_Tarea);
-                 break;
-             case "Letra": Itinerario_DL(Numero_de_Tarea);
-                 break;
-         }
-     });*/
-
     var Con_2 = '';
     var Con_3 = '';
     var Ser_Cif = '';
@@ -315,21 +305,6 @@ $(document).ready(function () {
         Con_2 = Consigna_2;
         Con_3 = Consigna_3;
         Ser_Cif = Serie_de_Cifras;
-
-        //Registro del TR
-        /*$('#Aceptar').on('click', function () {
-            if (Modalidad == 'Directo' && Numero_de_Tarea == 6) {
-                TRa = new moment();
-            }
-            if (Modalidad == 'Letra' && Numero_de_Tarea == 6) {
-                TRc = new moment();
-            }
-
-            $('#Aceptar').css('display', 'none');
-            Consigna_Secuencia(Consigna_2, Consigna_3, Serie_de_Cifras);
-        });*/
-
-
     };
 
     $('button').on('click', function () {
@@ -359,7 +334,6 @@ $(document).ready(function () {
 
     var Consigna_Secuencia = function (Consigna_2, Consigna_3, Serie_de_Cifras) {
         if (Consigna_3 == null) {
-            //$('#Test').css('font-size', '30vh');
             Consigna_Simple(Consigna_2, Serie_de_Cifras);
         }
         else {
@@ -373,7 +347,8 @@ $(document).ready(function () {
 
     var Consigna_Simple = function (Consigna, Serie_de_Cifras) {
         var z = 0;
-        switch (Numero_de_Tarea) {
+        switch(Modalidad){
+        case 'Directo': switch (Numero_de_Tarea) {
             case 2: z = 12000;
                 break;
             case 3: z = 8000;
@@ -381,6 +356,16 @@ $(document).ready(function () {
             default: z = 4000;
                 break;
         }
+        case 'Letra': switch (Numero_de_Tarea) {
+            case 2: z = 12000;
+                break;
+            case 3: z = 12000;
+                break;
+            default: z = 4000;
+                break;
+        }
+    }
+
         $('#Test').css('font-size', '2.8125vw');
         $('#Test>p').html(Consigna);
         setTimeout(function () {
@@ -401,17 +386,6 @@ $(document).ready(function () {
             $('#Test').css('font-size', '30vh');
             Mostrar(Serie_de_Cifras);
         }, 5000);
-        /*setTimeout(function () {
-            $('#Test').css('display', 'none');
-            var Parametros = Obtener_Parametros(Secuencia_de_Bloques);
-            
-            for (i = 0; i<Parametros.length; i++){
-                $(Parametros[i]).html('<p>'+ (i+1) +'</p>');
-            }
-            
-            $('div[class="bloques"]').css('display', 'block');
-        }, 4000);    */
-
     };
 
     var Secuencia = function (y) {                //Reproduce el Beep antes de f(x)Mostrar la secuencia
@@ -424,9 +398,9 @@ $(document).ready(function () {
 
     var Mostrar = function (k) {                  //Parametros es la lista que contiene los números a mostrar
         var Parametros = [];
-        Parametros = k.toString().split(",");   //Toma los items y los separa en la lista 
+        Parametros = k.toString().split(",");     //Toma los items y los separa en la lista 
 
-        Serie = Parametros.length;              //Serie: Cantidad de items en la serie 
+        Serie = Parametros.length;                //Serie: Cantidad de items en la serie 
 
         //Dependiendo de la cant de items de la Serie, varían los parámetros que le paso a la Función A
         switch (Serie) {
@@ -822,7 +796,7 @@ $(document).ready(function () {
     function Itinerario_DL(a) {
         Modalidad = 'Letra';
         switch (a) {
-            case 1: Consigna_Boton('Te vamos a presentar una serie de letras y números </br> de a uno por vez. Tu objetivo es intentar retener la serie. <br> Luego de que aparezca la palabra "recuerdo" deberás escribir, con tu teclado, primero las letras en orden alfabético </br>y luego los dígitos en orden ascendente.', 'Vamos a hacer unos ensayos de prueba', 'Va a aparecer una serie de dos, letras y números, y tendrás que recordarlos y escribir con tu teclado, primero las letras y luego los números.', '6,S');
+            case 1: Consigna_Boton('Te vamos a presentar una serie de letras y números </br> de a uno por vez. Tu objetivo es intentar retener la serie. <br> Luego de que aparezca la palabra "recuerdo" deberás escribir, con tu teclado, primero las letras en orden alfabético </br>y luego los dígitos en orden ascendente.', 'Vamos a hacer unos ensayos de prueba', 'Va a aparecer una serie de dos ítems, letras y números. </br> Tendrás que recordarlos y escribir con tu teclado, primero las letras y luego los números.', '6,S');
                 Numero_de_Tarea += 1;
                 break;
 
@@ -832,7 +806,7 @@ $(document).ready(function () {
                 break;
 
             case 3: Demostracion_Correcta = 0;
-                Consigna_Simple('Ahora van a aparecer una serie de tres letras y números </br> y tendrás que recordarlos ordenados, primero las letras, en orden alfabético, y luego los números, en orden ascendente.', '5,R,P');
+                Consigna_Simple('Ahora van a aparecer una serie de tres letras y números.</br> Tendrás que recordarlos ordenados, primero las letras en orden alfabético, y luego los números en orden ascendente.', '5,R,P');
                 Numero_de_Tarea += 1;
                 break;
 
