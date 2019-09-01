@@ -58,11 +58,10 @@ $(document).ready(function () {
                         break;
                     case 58: muestro_tecla(e.key)
                         break;
-                    case 13:
-                        $('#alert').html('El presente ejercicio corresponde a la serie de ' + convertir_a_letra(Serie) + ' números.');
-                        $('#alert').show();
+                    case 13: $('#Alert').html('El presente ejercicio corresponde a la serie de ' + convertir_a_letra(Serie) + ' números.');
+                        $('#Alert').show();
                         setTimeout(function () {
-                            $('#alert').fadeOut('slow');
+                            $('#Alert').fadeOut('slow');
                         }
                             , 4000);
                         break;
@@ -70,7 +69,7 @@ $(document).ready(function () {
                 };
             }
                 break;
-            case 0: if (e.keyCode == 13 && $('#Aceptar').attr('display') !== 'none') {
+            case 0: if (e.keyCode == 13 && $('button').css('display') == 'flex') {
                 clic_boton();
             }
                 break;
@@ -141,6 +140,9 @@ $(document).ready(function () {
          }
      });*/
 
+    var Con_2 = '';
+    var Con_3 = '';
+    var Ser_Cif = '';
 
     var Consigna_Boton = function (Consigna, Consigna_2, Consigna_3, Serie_de_Cifras) {
         //Consigna: La instrucción que se muestra
@@ -152,29 +154,9 @@ $(document).ready(function () {
         $('#Test').css('font-size', '2.8125vw');
         $('#Test>p').html(Consigna);
 
-        $('button').on('click', function () {
-            switch ($('button').attr('id')) {
-
-                case 'Siguiente': $('#Siguiente').css('display', 'none');
-                    if ($('#Alert').attr('display') !== 'none') {
-                        $('#alert').fadeOut('fast');
-                    }
-                    Respuesta = $('#Response>p').html();
-                    Siguiente_Tarea();
-                    break;
-
-                case 'Aceptar': if (Modalidad == 'Directo' && Numero_de_Tarea == 6) {
-                    TRa = new moment();
-                }
-                    if (Modalidad == 'Letra' && Numero_de_Tarea == 6) {
-                        TRc = new moment();
-                    }
-
-                    $('#Aceptar').css('display', 'none');
-                    Consigna_Secuencia(Consigna_2, Consigna_3, Serie_de_Cifras);
-                    break;
-            }
-        });
+        Con_2 = Consigna_2;
+        Con_3 = Consigna_3;
+        Ser_Cif = Serie_de_Cifras;
 
         //Registro del TR
         /*$('#Aceptar').on('click', function () {
@@ -192,9 +174,36 @@ $(document).ready(function () {
 
     };
 
+    $('button').on('click', function () {
+        switch ($('button').attr('id')) {
+
+            case 'Siguiente': if ($('#Alert').css('display') != 'none') {
+                $('#Alert').hide();
+            }
+                $('#Siguiente').css('display', 'none');
+                Respuesta = $('#Response>p').html();
+                Siguiente_Tarea();
+                break;
+
+            case 'Aceptar': if (Modalidad == 'Directo' && Numero_de_Tarea == 6) {
+                TRa = new moment();
+            }
+                if (Modalidad == 'Letra' && Numero_de_Tarea == 6) {
+                    TRc = new moment();
+                }
+
+                $('#Aceptar').css('display', 'none');
+                Consigna_Secuencia(Con_2, Con_3, Ser_Cif);
+                break;
+
+        }
+    });
+
+
+
     var Consigna_Secuencia = function (Consigna_2, Consigna_3, Serie_de_Cifras) {
         if (Consigna_3 == null) {
-            $('#Test').css('font-size', '30vh');
+            //$('#Test').css('font-size', '30vh');
             Consigna_Simple(Consigna_2, Serie_de_Cifras);
         }
         else {
@@ -202,33 +211,40 @@ $(document).ready(function () {
             $('#Test>p').html(Consigna_2);
             setTimeout(function () {
                 Consigna_Simple(Consigna_3, Serie_de_Cifras);
-            }, 1000);
+            }, 4000);
         }
     };
 
     var Consigna_Simple = function (Consigna, Serie_de_Cifras) {
+        var z = 0;
+        switch (Numero_de_Tarea) {
+            case 2: z = 12000;
+                break;
+            case 3: z = 8000;
+                break;
+            default: z = 4000;
+                break;
+        }
+        $('#Test').css('font-size', '2.8125vw');
+        $('#Test>p').html(Consigna);
         setTimeout(function () {
-            $('#Test').css('font-size', '2.8125vw');
-            $('#Test>p').html(Consigna);
-            setTimeout(function () {
-                $('#Test>p').html("");
-                $('#Test').css('font-size', '30vh');
-                Secuencia(Serie_de_Cifras);
-            }, 10000);
-        }, 4000);
+            $('#Test>p').empty();
+            $('#Test').css('font-size', '30vh');
+            Secuencia(Serie_de_Cifras);
+        }, z);
     }
 
     var Consigna_Respuesta = function (Consigna, Serie_de_Cifras) {
         Habilitar_Respuesta = 0;
         $('#Response').css('display', 'none');
-        $('#Response>p').html('');
+        $('#Response>p').empty();
         $('#Test').css('font-size', '2.8125vw');
         $('#Test>p').html(Consigna);
         $('#Test').css('display', 'flex');
         setTimeout(function () {
             $('#Test').css('font-size', '30vh');
             Mostrar(Serie_de_Cifras);
-        }, 4000);
+        }, 5000);
         /*setTimeout(function () {
             $('#Test').css('display', 'none');
             var Parametros = Obtener_Parametros(Secuencia_de_Bloques);
@@ -288,7 +304,7 @@ $(document).ready(function () {
     var A = function (Serie, a, b, c, d, e, f, g, h, i) {
         $('#Test>p').html(a);
         setTimeout(function () {
-            $('#Test>p').html(" ");
+            $('#Test>p').empty();
             setTimeout(function () {
                 switch (Serie) {
                     case 1:
@@ -303,7 +319,7 @@ $(document).ready(function () {
     var B = function (Serie, b, c, d, e, f, g, h, i) {
         $('#Test>p').html(b);
         setTimeout(function () {
-            $('#Test>p').html(" ");
+            $('#Test>p').empty();
             setTimeout(function () {
                 switch (Serie) {
                     case 2: Recuerdo();
@@ -317,7 +333,7 @@ $(document).ready(function () {
     var C = function (Serie, c, d, e, f, g, h, i) {
         $('#Test>p').html(c);
         setTimeout(function () {
-            $('#Test>p').html(" ");
+            $('#Test>p').empty();
             setTimeout(function () {
                 switch (Serie) {
                     case 3: Recuerdo();
@@ -331,72 +347,84 @@ $(document).ready(function () {
     var D = function (Serie, d, e, f, g, h, i) {
         $('#Test>p').html(d);
         setTimeout(function () {
-            $('#Test>p').html(" ");
-            switch (Serie) {
-                case 4: Recuerdo();
-                    break;
-                default: E(Serie, e, f, g, h, i);
-            }
-        }, 1000);
+            $('#Test>p').empty();
+            setTimeout(function () {
+                switch (Serie) {
+                    case 4: Recuerdo();
+                        break;
+                    default: E(Serie, e, f, g, h, i);
+                }
+            }, 1000);
+        }, 2000);
     };
 
     var E = function (Serie, e, f, g, h, i) {
         $('#Test>p').html(e);
         setTimeout(function () {
-            $('#Test>p').html(" ");
-            switch (Serie) {
-                case 5: Recuerdo();
-                    break;
-                default: F(Serie, f, g, h, i);
-            }
-        }, 1000);
+            $('#Test>p').empty();
+            setTimeout(function () {
+                switch (Serie) {
+                    case 5: Recuerdo();
+                        break;
+                    default: F(Serie, f, g, h, i);
+                }
+            }, 1000);
+        }, 2000);
     };
 
     var F = function (Serie, f, g, h, i) {
         $('#Test>p').html(f);
         setTimeout(function () {
-            $('#Test>p').html(" ");
-            switch (Serie) {
-                case 6: Recuerdo();
-                    break;
-                default: G(Serie, g, h, i);
-            }
-        }, 1000);
+            $('#Test>p').empty();
+            setTimeout(function () {
+                switch (Serie) {
+                    case 6: Recuerdo();
+                        break;
+                    default: G(Serie, g, h, i);
+                }
+            }, 1000);
+        }, 2000);
     };
 
     var G = function (Serie, g, h, i) {
         $('#Test>p').html(g);
         setTimeout(function () {
-            $('#Test>p').html(" ");
-            switch (Serie) {
-                case 7: Recuerdo();
-                    break;
-                default: H(Serie, h, i);
-            }
-        }, 1000);
+            $('#Test>p').empty();
+            setTimeout(function () {
+                switch (Serie) {
+                    case 7: Recuerdo();
+                        break;
+                    default: H(Serie, h, i);
+                }
+            }, 1000);
+        }, 2000);
     };
 
     var H = function (Serie, h, i) {
         $('#Test>p').html(h);
         setTimeout(function () {
-            $('#Test>p').html(" ");
-            switch (Serie) {
-                case 8: Recuerdo();
-                    break;
-                default: I(i);
-            }
-        }, 1000);
+            $('#Test>p').empty();
+            setTimeout(function () {
+                switch (Serie) {
+                    case 8: Recuerdo();
+                        break;
+                    default: I(i);
+                }
+            }, 1000);
+        }, 2000);
     };
 
     var I = function (i) {
         $('#Test>p').html(i);
         setTimeout(function () {
-            $('#Test>p').html(" ");
-            switch (Serie) {
-                case 9: Recuerdo();
-                    break;
-            }
-        }, 1000);
+            $('#Test>p').empty();
+            setTimeout(function () {
+                switch (Serie) {
+                    case 9: Recuerdo();
+                        break;
+                }
+            }, 1000);
+        }, 2000);
     }
 
     var Recuerdo = function () {
@@ -404,8 +432,9 @@ $(document).ready(function () {
         switch (Demostracion_Correcta) {
             default: $('#Test>p').html('Recuerdo');
                 setTimeout(function () {
-                    $('#Test>p').html('');
+                    $('#Test>p').empty();
                     $('#Test').css('display', 'none');
+                    $('#Response>p').empty();
                     $('#Response').css('display', 'flex');
 
                     if (Numero_de_Tarea == 2 || Numero_de_Tarea == 6) {
@@ -422,6 +451,10 @@ $(document).ready(function () {
         }
     };
 
+    function Ocultar_Response() {
+        $('#Response').css('display', 'none');
+        $('#Test').css('display', 'flex');
+    }
 
     var Itinerario_DD = function (a) {
         Modalidad = 'Directo';
@@ -450,13 +483,14 @@ $(document).ready(function () {
                 $('button').removeAttr('id');
                 $('button').attr('id', 'Aceptar');
                 $('button').html('Aceptar');
-                Consigna_Boton('Esa fue la práctica. Ahora vamos a comenzar con la tarea.', 'Comenzaremos con la serie de tres números', null, '3,4,7');
+                Consigna_Boton('Esa fue la práctica. Ahora vamos a empezar con la tarea.', 'Comenzaremos con una serie de tres números', null, '3,4,7');
                 Numero_de_Tarea += 1;
                 break;
 
-            case 6: Respuesta1 = Respuesta;          //Almaceno la Respuesta
-                Correccion(Respuesta1, '347');       //Corrijo
+            case 6: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '347');
                 Respuesta = '';
+                Ocultar_Response();
                 Secuencia('1,3,9');
                 Numero_de_Tarea += 1;
                 break;
@@ -464,58 +498,183 @@ $(document).ready(function () {
             case 7: Respuesta2 = Respuesta;
                 Correccion(Respuesta2, '139');
                 Respuesta = '';
+                Ocultar_Response();
                 Secuencia('8,1,6');
                 Numero_de_Tarea += 1;
                 break;
 
             //Serie 4
             case 8: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '816');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de cuatro números', '7,6,1,3');
+                break;
 
-                Correccion(Respuesta3, '385');
-                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3);
+            case 9: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '7613');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('5,4,8,2');
+                Numero_de_Tarea += 1;
+                break;
 
-                if (Errores < 2) {
-                    Respuesta = '';
+            case 10: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '5482');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('4,9,3,1');
+                Numero_de_Tarea += 1;
+                break;
 
-                    Errores = 0;
-                    Respuesta1 = "";
-                    Respuesta2 = "";
-                    Respuesta3 = "";
+            //Serie 5
+            case 11: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '4931');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de cinco números', '2,8,6,4,1');
+                break;
 
-                    Consigna_Simple('Vamos a arrancar con las series de cuatro números', '7,6,1,3');
-                    //Respuesta = '';
-                    Numero_de_Tarea += 1;
-                    break
-                    ;
-                }
+            case 12: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '28641');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('4,3,1,9,5');
+                Numero_de_Tarea += 1;
+                break;
 
-                else {
-                    SalidaDD();
-                    break;
-                }
+            case 13: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '43195');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('6,9,3,4,8');
+                Numero_de_Tarea += 1;
+                break;
 
+            //Serie 6
+            case 14: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '69348');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de seis números', '1,5,3,2,4,8');
+                break;
 
+            case 15: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '153248');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('9,1,5,3,7,2');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 16: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '915372');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('8,3,9,4,1,7');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 7
+            case 17: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '839417');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de siete números', '5,7,3,9,2,6,8');
+                break;
+
+            case 18: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '5739268');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('9,7,1,4,6,2,5');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 19: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '9714625');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('4,6,2,9,1,8,3');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 8
+            case 20: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '4629183');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de ocho números', '4,9,5,6,2,8,1,3');
+                break;
+
+            case 21: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '49562813');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('8,6,2,4,3,1,5,9');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 22: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '86243159');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('1,9,6,4,5,7,3,2');
+                Numero_de_Tarea += 1;
+                break;
+
+            //Serie 9
+            case 23: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '19645732');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, 'Ahora vamos a pasar a una serie de de nueve números', '7,3,8,9,5,2,4,6,1');
+                break;
+
+            case 24: Respuesta1 = Respuesta;
+                Correccion(Respuesta1, '738952461');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('2,7,5,3,8,4,9,1,6');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 25: Respuesta2 = Respuesta;
+                Correccion(Respuesta2, '275384916');
+                Respuesta = '';
+                Ocultar_Response();
+                Secuencia('6,4,1,9,5,2,7,3,2');
+                Numero_de_Tarea += 1;
+                break;
+
+            case 26: Respuesta3 = Respuesta;
+                Correccion(Respuesta3, '641952732');
+                Guardar_Datos_Brutos_DD(Respuesta1, Respuesta2, Respuesta3, null, null);
+                break;
         }
     }
 
     //Corrige las respuestas
-    var Correccion = function(a,b){  
-        if(a != b)
-        {
-            Errores +=1;
+    var Correccion = function (a, b) {
+        if (a != b) {
+            Errores += 1;
         }
-        else
-        {
-            Puntaje +=1;
+        else {
+            Puntaje += 1;
         }
     };
 
-     //Almacena las respuestas de la serie DD
-     var Guardar_Datos_Brutos_DD = function(a, b, c){       
-        Datos_Brutos = Datos_Brutos + "Serie " + a.length + "," + a + ","+ b + "," + c + ";";    
+    //Almacena las respuestas de la serie DD
+    var Guardar_Datos_Brutos_DD = function (R1, R2, R3, Consigna_nueva, Cifra_nueva) {
+        Datos_Brutos = Datos_Brutos + "Serie " + R1.length + "," + R1 + "," + R2 + "," + R3 + ";";
+
+        if (Errores < 2 && Serie != 9) {
+            Respuesta = '';
+
+            Errores = 0;
+            Respuesta1 = "";
+            Respuesta2 = "";
+            Respuesta3 = "";
+
+            Ocultar_Response();
+            Consigna_Simple(Consigna_nueva, Cifra_nueva);
+            Numero_de_Tarea += 1;
+        }
+
+        else {
+            SalidaDD();
+        }
     };
 
-    var SalidaDD = function(){
+    var SalidaDD = function () {
         //Almaceno los valores en los Inputs
         $('#Respuesta_DD').val(Datos_Brutos);
         $('#Puntaje_DD').val(Puntaje);
@@ -526,16 +685,16 @@ $(document).ready(function () {
 
         //Reinicio las Variables 
 
-        Numero_de_Tarea = 1;  
+        Numero_de_Tarea = 1;
         Serie = 0;
-        
+
         Conteo_de_Tecleo = 0;
-        
+
         Errores = 0;
         Respuesta1 = "";
         Respuesta2 = "";
         Respuesta3 = "";
-        
+
         Puntaje = 0;
         Datos_Brutos = "";
 
@@ -546,6 +705,10 @@ $(document).ready(function () {
 
     Itinerario_DD(1);
 
+
+    function Itinerario_DL(a) {
+        alert("DL" + a.toString());
+    }
 
 
 
