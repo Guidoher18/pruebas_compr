@@ -347,24 +347,24 @@ $(document).ready(function () {
 
     var Consigna_Simple = function (Consigna, Serie_de_Cifras) {
         var z = 0;
-        switch(Modalidad){
-        case 'Directo': switch (Numero_de_Tarea) {
-            case 2: z = 12000;
-                break;
-            case 3: z = 8000;
-                break;
-            default: z = 4000;
-                break;
+        switch (Modalidad) {
+            case 'Directo': switch (Numero_de_Tarea) {
+                case 2: z = 12000;
+                    break;
+                case 3: z = 8000;
+                    break;
+                default: z = 4000;
+                    break;
+            }
+            case 'Letra': switch (Numero_de_Tarea) {
+                case 2: z = 12000;
+                    break;
+                case 3: z = 12000;
+                    break;
+                default: z = 4000;
+                    break;
+            }
         }
-        case 'Letra': switch (Numero_de_Tarea) {
-            case 2: z = 12000;
-                break;
-            case 3: z = 12000;
-                break;
-            default: z = 4000;
-                break;
-        }
-    }
 
         $('#Test').css('font-size', '2.8125vw');
         $('#Test>p').html(Consigna);
@@ -782,21 +782,27 @@ $(document).ready(function () {
         Itinerario_DL(1);
     };
 
-    var SalidaDL = function(){
+    var SalidaDL = function () {
         //Almaceno los valores en los Inputs
-            $('#Respuesta_DL').val(Datos_Brutos);
-            $('#Puntaje_DL').val(Puntaje);
-            TRd = new moment();
-            var Duration = moment.duration(TRd.diff(TRc)).as('milliseconds');
-            var a = Duration.toString();
-            $('#TR_DL').val(a);
-            $('#Submit').click();
+        $('#Respuesta_DL').val(Datos_Brutos);
+        $('#Puntaje_DL').val(Puntaje);
+        TRd = new moment();
+        var Duration = moment.duration(TRd.diff(TRc)).as('milliseconds');
+        var a = Duration.toString();
+        $('#TR_DL').val(a);
+        $('#Submit').click();
     };
 
     function Itinerario_DL(a) {
         Modalidad = 'Letra';
         switch (a) {
-            case 1: Consigna_Boton('Te vamos a presentar una serie de letras y números </br> de a uno por vez. Tu objetivo es intentar retener la serie. <br> Luego de que aparezca la palabra "recuerdo" deberás escribir, con tu teclado, primero las letras en orden alfabético </br>y luego los dígitos en orden ascendente.', 'Vamos a hacer unos ensayos de prueba', 'Va a aparecer una serie de dos ítems, letras y números. </br> Tendrás que recordarlos y escribir con tu teclado, primero las letras y luego los números.', '6,S');
+            case 1: $('#Response').hide();
+                $('#Test').css('font-size', '2.8125vw');
+                $('#Test').show();
+                $('button').removeAttr('id');
+                $('button').attr('id', 'Aceptar');
+                $('button').html('Aceptar');
+                Consigna_Boton('Te vamos a presentar una serie de letras y números </br> de a uno por vez. Tu objetivo es intentar retener la serie. <br> Luego de que aparezca la palabra "recuerdo" deberás escribir, con tu teclado, primero las letras en orden alfabético </br>y luego los dígitos en orden ascendente.', 'Vamos a hacer unos ensayos de prueba', 'Va a aparecer una serie de dos ítems, letras y números. </br> Tendrás que recordarlos y escribir con tu teclado, primero las letras y luego los números.', '6,S');
                 Numero_de_Tarea += 1;
                 break;
 
