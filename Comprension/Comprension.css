@@ -2,6 +2,17 @@
     width:80vw;
 }
 
-span{
-    background-color:lightblue;
+span:hover{
+    border-bottom:1px solid orange;
+    border-top:1px solid orange;
+    cursor:pointer;
+}
+
+.Desde{
+    border-bottom:1px solid orange;
+    border-top:1px solid orange;
+}
+
+.Resaltado{
+    background-color:orange;
 }

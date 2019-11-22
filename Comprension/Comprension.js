@@ -1,89 +1,93 @@
-$(document).ready(function(){
-    
-/*
-    $(document).on("mouseup", function (e) {
-    var selected = getSelection();
-    var range = selected.getRangeAt(0);
-    if(selected.toString().length > 1){
-        var newNode = document.createElement("span");
-        newNode.setAttribute("class", "red");
-        range.surroundContents(newNode);       
+$(document).ready(function() {
+  var text_1 =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam porttitor velit eros, eget lobortis nulla tempor sed. Vivamus a nisl faucibus, finibus elit id, porta ex. Sed blandit, nisi interdum mattis dictum, tortor purus aliquam ligula, eu dictum sapien tortor ut lectus. Interdum et malesuada fames ac ante ipsum primis in";
+
+  var html = "";
+
+  var conteo_de_clic = 0;
+  var desde = 0;
+  var hasta = 0;
+
+  //f(x) rodea las palabras con <span> </span>. Cada uno con un Id ascendente comenzando por 0.
+  //Retorna la variable que contiene el texto rodeado.
+  function rodear_palabras_con_span(texto) {
+    var indice = texto.split(" ");
+    for (var x = 0; x < indice.length; x++) {
+      switch (x) {
+        case 0:
+          html = html + "<span id='" + x + "'>" + indice[x] + "</span>";
+          break;
+        default:
+          html = html + "<span id='" + x + "'> " + indice[x] + "</span>";
+          break;
+      }
     }
-    selected.removeAllRanges();
- });
+    $("body>div").html(html);
+  }
 
-    */
-    
-    
-    
-    
-    var text = $('#Text').html();
+  $("body").on("click", "div>span", function() {
+    var z = parseInt($(this).attr("id"));
+    switch (conteo_de_clic) {
+      case 0:
+        conteo_de_clic += 1;
+        desde = z;
+        $(this).addClass("Desde");
+        break;
+      case 1:
+        conteo_de_clic = 0;
+        hasta = z;
+        resaltar();
+        break;
+    }
+  });
 
+  function resaltar() {
+    $("#"+ desde.toString()).removeClass("Desde");
+    if (desde > hasta) { //Si hizo un resaltado de derecha a izquierda, invierto los valores
+      var a = desde;
+      var b = hasta;
+      desde = b;
+      hasta = a;
+    }
+    for (var i = desde; i < hasta + 1; i++) {
+      var a = "#" + i.toString();
+      $(a).addClass("Resaltado");
+    }
+  }
 
-    var Resaltado = [];
-    
-    //var b = document.getElementById(a);
-    //a.toString(); permite tomar la selección del usuario en texto
-   
+  rodear_palabras_con_span(text_1);
+});
 
+/* $('span').on('select', Seleccionar);
 
+  function Seleccionar() { 
+    var a = getElementById(this);
+    if (this.onmousedown || this.onmouseup || this.onmouesemove) { 
+      $(this).addClass("Resaltado");
+    }
+  };
 
-    $('#Seleccionar').on('click', function(){
-        if (getSelection().getRangeAt(0) === getSelection().getRangeAt(0)){ //Evalua true si la selección no está vacía.
-            var text2 = document.getElementById('Text');
-            var t_html = text2.outerHTML;
+  $("#context-text>p").html(html);
+  const editor = new EditorJS({
+    //Id of Element that should contain the Editor
+    holder: "context-text",
+    /**
+     * Available Tools list.
+     * Pass Tool's class or Settings object for each Tool you want to use
+     */
+/*
+    tools: {
+      Marker: {
+        class: Marker,
+        inlineToolbar: ["Marker"]
+      }
+    },
 
-           /* if ($(t_html).search('<span>') == true && $(t_html).search('</span>') == true)
-            {
-
-            } */
-
-            //Se pueden borrar al final
-            var a  = window.getSelection();
-            var a = a.toString();
-            //
-
-            
-            var indice_inicio = getSelection().anchorOffset;
-            var indice_fin = getSelection().focusOffset;
-            
-            if(indice_inicio > indice_fin){
-                var s = indice_inicio;
-                var d = indice_fin;
-                indice_inicio = d;
-                indice_fin = s;
-            }
-
-            Resaltado.push(indice_inicio,indice_fin);
-            //(Resultado.legth)/2 
-
-            var uno = text.substring(0,indice_inicio); 
-            var dos = text.substring(indice_inicio, indice_fin); 
-            var tres = text.substring(indice_fin,);
-            
-            
-            
-
-        $('#Text').html(uno + "<span>" + dos + "</span>" + tres);
-
-        }
-    });
-
-    $('#Borrar').on('click', function(){
-        var a  = window.getSelection().toString();
-        var text = $('#Text').html();
-        var indice_inicio = text.search(a);
-        var indice_fin = indice_inicio + a.toString().length;
-
-        var uno = text.substring(0,indice_inicio); 
-        var dos = text.substring(indice_inicio, indice_fin); 
-        var tres = text.substring(indice_fin,);
-
-        $('#Text').html(uno + "<span>" + dos + "</span>" + tres);
-    });
-
-
-    //https://clipboardjs.com/
-    //https://prismjs.com/#features-full
-
-    });
+    /**
+     * Previously saved data that should be rendered
+     */
+/*  data: {
+      text: text_1
+    }
+  });
+});*/
