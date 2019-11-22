@@ -3,14 +3,14 @@
 }
 
 span:hover{
-    border-bottom:1px solid orange;
-    border-top:1px solid orange;
+    border-bottom:2px solid red;
+    border-top:2px solid red;
     cursor:pointer;
 }
 
 .Desde{
-    border-bottom:1px solid orange;
-    border-top:1px solid orange;
+    border-bottom:2px solid red;
+    border-top:2px solid red;
 }
 
 .Resaltado{

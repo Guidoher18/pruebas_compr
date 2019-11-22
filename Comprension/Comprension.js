@@ -22,10 +22,28 @@ $(document).ready(function() {
           break;
       }
     }
-    $("body>div").html(html);
+    $("#text").html(html);
   }
 
-  $("body").on("click", "div>span", function() {
+  //Configuración de Botones
+  //Borra el Highlighted
+  $('#Clear').on("click", function () { 
+    $('#text>span').removeClass("Resaltado");
+  });
+
+  //Aumenta el tamaño de la letra
+  $('#Increase').on("click", function () { 
+    var j = $('#text').css("font-size");
+    $('#text').css("font-size", (parseInt(j)+2).toString() + "px");
+  });
+
+  //Disminuye el tamaño de la letra
+  $('#Decrease').on("click", function () { 
+    var j = $('#text').css("font-size");
+    $('#text').css("font-size", (parseInt(j)-2).toString() + "px");
+  });
+
+  $("body").on("click", "#text>span", function() {
     var z = parseInt($(this).attr("id"));
     switch (conteo_de_clic) {
       case 0:
@@ -57,6 +75,10 @@ $(document).ready(function() {
 
   rodear_palabras_con_span(text_1);
 });
+
+
+
+
 
 /* $('span').on('select', Seleccionar);
 
