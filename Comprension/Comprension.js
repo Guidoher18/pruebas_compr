@@ -25,25 +25,25 @@ $(document).ready(function() {
           break;
       }
     }
-    $("#text").html(html);
+    $("#Text").html(html);
   }
 
   //Configuración de Botones
   //Borra el Highlighted
   $("#Clear").on("click", function() {
-    $("#text>span").removeClass("Resaltado");
+    $("#Text>span").removeClass("Resaltado");
   });
 
   //Aumenta el tamaño de la letra
   $("#Increase").on("click", function() {
-    var j = $("#text").css("font-size");
-    $("#text").css("font-size", (parseInt(j) + 2).toString() + "px");
+    var j = $("#Text").css("font-size");
+    $("#Text").css("font-size", (parseInt(j) + 2).toString() + "px");
   });
 
   //Disminuye el tamaño de la letra
   $("#Decrease").on("click", function() {
-    var j = $("#text").css("font-size");
-    $("#text").css("font-size", (parseInt(j) - 2).toString() + "px");
+    var j = $("#Text").css("font-size");
+    $("#Text").css("font-size", (parseInt(j) - 2).toString() + "px");
   });
 
   //Continua con el texto siguiente
@@ -52,7 +52,7 @@ $(document).ready(function() {
   });
 
   //Cuando hago clic en una palabra para resaltarla...
-  $("body").on("click", "#text>span", function() {
+  $("body").on("click", "#Text>span", function() {
     var z = parseInt($(this).attr("id"));
     switch (conteo_de_clic) {
       case 0:
@@ -85,7 +85,7 @@ $(document).ready(function() {
   }
 
   function Obtener_Respuesta() {
-    var id_ultimo_span = $("#text>span:last-child").attr("ID");
+    var id_ultimo_span = $("#Text>span:last-child").attr("ID");
 
     //Obtengo los ids de los span resaltados y los almaceno en Indice
     var Indice = [];

@@ -1,18 +1,49 @@
-#Text{
-    width:80vw;
+body {
+    height: 99.9vh;
 }
 
-span:hover{
-    border-bottom:2px solid red;
-    border-top:2px solid red;
-    cursor:pointer;
+#Text {
+    width: 90vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    font-size: 26px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
 }
 
-.Desde{
-    border-bottom:2px solid red;
-    border-top:2px solid red;
+span:hover {
+    border-bottom: 2px solid #ff0000;
+    border-top: 2px solid #ff0000;
+    cursor: pointer;
 }
 
-.Resaltado{
-    background-color:orange;
+.Desde {
+    border-bottom: 2px solid #ff0000;
+    border-top: 2px solid #ff0000;
+}
+
+.Resaltado {
+    background-color: #ffa500;
+}
+
+#Barra_Superior {
+    display: flex;
+    align-items: center;
+}
+
+#Siguiente {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+}
+
+.btn-primary {
+    background-color: #0197FA !important;
+    border-color: #0197FA !important;
+    border-radius: 0px !important;
+}
+
+.btn-primary:hover {
+    background-color: #0070BA !important;
+    border-color: #0070BA !important;
 }

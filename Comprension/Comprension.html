@@ -9,14 +9,19 @@
 </head>
 
 <body>
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default" id="Clear"><img src="../icons/format_clear.svg"></button>
-        <button type="button" class="btn btn-default" id="Increase" ><img src="../icons/increase.png" width="28px" height="26px"></button>
-        <button type="button" class="btn btn-default" id="Decrease"><img src="../icons/decrease.png" width="28px" height="26px"></button>
+    <div class="btn-group" role="group" id="Barra_Superior">
+        <button type="button" class="btn btn-primary" id="Clear" disabled><img src="../icons/clear.png" width="34.2px" height="26px"></button>
+        <button type="button" class="btn btn-primary" id="Increase" ><img src="../icons/increase.png" width="30px" height="26px"></button>
+        <button type="button" class="btn btn-primary" id="Decrease"><img src="../icons/decrease.png" width="31.2px" height="26px"></button>
     </div>
-    <div id="text">
+    <div id="Text">
     </div>
-    <button type="button" class="btn btn-default" id="Siguiente"><img src="" alt="">Siguiente</button>
+    <p>¿Existe alguna información incorrecta o incoherente?</p>
+    <input type="radio" name="Incoherente" id="Incoherente" value="Si">Si</input>
+    <input type="radio" name="Incoherente" id="Incoherente" value="No">No</input>
+    
+
+    <button type="button" class="btn btn-primary col-md-12" id="Siguiente" ><img height="38px" src="../icons/siguiente.png"></button>
     <!--
     <div id="Test" class="col-md-10">
         <p></p>
