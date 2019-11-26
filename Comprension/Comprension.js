@@ -1,6 +1,6 @@
 $(document).ready(function() {
   var text_1 =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam porttitor velit eros, eget lobortis nulla tempor sed. Vivamus a nisl faucibus, finibus elit id, porta ex. Sed blandit, nisi interdum mattis dictum, tortor purus aliquam ligula, eu dictum sapien tortor ut lectus. Interdum et malesuada fames ac ante ipsum primis in";
+    "La psicología cognitiva se encarga del estudio de la cognición; es decir, de los procesos mentales implicados en el conocimiento. Tiene como objeto de estudio los mecanismos básicos y profundos por los que se elabora el conocimiento, desde la percepción, la memoria y el aprendizaje, hasta la formación de conceptos y razonamiento lógico. Se interesa así por los cambios en el psiquismo inconsciente entre las tópicas freudianas. Por cognitivo entendemos el acto de conocimiento, en sus acciones de almacenar, recuperar, reconocer, comprender, organizar y usar la información recibida a través de los sentidos.";
 
   var html = "";
 
@@ -10,6 +10,9 @@ $(document).ready(function() {
 
   var Respuesta_String = "";
   var Respuesta_ID = "";
+
+  var Habilitar_Resaltar = 0;
+  var No_Volver_A_Mostrar = 0;
 
   //Rodea las palabras con <span> </span>. Cada uno con un Id ascendente comenzando por 0.
   //Modifica el div #text con el texto "rodeado".
@@ -36,14 +39,14 @@ $(document).ready(function() {
 
   //Aumenta el tamaño de la letra
   $("#Increase").on("click", function() {
-    var j = $("#Text").css("font-size");
-    $("#Text").css("font-size", (parseInt(j) + 2).toString() + "px");
+    var j = $("#Container").css("font-size");
+    $("#Container").css("font-size", (parseInt(j) + 2).toString() + "px");
   });
 
   //Disminuye el tamaño de la letra
   $("#Decrease").on("click", function() {
-    var j = $("#Text").css("font-size");
-    $("#Text").css("font-size", (parseInt(j) - 2).toString() + "px");
+    var j = $("#Container").css("font-size");
+    $("#Container").css("font-size", (parseInt(j) - 2).toString() + "px");
   });
 
   //Continua con el texto siguiente
@@ -53,18 +56,54 @@ $(document).ready(function() {
 
   //Cuando hago clic en una palabra para resaltarla...
   $("body").on("click", "#Text>span", function() {
-    var z = parseInt($(this).attr("id"));
-    switch (conteo_de_clic) {
-      case 0:
-        conteo_de_clic += 1;
-        desde = z;
-        $(this).addClass("Desde");
+    switch (Habilitar_Resaltar) {
+      case 1:
+        var z = parseInt($(this).attr("id"));
+        switch (conteo_de_clic) {
+          case 0:
+            conteo_de_clic += 1;
+            desde = z;
+            $(this).addClass("Desde");
+            break;
+          case 1:
+            conteo_de_clic = 0;
+            hasta = z;
+            Resaltar();
+            break;
+        }
+        break;
+      default:
+        break;
+    }
+  });
+
+  //¿Hay una información incoherente en el texto? Si, No
+  $("#No").on("click", function() {
+    Habilitar_Resaltar = 0;
+    $("#Clear").click();
+    $("span").removeClass("Resaltar");
+    $("#Clear").prop("disabled", true);
+    $("#Siguiente").prop("disabled", false);
+  });
+
+  $("#Si").on("click", function() {
+    Habilitar_Resaltar = 1;
+    $("span").addClass("Resaltar");
+    $("#Clear").prop("disabled", false);
+    $("#Siguiente").prop("disabled", false);
+    switch (No_Volver_A_Mostrar) {
+      default:
+        $("#Modal").modal("toggle");
         break;
       case 1:
-        conteo_de_clic = 0;
-        hasta = z;
-        Resaltar();
         break;
+    }
+  });
+
+  //Modal
+  $("#Entendido").on("click", function() {
+    if ($("#No_Volver").prop("checked")) {
+      No_Volver_A_Mostrar = 1;
     }
   });
 
@@ -89,9 +128,10 @@ $(document).ready(function() {
 
     //Obtengo los ids de los span resaltados y los almaceno en Indice
     var Indice = [];
-    for (var i = 0; i < id_ultimo_span + 1; i++) {
-      switch ($("#" + i.toString()).attr("class")) {
-        case "Resaltado":
+    for (var i = 0; i < parseInt(id_ultimo_span) + 1; i++) {
+      var s = $("#" + i.toString()).attr("class");
+      switch (s.includes("Resaltado")) {
+        case true:
           Indice.push(i);
           break;
         default:

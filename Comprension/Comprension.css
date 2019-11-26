@@ -1,19 +1,42 @@
 body {
-    height: 99.9vh;
+    /*height: 99.9vh;*/
 }
 
-#Text {
-    width: 90vw;
+#Clear>img {
+    width: 34.2px;
+    height:4vh;
+}
+
+#Increase>img {
+    width: 30px;
+    height:4vh;
+}
+
+#Decrease>img {
+    width: 31.2px;
+    height:4vh;
+}
+button{
+    height:8vh;
+}
+
+#Container {
     margin-left: 5vw;
-    margin-right: 5vw;
+    margin-right: 0px;
+    padding-right: 5vw;
+    /*width: 90vw;*/
+    max-height: 84vh;
+    overflow-y: scroll;
     font-size: 26px;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
 }
 
-span:hover {
+.Resaltar:hover {
     border-bottom: 2px solid #ff0000;
     border-top: 2px solid #ff0000;
+    cursor: pointer;
+}
+
+.pointer{
     cursor: pointer;
 }
 
@@ -37,13 +60,32 @@ span:hover {
     left: 0px;
 }
 
+#Siguiente>img {
+    height: 6vh;
+}
+
 .btn-primary {
     background-color: #0197FA !important;
     border-color: #0197FA !important;
     border-radius: 0px !important;
 }
 
-.btn-primary:hover {
+.btn-primary:focus {
+    box-shadow: none;
+}
+
+.btn-primary:hover:enabled {
     background-color: #0070BA !important;
     border-color: #0070BA !important;
+}
+
+/*#Container::-webkit-scrollbar{
+    display:none;
+}*/
+
+#Pregunta {
+    border-top: 1px solid #000;
+}
+div[class="modal-body"]>img{
+    width: 98%;
 }
