@@ -34,11 +34,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="Modal_Title">Resaltá la información incoherente</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id="Modal_Close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="Modal_Body">
                     <p><b>Para marcar un fragmento del texto:</b> hacé clic sobre la primera y última palabra del
                         fragmento a seleccionar.</p>
                     <img src="../Content/Ejemplo_fragmento.jpg" alt="">
@@ -46,9 +46,9 @@
                     <p><b>Para marcar palabras de manera individual:</b> hacé dos clics sobre la palabra elegida.</p>
                     <img src="../Content/Ejemplo_palabra.jpg" alt="">
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" id="Modal_Footer">
                     <input type="checkbox" name="checkbox" id="No_Volver">
-                    <label for="checkbox">No volver a mostrar</label>
+                    <label for="checkbox" id="No_Volver_Label">No volver a mostrar</label>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         id="Entendido">Entendido</button>
                 </div>
