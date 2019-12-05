@@ -69,19 +69,24 @@ $(document).ready(function() {
   var B15 =
     "Un fonema no es un sonido sino un constructo mental. Cada fonema es una clase de equivalencia de sonidos, caracterizada por una especificación incompleta de rasgos fonéticos (acústicos y articulatorios). El fonema pertenece a la lengua, mientras que el sonido pertenece al habla. Los fonemas son sonidos con entidad física, no abstracciones mentales. Un fonema puede ser representado por una familia o clase de equivalencia de sonidos, que los hablantes asocian a un sonido específico durante la producción o la percepción del habla.";
 
+  //Variables para poder Resaltar el texto
   var html = "";
-
   var conteo_de_clic = 0;
   var desde = 0;
   var hasta = 0;
 
+  //Variables para guardar la respuesta
   var Respuesta_String = "";
   var Respuesta_ID = "";
+  var Libros = "";
 
+  //Variables en relación a la dinámica de la App
   var Habilitar_Resaltar = 0;
   var No_Volver_A_Mostrar = 0;
 
+  //Variables de Orden de Presentación
   var Orden_de_Presentación = "";
+  var Secuencia = 0;
 
   //Configuración de Botones
   //Borra el Highlighted
@@ -108,38 +113,138 @@ $(document).ready(function() {
     $("#Clear").click();
     $("span").removeClass("Resaltar");
     $("#Clear").prop("disabled", true);
+    /*switch ($("#Container>button").attr("ID") == "Siguiente_Ejemplo_1") {
+      case true:
+        $("#Siguiente_Ejemplo_1").prop("disabled", false);
+      case false:*/
     $("#Siguiente").prop("disabled", false);
+    // }
   });
 
   $("#Si").on("click", function() {
-    Habilitar_Resaltar = 1;
     $("span").addClass("Resaltar");
     $("#Clear").prop("disabled", false);
-    $("#Siguiente").prop("disabled", true);
+
+    switch (Habilitar_Resaltar) {
+      case 0:
+        Habilitar_Resaltar = 1;
+        $("#Siguiente").prop("disabled", true);
+        break;
+    }
+
     switch (No_Volver_A_Mostrar) {
       default:
-        $("#Modal").modal("toggle");
+        $("#Modal_Si").modal("toggle");
         break;
       case 1:
         break;
     }
   });
 
-  //Modal
-  $("#Entendido").on("click", function() {
+  //Botón Siguiente
+  $("#Siguiente").on("click", function() {
+    switch (Secuencia) {
+      case 2: //Modal #3
+        if ($("#Si").prop("checked")) {
+          Secuencia += 1;
+          Itinerario();
+        } else {
+          $("#Modal_Body").html(
+            "<p>¡Cuidado! El texto anterior, contenía información errónea o incoherente. Leelo nuevamente, respondé Sí y no te olvides de resaltar dicha información.</p>"
+          );
+
+          //$("#No_Volver").hide();
+          //$("#No_Volver_Label").hide();
+
+          $("#Modal_2").modal("toggle");
+        }
+        break;
+      case 4: //Modal 5 Si elige Si -> Siguiente en el Ejemplo #2
+        //SEGUIR DESDE ACÁ!!!!
+        if ($("#No").prop("checked")) {
+          Secuencia += 1;
+          Itinerario();
+        } else {
+          $("#Modal_Title").html("Texto Coherente");
+          $("#Modal_Body").html(
+            "<p>¡Cuidado! El texto anterior, NO contenía información errónea o incoherente. Leelo nuevamente, respondé No y hace clic en Siguiente (>).</p>"
+          );
+          $("#Modal_4").modal("toggle");
+        }
+    }
+    Obtener_Respuesta();
+  });
+
+  $("#Entendido_Si").on('click', function () { 
     if ($("#No_Volver").prop("checked")) {
       No_Volver_A_Mostrar = 1;
     }
   });
 
-  //Continua con el texto siguiente
-  $("#Siguiente").on("click", function() {
-    Obtener_Respuesta();
+  //Botón Entendido/Siguiente del Modal
+  $("#Entendido").on("click", function() {
+    switch (Secuencia) {
+      case 0: //Modal #1 Bienvenido de nuevo... ¿Cuántos libros lees...?
+        for (var i = 0; i < 5; i++) {
+          var a = "#L" + (i + 1).toString();
+          if ($(a).prop("checked")) {
+            Libros = $(a).attr("VALUE");
+          }
+        }
+        if (Libros != "") {
+          $("#Modal_1").hide();
+          Secuencia += 1;
+          Itinerario();
+        }
+        break;
+
+      case 1: //Modal #2 ¿Qué tengo que hacer?...
+        $("#Modal_2").modal("toggle");
+        Secuencia += 1;
+        Itinerario();
+        break;
+
+      /*case 2: //Modal #3 Resaltá la información incorrecta o incoherente
+        if ($("#No_Volver").prop("checked")) {
+          No_Volver_A_Mostrar = 1;
+        }
+
+        $("#No_Volver").css("display", "inline-block");
+        $("#No_Volver_Label").css("display", "inline-block");
+
+        $("#Modal_Body").html(
+          "<p><b>Para marcar un fragmento del texto:</b> hacé clic sobre la primera y última palabra del fragmento a seleccionar.</p><img src='../Content/Ejemplo_fragmento.jpg' alt=''><hr><p><b>Para marcar palabras de manera individual:</b> hacé dos clics sobre la palabra elegida.</p><img src='../Content/Ejemplo_palabra.jpg' alt=''><hr><p><b>Si te equivocás:</b> haciendo clic en <img src='../icons/clear.png' alt='' height = '20px' width:'auto' style='background-color:#0197FA'></img> reincias el texto y podés resaltarlo nuevamente.</p>"
+        );
+        break;*/
+      case 3: //Modal con Respuesta Correcta del Ejemplo #1
+        Secuencia += 1;
+        Itinerario();
+        break;
+      /*case 4: //Modal El texto no contiene info inorrecta Ejemplo #2
+        if ($("#No_Volver").prop("checked")) {
+          No_Volver_A_Mostrar = 1;
+        }
+        $("#Modal_4").prop("ID", "Modal_3");
+        $("#No_Volver").css("display", "inline-block");
+        $("#No_Volver_Label").css("display", "inline-block");
+
+        $("#Modal_Body").html(
+          "<p><b>Para marcar un fragmento del texto:</b> hacé clic sobre la primera y última palabra del fragmento a seleccionar.</p><img src='../Content/Ejemplo_fragmento.jpg' alt=''><hr><p><b>Para marcar palabras de manera individual:</b> hacé dos clics sobre la palabra elegida.</p><img src='../Content/Ejemplo_palabra.jpg' alt=''><hr><p><b>Si te equivocás:</b> haciendo clic en <img src='../icons/clear.png' alt='' height = '20px' width:'auto' style='background-color:#0197FA'></img> reincias el texto y podés resaltarlo nuevamente.</p>"
+        );
+        break;*/
+
+      case 5: //Modal con Respuesta Correcta del Ejemplo #2 e Instrucciones Generales (de nuevo)
+        Secuencia += 1;
+        Itinerario();
+    }
   });
+
+  Obtener_Respuesta();
 
   //Rodea las palabras con <span> </span>. Cada uno con un Id ascendente comenzando por 0.
   //Modifica el div #text con el texto "rodeado".
   function rodear_palabras_con_span(texto) {
+    html = "";
     var indice = texto.split(" ");
     for (var x = 0; x < indice.length; x++) {
       switch (x) {
@@ -151,6 +256,10 @@ $(document).ready(function() {
           break;
       }
     }
+    $("#Si").prop("checked", false);
+    $("#No").prop("checked", false);
+    $("#Siguiente").prop("disabled", true);
+    $("#Clear").prop("disabled", true);
     $("#Text").html(html);
   }
 
@@ -216,7 +325,13 @@ $(document).ready(function() {
           Respuesta_ID = Indice[i].toString();
           break;
         default:
-          Respuesta_ID = Respuesta_ID + ", " + Indice[i].toString();
+          switch (Indice[i] - Indice[i - 1]) { 
+            case 1: Respuesta_ID = Respuesta_ID + "-" + Indice[i].toString();
+              break;
+            default: Respuesta_ID = Respuesta_ID + " // " + Indice[i].toString();
+              break;
+          }
+          
       }
     }
 
@@ -253,7 +368,6 @@ $(document).ready(function() {
       }
     }
     Respuesta_String = Respuesta_String.trim();
-    alert(Respuesta_String);
     alert(Respuesta_ID);
   }
 
@@ -345,6 +459,124 @@ $(document).ready(function() {
     }
   }
 
-  rodear_palabras_con_span(Ejemplo_1);
-  Orden_Aleatorio();
+  function Itinerario() {
+    switch (Secuencia) {
+      case 0: //Modal con pregunta por ¿Cuántos Libros lee?...
+        Orden_Aleatorio();
+        rodear_palabras_con_span(Ejemplo_1);
+
+        $("#Modal").attr("ID", "Modal_1");
+
+        $("#Modal_Title").html("Bienvenido de nuevo...");
+
+        //$("#Modal_Close").hide();
+
+        $("#Modal_Body").html(
+          "<p>Antes de continuar, respondé la siguiente pregunta:</p><p>En estos dos últimos años, ¿con qué frecuencia leíste libros en tu casa (por fuera de la facultad)?</p><input type='radio' name='Libros' id='L1' value='1. Menos de un libro al año' required><label for='L1'>&nbsp;1. Menos de un libro al año</label><br><input type='radio' name='Libros' id='L2' value='2. Entre uno y dos libros al año'><label for='L2'>&nbsp;2. Entre uno y dos libros al año</label><br><input type='radio' name='Libros' id='L3' value='3. Tres libros por año'><label for='L3'>&nbsp;3. Tres libros por año</label><br><input type='radio' name='Libros' id='L4' value='4. Entre cuatro y cinco libros por año'><label for='L4'>&nbsp;4. Entre cuatro y cinco libros por año</label><br><input type='radio' name='Libros' id='L5' value='5. Más de cinco libros por año'><label for='L5'>&nbsp;5. Más de cinco libros por año</label>"
+        );
+
+        //$("#No_Volver").hide();
+        //$("#No_Volver_Label").hide();
+
+        //$("#Entendido").attr("ID", "Entendido_1");
+        //$("#Entendido_1").html("Siguiente");
+        $("#Entendido").html("Siguiente");
+        /*$("#Entendido_1").on("click", function() {
+          for (var i = 0; i < 5; i++) {
+            var a = "#L" + (i + 1).toString();
+            if ($(a).prop("checked")) {
+              Libros = $(a).attr("VALUE");
+            }
+          }
+          if (Libros != "") {
+            $("#Modal_1").hide();
+            Secuencia += 1;
+            Itinerario();
+          }
+        });*/
+
+        $("#Modal_1").modal("toggle");
+        break;
+      case 1: //Modal con Instrucción General...
+        $("#Modal_1").attr("ID", "Modal_2");
+
+        $("#Modal_Title").html("¿Qué tengo que hacer?");
+
+        $("#Modal_Body").html(
+          "<p>En esta segunda etapa, se presentarán diferentes textos pequeños.<br> Deberás leerlos con el objetivo de detectar si hay alguna información incorrecta o incoherente.</p><p><b>En caso afirmativo:</b> Seleccioná la opción <b>Si</b> y luego <b>resaltá dicha información </b> incorrecta o incoherente.</p><hr><p><b>En caso negativo:</b> Seleccioná la opción <b>No</b>.</p><hr><p> Finalmente, para pasar al <b>siguiente ejercicio</b>, hace clic en <img src='../icons/siguiente.png' height = '20px' style='background-color:#0197FA ' alt=''></img></p> <hr> Para tu comodidad, podes <b>aumentar</b> <img src='../icons/increase.png' height = '20px' width:'auto' style='background-color:#0197FA ' alt=''></img> o <b>disminuir </b><img src='../icons/decrease.png' height = '20px' width:'auto' style='background-color:#0197FA' alt=''></img> el tamaño del texto. <br> Comencemos con un ejemplo para practicar...</p >"
+        );
+
+        //$("#Entendido_1").attr("ID", "Entendido_2");
+        //$("#Entendido_2").html("Entendido");
+        $("#Entendido").html("Entendido");
+        /*$("#Entendido_2").on("click", function () {
+          $("#Modal_2").modal("toggle");
+          Secuencia += 1;
+          Itinerario();
+        });*/
+        $("#Modal_2").show();
+        break;
+      case 2: //Modal 3: Si presiona Si -> Resaltá la información incoherente...
+        /*$("#Modal_2").attr("ID", "Modal_3");
+        $("#Modal_Title").html("Resaltá la información incoherente");*/
+
+        //$("#Modal_Close").html("<span aria-hidden='true'>&times;</span>");
+        //$("#Modal_Close").css("display", "flex");
+
+       /* $("#Modal_Body").html(
+          "<p><b>Para marcar un fragmento del texto:</b> hacé clic sobre la primera y última palabra del fragmento a seleccionar.</p><img src='../Content/Ejemplo_fragmento.jpg' alt=''><hr><p><b>Para marcar palabras de manera individual:</b> hacé dos clics sobre la palabra elegida.</p><img src='../Content/Ejemplo_palabra.jpg' alt=''><hr><p><b>Si te equivocás:</b> haciendo clic en <img src='../icons/clear.png' alt='' height = '20px' width:'auto' style='background-color:#0197FA'></img> reincias el texto y podés resaltarlo nuevamente.</p>"
+        );*/
+
+        //$("#Entendido_2").attr("ID", "Entendido_3");
+        //$("#Entendido_3").attr("data-dismiss", "modal");
+        $("#Entendido").attr("data-dismiss", "modal");
+
+        /*$("#No_Volver").css("display", "inline-block");
+        $("#No_Volver_Label").css("display", "inline-block");*/
+
+        /*$("#Entendido_3").on("click", function() {
+          if ($("#No_Volver").prop("checked")) {
+            No_Volver_A_Mostrar = 1;
+          }
+        });*/
+
+        break;
+      case 3:
+        $("#Modal_2").attr("ID", "Modal_4");
+
+        $("#Modal_Title").html("¿Cuál era la Respuesta Correcta?");
+
+        $("#Modal_Body").html(
+          "<p>En el texto anterior, la información incoherente que debía ser seleccionada era: <b>'Se interesa así por los cambios en el psiquismo inconsciente entre las tópicas freudianas.'</b><br> Hagamos otro ejercicio de práctica..."
+        );
+
+        /*$("#No_Volver").hide();
+        $("#No_Volver_Label").hide();*/
+
+        $("#Modal_4").modal("toggle");
+
+        break;
+      case 4:
+        rodear_palabras_con_span(Ejemplo_2);
+        Habilitar_Resaltar = 0;
+
+        break;
+
+      case 5:
+        $("#Modal_4").attr("ID", "Modal_5");
+
+        $("#Modal_Title").html("¿Cuál era la Respuesta Correcta?");
+
+        $("#Modal_Body").html(
+          "<p>El texto anterior <b>no contenía información errónea o incoherente</b>, por ello la respuesta correcta era: No.<hr>Hasta aquí la práctica.<br> A continuación,  seguirás con la actividad propiamente dicha.  <hr> Se presentará el texto, deberás leerlo y decidir si contiene o no información errónea o incoherente (seleccionando, luego, la opción correspondiente). En caso afirmativo tendrás que resaltarla antes de continuar con el próximo ejercicio.</p>"
+        );
+
+        $("#Modal_5").modal("toggle");
+        break;
+      case 6:
+        rodear_palabras_con_span(A1);
+    }
+  }
+
+  Itinerario();
 });
