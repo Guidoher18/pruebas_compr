@@ -76,16 +76,23 @@ $(document).ready(function() {
   var hasta = 0;
 
   //Variables para guardar la respuesta
+  var Respuesta_Total = [];
+  var Libros = "";
+
+  var Texto = "";
+  var SiNo = "";
   var Respuesta_String = "";
   var Respuesta_ID = "";
-  var Libros = "";
+  var Tiempo_Inicio = 0;
+  var Tiempo_Fin = 0;
 
   //Variables en relación a la dinámica de la App
   var Habilitar_Resaltar = 0;
   var No_Volver_A_Mostrar = 0;
 
   //Variables de Orden de Presentación
-  var Orden_de_Presentación = "";
+  var Orden_de_Presentacion = "";
+  var Orden_de_Presentacion_Array = [];
   var Secuencia = 0;
 
   //Configuración de Botones
@@ -143,11 +150,17 @@ $(document).ready(function() {
 
   //Botón Siguiente
   $("#Siguiente").on("click", function() {
+    function Proximo_Itinerario() {
+      Secuencia += 1;
+      Itinerario();
+    }
+
     switch (Secuencia) {
       case 2: //Modal #3
         if ($("#Si").prop("checked")) {
-          Secuencia += 1;
-          Itinerario();
+          Proximo_Itinerario();
+          /*Secuencia += 1;
+          Itinerario();*/
         } else {
           $("#Modal_Body").html(
             "<p>¡Cuidado! El texto anterior, contenía información errónea o incoherente. Leelo nuevamente, respondé Sí y no te olvides de resaltar dicha información.</p>"
@@ -162,8 +175,9 @@ $(document).ready(function() {
       case 4: //Modal 5 Si elige Si -> Siguiente en el Ejemplo #2
         //SEGUIR DESDE ACÁ!!!!
         if ($("#No").prop("checked")) {
-          Secuencia += 1;
-          Itinerario();
+          /*Secuencia += 1;
+          Itinerario();*/
+          Proximo_Itinerario();
         } else {
           $("#Modal_Title").html("Texto Coherente");
           $("#Modal_Body").html(
@@ -171,11 +185,26 @@ $(document).ready(function() {
           );
           $("#Modal_4").modal("toggle");
         }
+        break;
+      default:
+        Tiempo_Fin = new moment();
+        var Duration = moment
+          .duration(Tiempo_Fin.diff(Tiempo_Inicio))
+          .as("milliseconds");
+        var TR = Duration.toString();
+
+        Obtener_Respuesta();
+        var y = [Texto, SiNo, Respuesta_String, Respuesta_ID, TR];
+
+        Respuesta_Total.push(y);
+        console.log(Respuesta_Total);
+        Proximo_Itinerario();
+        break;
     }
-    Obtener_Respuesta();
   });
 
-  $("#Entendido_Si").on('click', function () { 
+  //Botón Entendido,  modal con instrucciones para resaltar, si hace clic en Si
+  $("#Entendido_Si").on("click", function() {
     if ($("#No_Volver").prop("checked")) {
       No_Volver_A_Mostrar = 1;
     }
@@ -304,71 +333,86 @@ $(document).ready(function() {
   }
 
   function Obtener_Respuesta() {
-    var id_ultimo_span = $("#Text>span:last-child").attr("ID");
+    switch ($("#Si").prop("checked")) {
+      case true:
+        SiNo = "Si";
 
-    //Obtengo los ids de los span resaltados y los almaceno en Indice
-    var Indice = [];
-    for (var i = 0; i < parseInt(id_ultimo_span) + 1; i++) {
-      var s = $("#" + i.toString()).attr("class");
-      switch (s.includes("Resaltado")) {
-        case true:
-          Indice.push(i);
-          break;
-        default:
-          break;
-      }
-    }
+        var id_ultimo_span = $("#Text>span:last-child").attr("ID");
 
-    for (var i = 0; i < Indice.length; i++) {
-      switch (i) {
-        case 0:
-          Respuesta_ID = Indice[i].toString();
-          break;
-        default:
-          switch (Indice[i] - Indice[i - 1]) { 
-            case 1: Respuesta_ID = Respuesta_ID + "-" + Indice[i].toString();
+        //Obtengo los ids de los span resaltados y los almaceno en Indice
+        var Indice = [];
+        for (var i = 0; i < parseInt(id_ultimo_span) + 1; i++) {
+          var s = $("#" + i.toString()).attr("class");
+          switch (typeof s) {
+            case "string":
+              switch (s.includes("Resaltado")) {
+                case true:
+                  Indice.push(i);
+                  break;
+                default:
+                  break;
+              }
               break;
-            default: Respuesta_ID = Respuesta_ID + " // " + Indice[i].toString();
+            default:
               break;
           }
-          
-      }
-    }
+        }
 
-    //Almaceno en Respuesta la frase seleccionada. Si eligió fragmentos discontinuos los divide con //. Por ejemplo: "porttitor velit eros, eget lobortis // tortor // sapien tortor ut lectus. // in"
-    for (var i = 0; i < Indice.length; i++) {
-      var r = parseInt(Indice[i]); //38       int
-      var w = "#" + r.toString(); //"#38"    id
-
-      switch (
-        i //y es la diferencia entre un id y el anterior (para saber si dos span son continuos o no)
-      ) {
-        default:
-          var y = r - Indice[i - 1];
-          break;
-        case 0:
-          y = 1;
-          break;
-      }
-
-      switch (y) {
-        case 1:
-          Respuesta_String = Respuesta_String + $(w).html();
-          break;
-        default:
-          //Si los span no son continuos...
+        for (var i = 0; i < Indice.length; i++) {
           switch (i) {
-            case 0: //el primero
+            case 0:
+              Respuesta_ID = Indice[i].toString();
+              break;
+            default:
+              switch (Indice[i] - Indice[i - 1]) {
+                case 1:
+                  Respuesta_ID = Respuesta_ID + "-" + Indice[i].toString();
+                  break;
+                default:
+                  Respuesta_ID = Respuesta_ID + " // " + Indice[i].toString();
+                  break;
+              }
+          }
+        }
+
+        //Almaceno en Respuesta la frase seleccionada. Si eligió fragmentos discontinuos los divide con //. Por ejemplo: "porttitor velit eros, eget lobortis // tortor // sapien tortor ut lectus. // in"
+        for (var i = 0; i < Indice.length; i++) {
+          var r = parseInt(Indice[i]); //38       int
+          var w = "#" + r.toString(); //"#38"    id
+
+          switch (
+            i //y es la diferencia entre un id y el anterior (para saber si dos span son continuos o no)
+          ) {
+            default:
+              var y = r - Indice[i - 1];
+              break;
+            case 0:
+              y = 1;
+              break;
+          }
+
+          switch (y) {
+            case 1:
               Respuesta_String = Respuesta_String + $(w).html();
               break;
             default:
-              Respuesta_String = Respuesta_String + " //" + $(w).html();
-              break;
+              //Si los span no son continuos...
+              switch (i) {
+                case 0: //el primero
+                  Respuesta_String = Respuesta_String + $(w).html();
+                  break;
+                default:
+                  Respuesta_String = Respuesta_String + " //" + $(w).html();
+                  break;
+              }
           }
-      }
+        }
+        Respuesta_String = Respuesta_String.trim();
+        break;
+      case false:
+        SiNo = "No";
+        break;
     }
-    Respuesta_String = Respuesta_String.trim();
-    alert(Respuesta_ID);
   }
 
   //Obtengo el orden de presentación aleatorio en dos niveles: (1) Si comienza por Alto o Bajo conocimiento previo y (2) un orden aleatorio de los 15 textos al interior de cada grupo.
@@ -447,15 +491,127 @@ $(document).ready(function() {
 
       //Almaceno en la variable Orden_de_Presentación los códigos ordenados al azar. Por ej: "A4, A7, A2, A9, A13,......"
       for (var g = 0; g < cantidad; g++) {
-        switch (Orden_de_Presentación) {
+        switch (Orden_de_Presentacion) {
           case "":
-            Orden_de_Presentación = Orden_de_Presentación + Orden[g][0];
+            Orden_de_Presentacion = Orden_de_Presentacion + Orden[g][0];
             break;
           default:
-            Orden_de_Presentación = Orden_de_Presentación + ", " + Orden[g][0];
+            Orden_de_Presentacion = Orden_de_Presentacion + "," + Orden[g][0];
         }
       }
-      console.log(Orden_de_Presentación);
+      Orden_de_Presentacion_Array = Orden_de_Presentacion.split(",");
+      console.log(Orden_de_Presentacion_Array);
+    }
+  }
+
+  function Presento_Texto(a) {
+    Reinicio_Variables();
+    Texto = a;
+    Tiempo_Inicio = new moment();
+    rodear_palabras_con_span(Recuperar_Texto_Desde_String(a));
+  }
+
+  function Reinicio_Variables() {
+    Texto = "";
+    SiNo = "";
+    Respuesta_String = "";
+    Respuesta_ID = "";
+    Tiempo_Inicio = 0;
+    Tiempo_Fin = 0;
+  }
+
+  function Recuperar_Texto_Desde_String(x) {
+    switch (x) {
+      case "A1":
+        return A1;
+        break;
+      case "A2":
+        return A2;
+        break;
+      case "A3":
+        return A3;
+        break;
+      case "A4":
+        return A4;
+        break;
+      case "A5":
+        return A5;
+        break;
+      case "A6":
+        return A6;
+        break;
+      case "A7":
+        return A7;
+        break;
+      case "A8":
+        return A8;
+        break;
+      case "A9":
+        return A9;
+        break;
+      case "A10":
+        return A10;
+        break;
+      case "A11":
+        return A11;
+        break;
+      case "A12":
+        return A12;
+        break;
+      case "A13":
+        return A13;
+        break;
+      case "A14":
+        return A14;
+        break;
+      case "A15":
+        return A15;
+        break;
+      case "B1":
+        return B1;
+        break;
+      case "B2":
+        return B2;
+        break;
+      case "B3":
+        return B3;
+        break;
+      case "B4":
+        return B4;
+        break;
+      case "B5":
+        return B5;
+        break;
+      case "B6":
+        return B6;
+        break;
+      case "B7":
+        return B7;
+        break;
+      case "B8":
+        return B8;
+        break;
+      case "B9":
+        return B9;
+        break;
+      case "B10":
+        return B10;
+        break;
+      case "B11":
+        return B11;
+        break;
+      case "B12":
+        return B12;
+        break;
+      case "B13":
+        return B13;
+        break;
+      case "B14":
+        return B14;
+        break;
+      case "B15":
+        return B15;
+        break;
     }
   }
 
@@ -523,7 +679,7 @@ $(document).ready(function() {
         //$("#Modal_Close").html("<span aria-hidden='true'>&times;</span>");
         //$("#Modal_Close").css("display", "flex");
 
-       /* $("#Modal_Body").html(
+        /* $("#Modal_Body").html(
           "<p><b>Para marcar un fragmento del texto:</b> hacé clic sobre la primera y última palabra del fragmento a seleccionar.</p><img src='../Content/Ejemplo_fragmento.jpg' alt=''><hr><p><b>Para marcar palabras de manera individual:</b> hacé dos clics sobre la palabra elegida.</p><img src='../Content/Ejemplo_palabra.jpg' alt=''><hr><p><b>Si te equivocás:</b> haciendo clic en <img src='../icons/clear.png' alt='' height = '20px' width:'auto' style='background-color:#0197FA'></img> reincias el texto y podés resaltarlo nuevamente.</p>"
         );*/
 
@@ -573,10 +729,13 @@ $(document).ready(function() {
 
         $("#Modal_5").modal("toggle");
         break;
-      case 6:
-        rodear_palabras_con_span(A1);
+      default:
+        Presento_Texto(Orden_de_Presentacion_Array[Secuencia - 6]);
+        break;
+      case 30: //Termino los 30 textos
+        alert("TERMINASTE POR FIN!!!");
+        break;
     }
   }
-
   Itinerario();
 });
