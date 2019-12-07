@@ -12,8 +12,15 @@
     width: 31.2px;
     height:4vh;
 }
+
 button{
     height:8vh;
+}
+
+#Modal_Si img[src="../icons/clear.png"]{
+    height: 4vh;
+    width:auto;
+    background-color:#0197FA;
 }
 
 #Container {

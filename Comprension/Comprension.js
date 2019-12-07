@@ -1,11 +1,10 @@
 $(document).ready(function() {
   var Ejemplo_1 =
     "La psicología cognitiva se encarga del estudio de la cognición; es decir, de los procesos mentales implicados en el conocimiento. Tiene como objeto de estudio los mecanismos básicos y profundos por los que se elabora el conocimiento, desde la percepción, la memoria y el aprendizaje, hasta la formación de conceptos y razonamiento lógico. Se interesa así por los cambios en el psiquismo inconsciente entre las tópicas freudianas. Por cognitivo entendemos el acto de conocimiento, en sus acciones de almacenar, recuperar, reconocer, comprender, organizar y usar la información recibida a través de los sentidos.";
-
   var Ejemplo_2 =
     "El interés de la psicología cognitiva es doble. El primer interés es estudiar cómo las personas entienden el mundo en el que viven y también se abordan las cuestiones de cómo los seres humanos toman la información sensorial entrante y la transforman, sintetizan, elaboran, almacenan, recuperan y finalmente hacen uso de ella. El resultado de todo este procesamiento activo de la información es el conocimiento funcional en el sentido de que la segunda vez que la persona se encuentra con un acontecimiento del entorno igual o similar está más segura de lo que puede ocurrir comparado con la primera vez.";
-
-  //Textos de Alto conocimiento previo
+  
+    //Textos de Alto conocimiento previo
   var A1 =
     "La psicología cognitiva surge como alternativa a la concepción conductista de la mente como caja negra inaccesible. Es difícil atribuir su aparición a un único autor, pero sí parece claro que su inicio coincide con la aparición y desarrollo de los ordenadores. William James es el autor principal en Psicología Cognitiva. El funcionamiento de estas máquinas sirve como metáfora al investigador para explorar el funcionamiento de los procesos cognitivos internos.";
   var A2 =
@@ -96,7 +95,7 @@ $(document).ready(function() {
   var Secuencia = 0;
 
   //Configuración de Botones
-  //Borra el Highlighted
+  //Borra el Texto Resaltado
   $("#Clear").on("click", function() {
     $("#Text>span").removeClass("Resaltado");
     $("#Siguiente").prop("disabled", true);
@@ -120,12 +119,7 @@ $(document).ready(function() {
     $("#Clear").click();
     $("span").removeClass("Resaltar");
     $("#Clear").prop("disabled", true);
-    /*switch ($("#Container>button").attr("ID") == "Siguiente_Ejemplo_1") {
-      case true:
-        $("#Siguiente_Ejemplo_1").prop("disabled", false);
-      case false:*/
     $("#Siguiente").prop("disabled", false);
-    // }
   });
 
   $("#Si").on("click", function() {
@@ -159,24 +153,16 @@ $(document).ready(function() {
       case 2: //Modal #3
         if ($("#Si").prop("checked")) {
           Proximo_Itinerario();
-          /*Secuencia += 1;
-          Itinerario();*/
         } else {
           $("#Modal_Body").html(
             "<p>¡Cuidado! El texto anterior, contenía información errónea o incoherente. Leelo nuevamente, respondé Sí y no te olvides de resaltar dicha información.</p>"
           );
 
-          //$("#No_Volver").hide();
-          //$("#No_Volver_Label").hide();
-
           $("#Modal_2").modal("toggle");
         }
         break;
       case 4: //Modal 5 Si elige Si -> Siguiente en el Ejemplo #2
-        //SEGUIR DESDE ACÁ!!!!
         if ($("#No").prop("checked")) {
-          /*Secuencia += 1;
-          Itinerario();*/
           Proximo_Itinerario();
         } else {
           $("#Modal_Title").html("Texto Coherente");
@@ -197,7 +183,6 @@ $(document).ready(function() {
         var y = [Texto, SiNo, Respuesta_String, Respuesta_ID, TR];
 
         Respuesta_Total.push(y);
-        console.log(Respuesta_Total);
         Proximo_Itinerario();
         break;
     }
@@ -237,34 +222,10 @@ $(document).ready(function() {
         Itinerario();
         break;
 
-      /*case 2: //Modal #3 Resaltá la información incorrecta o incoherente
-        if ($("#No_Volver").prop("checked")) {
-          No_Volver_A_Mostrar = 1;
-        }
-
-        $("#No_Volver").css("display", "inline-block");
-        $("#No_Volver_Label").css("display", "inline-block");
-
-        $("#Modal_Body").html(
-          "<p><b>Para marcar un fragmento del texto:</b> hacé clic sobre la primera y última palabra del fragmento a seleccionar.</p><img src='../Content/Ejemplo_fragmento.jpg' alt=''><hr><p><b>Para marcar palabras de manera individual:</b> hacé dos clics sobre la palabra elegida.</p><img src='../Content/Ejemplo_palabra.jpg' alt=''><hr><p><b>Si te equivocás:</b> haciendo clic en <img src='../icons/clear.png' alt='' height = '20px' width:'auto' style='background-color:#0197FA'></img> reincias el texto y podés resaltarlo nuevamente.</p>"
-        );
-        break;*/
       case 3: //Modal con Respuesta Correcta del Ejemplo #1
         Secuencia += 1;
         Itinerario();
         break;
-      /*case 4: //Modal El texto no contiene info inorrecta Ejemplo #2
-        if ($("#No_Volver").prop("checked")) {
-          No_Volver_A_Mostrar = 1;
-        }
-        $("#Modal_4").prop("ID", "Modal_3");
-        $("#No_Volver").css("display", "inline-block");
-        $("#No_Volver_Label").css("display", "inline-block");
-
-        $("#Modal_Body").html(
-          "<p><b>Para marcar un fragmento del texto:</b> hacé clic sobre la primera y última palabra del fragmento a seleccionar.</p><img src='../Content/Ejemplo_fragmento.jpg' alt=''><hr><p><b>Para marcar palabras de manera individual:</b> hacé dos clics sobre la palabra elegida.</p><img src='../Content/Ejemplo_palabra.jpg' alt=''><hr><p><b>Si te equivocás:</b> haciendo clic en <img src='../icons/clear.png' alt='' height = '20px' width:'auto' style='background-color:#0197FA'></img> reincias el texto y podés resaltarlo nuevamente.</p>"
-        );
-        break;*/
 
       case 5: //Modal con Respuesta Correcta del Ejemplo #2 e Instrucciones Generales (de nuevo)
         Secuencia += 1;
@@ -272,10 +233,9 @@ $(document).ready(function() {
     }
   });
 
-  Obtener_Respuesta();
+  //Obtener_Respuesta(); ******************************
 
-  //Rodea las palabras con <span> </span>. Cada uno con un Id ascendente comenzando por 0.
-  //Modifica el div #text con el texto "rodeado".
+  //Rodea las palabras con <span> </span>. Cada uno con un Id ascendente comenzando por 0. Modifica el div #text con el texto "rodeado".
   function rodear_palabras_con_span(texto) {
     html = "";
     var indice = texto.split(" ");
@@ -383,7 +343,7 @@ $(document).ready(function() {
         //Almaceno en Respuesta la frase seleccionada. Si eligió fragmentos discontinuos los divide con //. Por ejemplo: "porttitor velit eros, eget lobortis // tortor // sapien tortor ut lectus. // in"
         for (var i = 0; i < Indice.length; i++) {
           var r = parseInt(Indice[i]); //38       int
-          var w = "#" + r.toString(); //"#38"    id
+          var w = "#" + r.toString(); //"#38"     id
 
           switch (
             i //y es la diferencia entre un id y el anterior (para saber si dos span son continuos o no)
@@ -505,7 +465,6 @@ $(document).ready(function() {
         }
       }
       Orden_de_Presentacion_Array = Orden_de_Presentacion.split(",");
-      console.log(Orden_de_Presentacion_Array);
     }
   }
 
@@ -630,31 +589,11 @@ $(document).ready(function() {
 
         $("#Modal_Title").html("Bienvenido de nuevo...");
 
-        //$("#Modal_Close").hide();
-
         $("#Modal_Body").html(
           "<p>Antes de continuar, respondé la siguiente pregunta:</p><p>En estos dos últimos años, ¿con qué frecuencia leíste libros en tu casa (por fuera de la facultad)?</p><input type='radio' name='Libros' id='L1' value='1. Menos de un libro al año' required><label for='L1'>&nbsp;1. Menos de un libro al año</label><br><input type='radio' name='Libros' id='L2' value='2. Entre uno y dos libros al año'><label for='L2'>&nbsp;2. Entre uno y dos libros al año</label><br><input type='radio' name='Libros' id='L3' value='3. Tres libros por año'><label for='L3'>&nbsp;3. Tres libros por año</label><br><input type='radio' name='Libros' id='L4' value='4. Entre cuatro y cinco libros por año'><label for='L4'>&nbsp;4. Entre cuatro y cinco libros por año</label><br><input type='radio' name='Libros' id='L5' value='5. Más de cinco libros por año'><label for='L5'>&nbsp;5. Más de cinco libros por año</label>"
         );
 
-        //$("#No_Volver").hide();
-        //$("#No_Volver_Label").hide();
-
-        //$("#Entendido").attr("ID", "Entendido_1");
-        //$("#Entendido_1").html("Siguiente");
         $("#Entendido").html("Siguiente");
-        /*$("#Entendido_1").on("click", function() {
-          for (var i = 0; i < 5; i++) {
-            var a = "#L" + (i + 1).toString();
-            if ($(a).prop("checked")) {
-              Libros = $(a).attr("VALUE");
-            }
-          }
-          if (Libros != "") {
-            $("#Modal_1").hide();
-            Secuencia += 1;
-            Itinerario();
-          }
-        });*/
 
         $("#Modal_1").modal("toggle");
         break;
@@ -667,40 +606,12 @@ $(document).ready(function() {
           "<p>En esta segunda etapa, se presentarán diferentes textos pequeños.<br> Deberás leerlos con el objetivo de detectar si hay alguna información incorrecta o incoherente.</p><p><b>En caso afirmativo:</b> Seleccioná la opción <b>Si</b> y luego <b>resaltá dicha información </b> incorrecta o incoherente.</p><hr><p><b>En caso negativo:</b> Seleccioná la opción <b>No</b>.</p><hr><p> Finalmente, para pasar al <b>siguiente ejercicio</b>, hace clic en <img src='../icons/siguiente.png' height = '20px' style='background-color:#0197FA ' alt=''></img></p> <hr> Para tu comodidad, podes <b>aumentar</b> <img src='../icons/increase.png' height = '20px' width:'auto' style='background-color:#0197FA ' alt=''></img> o <b>disminuir </b><img src='../icons/decrease.png' height = '20px' width:'auto' style='background-color:#0197FA' alt=''></img> el tamaño del texto. <br> Comencemos con un ejemplo para practicar...</p >"
         );
 
-        //$("#Entendido_1").attr("ID", "Entendido_2");
-        //$("#Entendido_2").html("Entendido");
         $("#Entendido").html("Entendido");
-        /*$("#Entendido_2").on("click", function () {
-          $("#Modal_2").modal("toggle");
-          Secuencia += 1;
-          Itinerario();
-        });*/
+
         $("#Modal_2").show();
         break;
-      case 2: //Modal 3: Si presiona Si -> Resaltá la información incoherente...
-        /*$("#Modal_2").attr("ID", "Modal_3");
-        $("#Modal_Title").html("Resaltá la información incoherente");*/
-
-        //$("#Modal_Close").html("<span aria-hidden='true'>&times;</span>");
-        //$("#Modal_Close").css("display", "flex");
-
-        /* $("#Modal_Body").html(
-          "<p><b>Para marcar un fragmento del texto:</b> hacé clic sobre la primera y última palabra del fragmento a seleccionar.</p><img src='../Content/Ejemplo_fragmento.jpg' alt=''><hr><p><b>Para marcar palabras de manera individual:</b> hacé dos clics sobre la palabra elegida.</p><img src='../Content/Ejemplo_palabra.jpg' alt=''><hr><p><b>Si te equivocás:</b> haciendo clic en <img src='../icons/clear.png' alt='' height = '20px' width:'auto' style='background-color:#0197FA'></img> reincias el texto y podés resaltarlo nuevamente.</p>"
-        );*/
-
-        //$("#Entendido_2").attr("ID", "Entendido_3");
-        //$("#Entendido_3").attr("data-dismiss", "modal");
+      case 2: 
         $("#Entendido").attr("data-dismiss", "modal");
-
-        /*$("#No_Volver").css("display", "inline-block");
-        $("#No_Volver_Label").css("display", "inline-block");*/
-
-        /*$("#Entendido_3").on("click", function() {
-          if ($("#No_Volver").prop("checked")) {
-            No_Volver_A_Mostrar = 1;
-          }
-        });*/
-
         break;
       case 3:
         $("#Modal_2").attr("ID", "Modal_4");
@@ -711,16 +622,11 @@ $(document).ready(function() {
           "<p>En el texto anterior, la información incoherente que debía ser seleccionada era: <b>'Se interesa así por los cambios en el psiquismo inconsciente entre las tópicas freudianas.'</b><br> Hagamos otro ejercicio de práctica..."
         );
 
-        /*$("#No_Volver").hide();
-        $("#No_Volver_Label").hide();*/
-
         $("#Modal_4").modal("toggle");
-
         break;
       case 4:
         rodear_palabras_con_span(Ejemplo_2);
         Habilitar_Resaltar = 0;
-
         break;
 
       case 5:
@@ -738,9 +644,7 @@ $(document).ready(function() {
         Presento_Texto(Orden_de_Presentacion_Array[Secuencia - 6]);
         break;
       case Orden_de_Presentacion_Array.length + 5: //Termino los 30 textos
-        /*console.log(Libros);
-        console.log(Orden_de_Presentacion);
-        console.log(Respuesta_Total);*/
+
         $("#Libros").val(Libros);
         $("#Orden_de_Presentacion").val(Orden_de_Presentacion);
 
@@ -750,14 +654,13 @@ $(document).ready(function() {
         for (var i = 0; i < Respuesta_Total.length; i++) {
           
           a(Respuesta_Total[i]);
-
-          
+   
           function a(x) { 
             //x[0]  // A1
-            //x[1] // Si
-            //x[2] // la psicología cognitiva...
-            //x[3] // 34-35-36-37-40-50
-            //x[4] // 34567 int
+            //x[1]  // Si
+            //x[2]  // la psicología cognitiva...
+            //x[3]  // 34-35-36-37-40-50
+            //x[4]  // 34567 int
           
             string = "[\"" + x[0] + "\", \"" + x[1] + "\", \"" + x[2] + "\", \"" + x[3] + "\", " + x[4] + "]";
           }
@@ -772,16 +675,8 @@ $(document).ready(function() {
           }
         }
 
-        console.log(f);
         $("#Respuesta_Total").val(f);
-        
-        console.log($("#Libros").val());
-        console.log($("#Orden_de_Presentacion").val());
-        console.log($("#Respuesta_Total").val());
-        
-        // $("#Submit").click();
-
-
+        $("#Submit").click();
         break;
     }
   }
