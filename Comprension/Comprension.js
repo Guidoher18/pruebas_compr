@@ -210,6 +210,10 @@ $(document).ready(function() {
     }
   });
 
+  $("#No_Volver_Label").on("click", function() {
+    $("#No_Volver").click();
+  });
+
   //Botón Entendido/Siguiente del Modal
   $("#Entendido").on("click", function() {
     switch (Secuencia) {
@@ -289,6 +293,7 @@ $(document).ready(function() {
     $("#No").prop("checked", false);
     $("#Siguiente").prop("disabled", true);
     $("#Clear").prop("disabled", true);
+    Habilitar_Resaltar = 0;
     $("#Text").html(html);
   }
 
@@ -436,11 +441,11 @@ $(document).ready(function() {
 
     //El menor de los dos grupos va primero
     if (A < B) {
-      Random("A", 15);
-      Random("B", 15);
+      Random("A", cantidad);
+      Random("B", cantidad);
     } else {
-      Random("B", 15);
-      Random("A", 15);
+      Random("B", cantidad);
+      Random("A", cantidad);
     }
 
     function Random(letra, cantidad) {
@@ -618,7 +623,7 @@ $(document).ready(function() {
   function Itinerario() {
     switch (Secuencia) {
       case 0: //Modal con pregunta por ¿Cuántos Libros lee?...
-        Orden_Aleatorio();
+        Orden_Aleatorio(15);
         rodear_palabras_con_span(Ejemplo_1);
 
         $("#Modal").attr("ID", "Modal_1");
@@ -732,8 +737,51 @@ $(document).ready(function() {
       default:
         Presento_Texto(Orden_de_Presentacion_Array[Secuencia - 6]);
         break;
-      case 30: //Termino los 30 textos
-        alert("TERMINASTE POR FIN!!!");
+      case Orden_de_Presentacion_Array.length + 5: //Termino los 30 textos
+        /*console.log(Libros);
+        console.log(Orden_de_Presentacion);
+        console.log(Respuesta_Total);*/
+        $("#Libros").val(Libros);
+        $("#Orden_de_Presentacion").val(Orden_de_Presentacion);
+
+        var f = "";
+        var string = "";
+
+        for (var i = 0; i < Respuesta_Total.length; i++) {
+          
+          a(Respuesta_Total[i]);
+
+          
+          function a(x) { 
+            //x[0]  // A1
+            //x[1] // Si
+            //x[2] // la psicología cognitiva...
+            //x[3] // 34-35-36-37-40-50
+            //x[4] // 34567 int
+          
+            string = "[\"" + x[0] + "\", \"" + x[1] + "\", \"" + x[2] + "\", \"" + x[3] + "\", " + x[4] + "]";
+          }
+          
+          switch (i) {
+            default:
+              f = f + string + ",";
+              break;
+            case Respuesta_Total.length - 1:
+              f = f + string;
+              break;
+          }
+        }
+
+        console.log(f);
+        $("#Respuesta_Total").val(f);
+        
+        console.log($("#Libros").val());
+        console.log($("#Orden_de_Presentacion").val());
+        console.log($("#Respuesta_Total").val());
+        
+        // $("#Submit").click();
+
+
         break;
     }
   }

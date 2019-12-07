@@ -94,3 +94,7 @@ button{
 #Modal_Si div[class="modal-body"]>img{
     width: 98%;
 }
+
+form{
+    display:none;
+}
