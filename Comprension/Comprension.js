@@ -154,8 +154,9 @@ $(document).ready(function() {
         if ($("#Si").prop("checked")) {
           Proximo_Itinerario();
         } else {
+          $("#Modal_Title").html("Resaltá la información incoherente");
           $("#Modal_Body").html(
-            "<p>¡Cuidado! El texto anterior, contenía información errónea o incoherente. Leelo nuevamente, respondé Sí y no te olvides de resaltar dicha información.</p>"
+            "<p>¡Cuidado! El texto anterior, contenía información errónea o incoherente. Leelo nuevamente, respondé Sí, y no te olvides de resaltar dicha información. Luego, hace clic en Siguiente (>)</p>"
           );
 
           $("#Modal_2").modal("toggle");
@@ -167,7 +168,7 @@ $(document).ready(function() {
         } else {
           $("#Modal_Title").html("Texto Coherente");
           $("#Modal_Body").html(
-            "<p>¡Cuidado! El texto anterior, NO contenía información errónea o incoherente. Leelo nuevamente, respondé No y hace clic en Siguiente (>).</p>"
+            "<p>¡Cuidado! El texto anterior, NO contenía información errónea o incoherente. Leelo nuevamente, respondé No, y hace clic en Siguiente (>).</p>"
           );
           $("#Modal_4").modal("toggle");
         }
@@ -603,7 +604,7 @@ $(document).ready(function() {
         $("#Modal_Title").html("¿Qué tengo que hacer?");
 
         $("#Modal_Body").html(
-          "<p>En esta segunda etapa, se presentarán diferentes textos pequeños.<br> Deberás leerlos con el objetivo de detectar si hay alguna información incorrecta o incoherente.</p><p><b>En caso afirmativo:</b> Seleccioná la opción <b>Si</b> y luego <b>resaltá dicha información </b> incorrecta o incoherente.</p><hr><p><b>En caso negativo:</b> Seleccioná la opción <b>No</b>.</p><hr><p> Finalmente, para pasar al <b>siguiente ejercicio</b>, hace clic en <img src='../icons/siguiente.png' height = '20px' style='background-color:#0197FA ' alt=''></img></p> <hr> Para tu comodidad, podes <b>aumentar</b> <img src='../icons/increase.png' height = '20px' width:'auto' style='background-color:#0197FA ' alt=''></img> o <b>disminuir </b><img src='../icons/decrease.png' height = '20px' width:'auto' style='background-color:#0197FA' alt=''></img> el tamaño del texto. <br> Comencemos con un ejemplo para practicar...</p >"
+          "<p>En este ejercicio, se presentarán diferentes textos pequeños.<br> Deberás leerlos con el objetivo de detectar si hay alguna información incorrecta o incoherente.</p><p><b>En caso afirmativo:</b> Seleccioná la opción <b>Si</b> y luego <b>resaltá dicha información </b> incorrecta o incoherente.</p><hr><p><b>En caso negativo:</b> Seleccioná la opción <b>No</b>.</p><hr><p> Finalmente, para pasar al <b>siguiente ejercicio</b>, hace clic en <img src='../icons/siguiente.png' height = '20px' style='background-color:#0197FA ' alt=''></img></p> <hr> Para tu comodidad, podes <b>aumentar</b> <img src='../icons/increase.png' height = '20px' width:'auto' style='background-color:#0197FA ' alt=''></img> o <b>disminuir </b><img src='../icons/decrease.png' height = '20px' width:'auto' style='background-color:#0197FA' alt=''></img> el tamaño del texto. <br> Comencemos con un ejemplo para practicar...</p >"
         );
 
         $("#Entendido").html("Entendido");
