@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Dígitos";
+    Layout = "../Shared/Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="Stylesheet" type="text/css" href="~/Content/Digitos.css" />
+}
+
+<div id="Test" class="col-md-10">
+    <p></p>
+</div>
+
+<div id="Alert" class="modal alert alert-warning" tabindex="-1" role="alert"></div>
+
+<div id="Response" class="col-md-10">
+    <p></p>
+</div>
+
+<button id="Aceptar" class="btn btn-outline-success col-md-3">Aceptar</button>
+
+<form action="@Url.Action("CargarRespuestaDigitos","Home")" method="post">
+    <input type="text" id="Respuesta_DD" name="Respuesta_DD" />
+    <input type="text" id="Puntaje_DD" name="Puntaje_DD" />
+    <input type="text" id="DD_TR" name="DD_TR" />
+
+    <input type="text" id="Respuesta_DL" name="Respuesta_DL" />
+    <input type="text" id="Puntaje_DL" name="Puntaje_DL" />
+    <input type="text" id="DL_TR" name="DL_TR" />
+
+    <input type="submit" id="Submit">
+</form>
+
+<audio id="audio">
+    <source type="audio/wav" src="~/Audio/beep.wav">
+</audio>
+
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts/Digitos.js"></script>
+    <script type="text/javascript" src="~/Scripts/Moment.js"></script>
+}
