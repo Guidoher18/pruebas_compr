@@ -60,7 +60,7 @@ $(document).ready(function () {
                             case 13: $('#Alert').html('El presente ejercicio corresponde a la serie de ' + convertir_a_letra(Serie) + ' números.');
                                 $('#Alert').show();
                                 setTimeout(function () {
-                                    $('#Alert').fadeOut('slow');
+                                    $('#Alert').hide('slow');
                                 }
                                     , 4000);
                                 break;
@@ -210,7 +210,7 @@ $(document).ready(function () {
                             case 13: $('#Alert').html('El presente ejercicio corresponde a la serie de ' + convertir_a_letra(Serie) + ' ítems.');
                                 $('#Alert').show();
                                 setTimeout(function () {
-                                    $('#Alert').fadeOut('slow');
+                                    $('#Alert').hide('slow');
                                 }
                                     , 4000);
                                 break;
@@ -278,13 +278,17 @@ $(document).ready(function () {
 
     //Simula la animación que se obtiene con el ::hover a partir del Enter
     function clic_boton() {
-        $('button').css('background-color', '#28a745');
-        $('button').css('color', '#fff');
-        $('button').css('transition', 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out');
+        //$('#Siguiente, #Aceptar').css('background-color', '#007bff');
+        //$('#Siguiente, #Aceptar').css('color', 'white !important');
+        $('#Siguiente, #Aceptar').removeClass("normal");
+        $('#Siguiente, #Aceptar').addClass("clickeado");
+        $('#Siguiente, #Aceptar').css('transition', 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out');
         setTimeout(function () {
-            $('button').css('background-color', 'transparent');
-            $('button').css('color', '#28a745');
-            $('button').click();
+            //$('#Siguiente, #Aceptar').css('background-color', 'transparent');
+            //$('#Siguiente, #Aceptar').css('color', '#007bff !important');
+            $('#Siguiente, #Aceptar').removeClass("clickeado");
+            $('#Siguiente, #Aceptar').addClass("normal");
+            $('#Siguiente, #Aceptar').click();
         }, 300);
     }
 
@@ -789,7 +793,7 @@ $(document).ready(function () {
         TRd = new moment();
         var Duration = moment.duration(TRd.diff(TRc)).as('milliseconds');
         var a = Duration.toString();
-        $('#TR_DL').val(a);
+        $('#DL_TR').val(a);
         $('#Submit').click();
     };
 

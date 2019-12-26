@@ -41,7 +41,7 @@ namespace Comprension.Models
             SqlConnection Conexion = new SqlConnection(ConfigurationManager.AppSettings["ConexionBase"]);
             Conexion.Open();
             SqlCommand Sentencia = Conexion.CreateCommand();
-            Sentencia.CommandText = "INSERT INTO Resultados (FechayHora_Entrada, Apellido, Nombre, Edad, Sexo, Nivel_Educativo, Lugar_de_Residencia, Mail, Respuesta_DD, Puntaje_DD, DD_TR, Respuesta_DL, Puntaje_DL, DL_TR) OUTPUT.ID VALUES(@FechayHora_Entrada, @Apellido, @Nombre, @Edad, @Sexo, @Nivel_Educativo, @Lugar_de_Residencia, @Mail, @Respuesta_DD, @Puntaje_DD, @DD_TR, @Respuesta_DL, @Puntaje_DL, @DL_TR)";
+            Sentencia.CommandText = "INSERT INTO Resultados (FechayHora_Entrada, Apellido, Nombre, Edad, Sexo, Nivel_Educativo, Lugar_de_Residencia, Mail, Respuesta_DD, Puntaje_DD, DD_TR, Respuesta_DL, Puntaje_DL, DL_TR) OUTPUT INSERTED.ID VALUES(@FechayHora_Entrada, @Apellido, @Nombre, @Edad, @Sexo, @Nivel_Educativo, @Lugar_de_Residencia, @Mail, @Respuesta_DD, @Puntaje_DD, @DD_TR, @Respuesta_DL, @Puntaje_DL, @DL_TR)";
 
             Sentencia.Parameters.AddWithValue("@FechayHora_Entrada", Sujeto.FechayHora_Entrada);
             Sentencia.Parameters.AddWithValue("@Apellido", Sujeto.Apellido);
@@ -60,9 +60,9 @@ namespace Comprension.Models
             Sentencia.Parameters.AddWithValue("@Puntaje_DL", Sujeto.Puntaje_DL);
             Sentencia.Parameters.AddWithValue("@DL_TR", Sujeto.DL_TR);
 
-            Sujeto.ID = Sentencia.ExecuteScalar().ToString();
+            var a = Sentencia.ExecuteScalar().ToString();
             Conexion.Close();
-            return Sujeto.ID;
+            return a;
         }
     }
 }
