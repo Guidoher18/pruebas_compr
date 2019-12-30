@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Monitoreo";
+    Layout = "../Shared/Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="Stylesheet" type="text/css" href="~/Content/Monitoreo.css" />
+}
+
+<div>
+    <div class=" nav btn-group" role="group" id="Barra_Superior">
+        <button type="button" class="btn btn-primary" id="Clear" disabled><img src="~/icons/clear.png"></button>
+        <button type="button" class="btn btn-primary" id="Increase"><img src="~/icons/increase.png"></button>
+        <button type="button" class="btn btn-primary" id="Decrease"><img src="~/icons/decrease.png"></button>
+    </div>
+    <div id="Container">
+        <div id="Text"></div>
+
+        <div id="Pregunta">
+            <p>¿Existe alguna información incorrecta o incoherente?</p>
+            <input type="radio" name="Incoherente" id="Si" value="Si">&nbsp;Si</input>
+            <input type="radio" name="Incoherente" id="No" value="No">&nbsp;No</input>
+        </div>
+
+        <button type="button" class="btn btn-primary col-md-12" id="Siguiente" disabled>
+            <img src="~/icons/siguiente.png">
+        </button>
+    </div>
+
+    <!-- Modal sobre cómo Resaltar-->
+    <div class="modal fade" id="Modal_Si" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Resaltá la información incoherente</h5>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <b>Para marcar un fragmento del texto:</b> hacé clic sobre la primera y última palabra del
+                        fragmento a seleccionar.
+                    </p>
+                    <img src="~/Content/img/Ejemplo_fragmento.jpg" alt="">
+                    <hr>
+                    <p><b>Para marcar palabras de manera individual:</b> hacé dos clics sobre la palabra elegida.</p>
+                    <img src="~/Content/img/Ejemplo_palabra.jpg" alt="">
+                    <hr><p><b>Si te equivocás:</b> haciendo clic en <img src='~/icons/clear.png' alt=''> reincias el texto y podés resaltarlo nuevamente.</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="checkbox" name="checkbox" id="No_Volver">
+                    <label for="checkbox" id="No_Volver_Label">No volver a mostrar</label>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            Id="Entendido_Si">
+                        Entendido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal GENERAL -->
+    <div class="modal fade" id="Modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Modal_Title">
+                        <!--TÍTULO-->
+                    </h5>
+                </div>
+                <div class="modal-body" id="Modal_Body">
+                    <!--BODY-->
+                </div>
+                <div class="modal-footer" id="Modal_Footer">
+                    <button type="button" class="btn btn-secondary" id="Entendido">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="@Url.Action("CargarRespuestaMonitoreo","Home")" method="post">
+        <input type="text" id="Libros" name="Libros" />
+        <input type="text" id="Orden_de_Presentacion" name="Orden_de_Presentacion" />
+        <input type="text" id="Respuesta_Total" name="Respuesta_Total" />
+        <input type="submit" id="Submit">
+    </form>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts/Moment.js"></script>
+    <script type="text/javascript" src="~/Scripts/Monitoreo.js"></script>
+}
