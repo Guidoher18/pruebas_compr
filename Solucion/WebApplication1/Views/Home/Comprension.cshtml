@@ -1,0 +1,400 @@
+﻿@{
+    ViewBag.Title = "Comprensión";
+    Layout = "../Shared/Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="Stylesheet" type="text/css" href="~/Content/Comprension.css" />
+}
+
+<div>
+    <div class=" nav btn-group" role="group" id="Barra_Superior">
+        <button type="button" class="btn btn-primary" disabled></button>
+        <button type="button" class="btn btn-primary" id="Increase"><img src="~/icons/increase.png"></button>
+        <button type="button" class="btn btn-primary" id="Decrease"><img src="~/icons/decrease.png"></button>
+    </div>
+    <div id="Container">
+        <div id="Text">
+            <h3></h3>
+            <p></p>
+        </div>
+
+        <form action="@Url.Action("___________","_____")" method="post">
+
+            <div id="Puntajes_y_TR" class="hide">
+                <!--A: Alto Conocimiento Previo - Memoria || B: Bajo Conocimiento Previo - Física-->
+                <input type="text" id="Lectura_A_TR" name="Lectura_A_TR" />
+                <input type="text" id="Lectura_B_TR" name="Lectura_B_TR" />
+
+                <input type="text" id="Cuestionario_A_TR" name="Cuestionario_A_TR" />
+                <input type="text" id="Cuestionario_B_TR" name="Cuestionario_B_TR" />
+
+                <input type="text" id="Comprension_Orden_de_Presentacion" name="Comprension_Orden_de_Presentacion" />
+                <input type="text" id="Puntaje_A_Comprension" name="Puntaje_A_Comprension" />
+                <input type="text" id="Puntaje_B_Comprension" name="Puntaje_B_Comprension" />
+            </div>
+
+            <div id="Cuestionario_A" class="hide">
+                <h3><strong>MEMORIA HUMANA</strong></h3>
+                <h4> A continuación, se presentan 10 preguntas en formato de opción múltiple. <br />Sólo una opción es correcta, elija la opción correcta.</h4>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>1. Elije la pregunta que se constestaría con la idea más imporante del texto que acaba de leer</strong></h4>
+                        <p class="margen">A. ¿Cuáles son los exponentes teóricos más representantes de los procesos de memoria?</p>
+                        <p class="margen">B. ¿Cómo surgió la diferenciación entre sistemas y procesos de memoria?</p>
+                        <p class="margen">C. ¿Cúal es la concepción que actualmente tiene la psicología sobre la memoria humana?</p>
+                    </div>
+                    <select class="col-md-1 form-control" id="Comprension_A1" name="Comprension_A1" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>2. ¿Cómo se considera a la memoria desde la investigación psicológica?</strong></h4>
+                        <p class="margen">A. Como un tejido de asociaciones que debía estudiarse bajo estrictas condiciones de laboratorio.</p>
+                        <p class="margen">B. Como una capacidad mental, que posibilita a un sujeto registrar, conservar y evocar experiencias.</p>
+                        <p class="margen">C. Como un almacén duradero de las experiencias y los conocimientos adquiridos por el sujeto en el curso de su vida.</p>
+                        <p class="margen">D. Como un almacén temporal de los acontecimientos sensoriales externos que ocupan el foco de la conciencia, así como las experiencias pasadas.</p>
+                    </div><select class="col-md-1 form-control" id="Comprension_A2" name="Comprension_A2" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>3. Desde un punto de vista biológico, la memoria puede ser definida cómo:</strong></h4>
+                        <p class="margen">A. Como una funció del conjunto del sistema nervioso autónomo, vinculado al lóbulo temporal.</p>
+                        <p class="margen">B. Como una conducta verbal, producto de asociaciones entre estímulos.</p>
+                        <p class="margen">C. Como una función cerebral, resultado de conexiones sinápticas.</p>
+                        <p class="margen">D. Como una capacidad mental, que posibilita la codificació, el almacenamiento y la recuperación.</p>
+                    </div><select class="col-md-1 form-control" id="Comprension_A3" name="Comprension_A3" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>4. Herman Ebbinghaus realizó estudios sobre:</strong></h4>
+                        <p class="margen">A. Las curvas de aprendizaje y del olvido.</p>
+                        <p class="margen">B. La diferencia entre memoria primaria y secundaria.</p>
+                        <p class="margen">C. La distinción entre memoria de corto plazo y largo plazo.</p>
+                        <p class="margen">D. Traumatismos de cráneo y amnesias.</p>
+                    </div><select class="col-md-1 form-control" id="Comprension_A4" name="Comprension_A4" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>5. ¿Qué consecuencias tuvo para la psicología la propuesta que realizó William James?</strong></h4>
+                        <p class="margen">A. Ayudó a la diferenciación entre una memoria semántica y otra episódica.</p>
+                        <p class="margen">B. Sostuvo la idea de una memoria unitaria, amodal e inespecífica.</p>
+                        <p class="margen">C. Posibilitó el planteo de la memoria como una conducta verbal.</p>
+                        <p class="margen">D. Permitió pensar la idea de diferentes tipos de memoria.</p>
+                    </div><select class="col-md-1 form-control" id="Comprension_A5" name="Comprension_A5" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>6. Las técnicas de evaluación de la memoria permiten…</strong></h4>
+                        <p class="margen">A. recuperar el pasado y utilizar esa información para lidiar con el presente.</p>
+                        <p class="margen">B. delimitar sub-sistemas dentro de la memoria de largo plazo.</p>
+                        <p class="margen">C. mantener el registro de la información activo.</p>
+                        <p class="margen">D. obtener información valiosa para lograr un tratamiento más efectivo de patologías.</p>
+                    </div><select class="col-md-1 form-control" id="Comprension_A6" name="Comprension_A6" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>7. Los sistemas de memoria…</strong></h4>
+                        <p class="margen">A. Dan cuenta de estructuras que tratan con diferentes tipos de información.</p>
+                        <p class="margen">B. Se estudian, generalmente, en el campo de la psicología educacional.</p>
+                        <p class="margen">C. Incluyen la memoria primaria y la memoria de corto plazo.</p>
+                        <p class="margen">D. Incluyen la memoria secundaria y la memoria de largo plazo.</p>
+                    </div><select class="col-md-1 form-control" id="Comprension_A7" name="Comprension_A7" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>8. La memoria de corto plazo…</strong></h4>
+                        <p class="margen">A. Es una memoria de larga duración.</p>
+                        <p class="margen">B. Recupera información proveniente de los sistemas perceptivos.</p>
+                        <p class="margen">C. Está vinculada a los procesos lingüísticos.</p>
+                        <p class="margen">D. Es empleada para para el razonamiento y la toma de decisión.</p>
+                    </div><select class="col-md-1 form-control" id="Comprension_A8" name="Comprension_A8" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>9. La memoria de largo plazo…</strong></h4>
+                        <p class="margen">A. Se podría identificar como la memoria primaria, desde la clasificación de James.</p>
+                        <p class="margen">B. Almacena los conocimientos adquiridos por el sujeto en el curso de su vida.</p>
+                        <p class="margen">C. No puede dividirse en sub-sistemas.</p>
+                        <p class="margen">D. Permite configurar el presente psicológico.</p>
+                    </div><select class="col-md-1 form-control" id="Comprension_A9" name="Comprension_A9" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>10. Un paciente con amnesia tiene una dificultad para mantener información activa recientemente escuchada y no puede evocarla. Su dificultad se encuentra en:</strong></h4>
+                        <p class="margen">A. La memoria de largo plazo.</p>
+                        <p class="margen">B. La memoria de corto plazo.</p>
+                        <p class="margen">C. La memoria de corto plazo y de largo plazo.</p>
+                        <p class="margen">D. La memoria inmanente consciente.</p>
+                    </div><select class="col-md-1 form-control" id="Comprension_A10" name="Comprension_A10" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="Cuestionario_B" class="hide">
+                <h3>MODELO ESTÁNDAR EN FÍSICA</h3>
+                <h4>
+                    A continuación, se presentan 10 preguntas en formato de opción múltiple. <br /> Sólo una opción es correcta, elije la opción correcta.
+                </h4>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>1. Elije la pregunta que se contestaría con la idea más importante del texto que acaba de leer.</strong></h4>
+                        <p class="margen">A. ¿Cuál es el concepto de átomo en los comienzos de la investigación en física nuclear y atómica?</p>
+                        <p class="margen">B. ¿Cuáles son los aportes de Fermi y Bose al estudio de las partículas elementales en el modelo atómico actual?</p>
+                        <p class="margen">C. ¿Cuáles son las partículas elementales y fuerzas en la conformación de los niveles de la materia? </p>
+                    </div>
+                    <select class="col-md-1 form-control" id="Comprension_B1" name="Comprension_B1" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>2. El Modelo Estándar o Teoría Cuántica describe…</strong></h4>
+                        <p class="margen">A. las partículas elementales y sus interacciones.</p>
+                        <p class="margen">B. el modelo atómico del siglo XIX.</p>
+                        <p class="margen">C. el portal abierto a otro mundo.</p>
+                        <p class="margen">D. la teoría de Fermi y Bose.</p>
+                    </div>
+                    <select class="col-md-1 form-control" id="Comprension_B2" name="Comprension_B2" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>3. Un acelerador de partículas usa campos electromagnéticos para hacer que las partículas…</strong></h4>
+                        <p class="margen">A. desaparezcan.</p>
+                        <p class="margen">B. abran un agujero a otra dimensión.</p>
+                        <p class="margen">C. choquen.</p>
+                        <p class="margen">D. exploten. </p>
+                    </div>
+                    <select class="col-md-1 form-control" id="Comprension_B3" name="Comprension_B3" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>4. Los experimentos han revelado que algunas partes del átomo que se creían simples…</strong></h4>
+                        <p class="margen">A. son las más elementales de todas.</p>
+                        <p class="margen">B. están formadas por otras más elementales.</p>
+                        <p class="margen">C. no se pueden descomponer.</p>
+                        <p class="margen">D. no se pueden destruir.</p>
+                    </div>
+                    <select class="col-md-1 form-control" id="Comprension_B4" name="Comprension_B4" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>5. En las siguientes opciones, ¿cuál describe elementos de diferente tamaño, de mayor a menor?</strong></h4>
+                        <p class="margen">A. fermión – bosón – natón.</p>
+                        <p class="margen">B. electromagnetismo – fuerza nuclear débil - fuerza nuclear fuerte.</p>
+                        <p class="margen">C. electrón – leptón – fermión.</p>
+                        <p class="margen">D. átomo –  protón, neutrón  -  leptón, quark.</p>
+                    </div>
+                    <select class="col-md-1 form-control" id="Comprension_B5" name="Comprension_B5" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>6. Las interacciones que actúan al interior de un átomo descriptas por el modelo estándar son…</strong></h4>
+                        <p class="margen">A. quarks y leptones.</p>
+                        <p class="margen">B. fuerzas nucleares y electromagnetismo.</p>
+                        <p class="margen">C. fuerzas de Higgs.</p>
+                        <p class="margen">D. fermiones y bosones.</p>
+                    </div>
+                    <select class="col-md-1 form-control" id="Comprension_B6" name="Comprension_B6" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>7. La observación del bosón de Higgs es importante para el modelo estándar porque…</strong></h4>
+                        <p class="margen">A. corroboraría una propuesta teórica sobre cómo se generan partículas en el intercambio entre partículas.</p>
+                        <p class="margen">B. mostraría que existe una puerta a otro mundo, compuesto por campos de fuerzas electromagnéticas.</p>
+                        <p class="margen">C. avalaría la propuesta teórica de que toda la materia está compuesta por bosones.</p>
+                        <p class="margen">D. permitiría conocer más sobre la radiactividad y la fuerza nuclear.</p>
+                    </div>
+                    <select class="col-md-1 form-control" id="Comprension_B7" name="Comprension_B7" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>8. Según el modelo estándar en Física cuántica…</strong></h4>
+                        <p class="margen">A. Todo lo que existe está hecho de átomos, los constituyentes mínimos, últimos, de la materia.</p>
+                        <p class="margen">B. Los fermiones y bosones, cuando se combinan con las tres fuerzas subatómicas, constituyen la materia.</p>
+                        <p class="margen">C. Las unidades más pequeñas de la materia son los protones.</p>
+                        <p class="margen">D. Los quarks y leptones se combinan para formar las partes que componen el átomo.</p>
+                    </div>
+                    <select class="col-md-1 form-control" id="Comprension_B8" name="Comprension_B8" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>9. Dentro de un átomo, los protones y neutrones… </strong></h4>
+                        <p class="margen">A. están compuestos de partes más pequeñas, como los bosones.</p>
+                        <p class="margen">B. fueron descriptos por Fermi por primera vez.</p>
+                        <p class="margen">C. se pueden descomponer en fermiones más elementales.</p>
+                        <p class="margen">D. forman parte de las partículas elementales, los constituyentes últimos de la materia.</p>
+                    </div>
+                    <select class="col-md-1 form-control" id="Comprension_B9" name="Comprension_B9" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4><strong>10.  La radioactividad se produce por…</strong></h4>
+                        <p class="margen">A. la fuerza electromagnética, que es la que interviene en las transformaciones físicas y químicas de átomos y moléculas.</p>
+                        <p class="margen">B. un cambio en la cantidad relativa de determinadas partículas al interior del núcleo del átomo.</p>
+                        <p class="margen">C. un desequilibrio entre la fuerza nuclear débil y la fuerte, entre átomos.</p>
+                        <p class="margen">D. un desequilibrio entre fermiones, bosones y quarks, dentro del átomo.</p>
+                    </div>
+                    <select class="col-md-1 form-control" id="Comprension_B10" name="Comprension_B10" required>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <br />
+            </div>
+            <input class="hide" type="submit" id="Submit">
+        </form>
+        <button type="button" class="btn btn-primary col-md-12" id="Siguiente">
+            <img src="~/icons/siguiente.png">
+        </button>
+    </div>
+
+
+    <!-- Modal GENERAL -->
+    <div class="modal fade" id="Modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Modal_Title">
+                        <!--TÍTULO-->
+                    </h5>
+                </div>
+                <div class="modal-body" id="Modal_Body">
+                    <!--BODY-->
+                </div>
+                <div class="modal-footer" id="Modal_Footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="Entendido">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts/Moment.js"></script>
+    <script type="text/javascript" src="~/Scripts/Comprension.js"></script>}

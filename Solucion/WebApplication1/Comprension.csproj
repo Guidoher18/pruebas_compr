@@ -131,6 +131,7 @@
   <ItemGroup>
     <Content Include="Audio\beep.wav" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\Comprension.css" />
     <Content Include="Content\Monitoreo.css" />
     <Content Include="Content\Consentimiento.css" />
     <Content Include="Content\Digitos.css" />
@@ -142,6 +143,7 @@
     <Content Include="icons\increase.png" />
     <Content Include="icons\siguiente.png" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\Comprension.js" />
     <Content Include="Scripts\Monitoreo.js" />
     <Content Include="Scripts\Digitos.js" />
     <Content Include="Scripts\jquery.js" />
@@ -171,6 +173,7 @@
     <Content Include="Views\Home\Mobile.cshtml" />
     <Content Include="Views\Home\Digitos.cshtml" />
     <Content Include="Views\Home\Monitoreo.cshtml" />
+    <Content Include="Views\Home\Comprension.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

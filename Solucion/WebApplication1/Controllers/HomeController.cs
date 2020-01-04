@@ -115,7 +115,7 @@ namespace Comprension.Controllers
         {
             Sujeto Sujeto = new Sujeto();
 
-            Sujeto.ID = (string) Session["Sujeto.ID"];
+            Sujeto.ID = (string)Session["Sujeto.ID"];
 
             Sujeto.Libros = Libros;
             Sujeto.Orden_de_Presentacion = Orden_de_Presentacion;
@@ -128,6 +128,15 @@ namespace Comprension.Controllers
             return View("~/Views/Home/Comprension.cshtml");
         }
 
+        public ActionResult CargarRespuestaComprension(string Lectura_A_TR, string Lectura_B_TR, string Cuestionario_A_TR, string Cuestionario_B_TR, string Comprension_Orden_de_Presentacion, string Puntaje_A_Comprension, string Puntaje_B_Comprension, string Comprension_A1, string Comprension_A2, string Comprension_A3, string Comprension_A4, string Comprension_A5, string
+                Comprension_A6, string Comprension_A7, string Comprension_A8, string Comprension_A9, string Comprension_A10, string
+                Comprension_B1, string Comprension_B2, string Comprension_B3, string Comprension_B4, string Comprension_B5, string
+                Comprension_B6, string Comprension_B7, string Comprension_B8, string Comprension_B9, string Comprension_B10)
+        {
 
+
+
+            return View("~/Views/Home/Comprension.cshtml");
+        }
     }
 }
