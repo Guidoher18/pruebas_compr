@@ -214,6 +214,8 @@ namespace Comprension.Controllers
 
         public FileResult Exportar()
         {
+            Borrar_Archivos();
+
             HomeManager Manager = new HomeManager();
             Dictionary<int, Sujeto> SujetosBase = Manager.LeerBase();
 
@@ -460,8 +462,18 @@ namespace Comprension.Controllers
             string Ruta = Server.MapPath("~/Exportar/" + Nombre_Archivo);
 
             Libro.SaveAs(Ruta);
+            Session["Ruta"] = Ruta;
 
             return File(Ruta, "application/xlsx", Nombre_Archivo);
+        }
+
+        public void Borrar_Archivos()
+        {
+            string [] Archivos = Directory.GetFiles(Server.MapPath("~/Exportar/"));
+
+            foreach (string Z in Archivos) {
+                System.IO.File.Delete(Z);
+            }
         }
     }
 }
