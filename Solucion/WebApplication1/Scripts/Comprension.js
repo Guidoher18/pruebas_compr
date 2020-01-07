@@ -31,14 +31,14 @@ $(document).ready(function () {
     //Configuración de Botones
     //Aumenta el tamaño de la letra
     $("#Increase").on("click", function () {
-        var j = $("#Container").css("font-size");
-        $("#Container").css("font-size", (parseInt(j) + 2).toString() + "px");
+        var j = $("#Text>p>p").css("font-size");
+        $("#Text>p>p").css("font-size", (parseInt(j) + 2).toString() + "px");
     });
 
     //Disminuye el tamaño de la letra
     $("#Decrease").on("click", function () {
-        var j = $("#Container").css("font-size");
-        $("#Container").css("font-size", (parseInt(j) - 2).toString() + "px");
+        var j = $("#Text>p>p").css("font-size");
+        $("#Text>p>p").css("font-size", (parseInt(j) - 2).toString() + "px");
     });
 
     //Botón Siguiente
@@ -63,8 +63,6 @@ $(document).ready(function () {
                 Itinerario();
                 break;
             case 2:
-                $("#Increase").attr("disabled", true);
-                $("#Decrease").attr("disabled", true);
                 if (Comprobar_Respuestas_Vacias(1)) {
                     $("#Modal_Title").html("¡Cuidado!");
                     $("#Modal_Body").html("<p>Dejaste algunas preguntas sin responder. <br/> Por favor, respondelas eligiendo una opción.</p>");
@@ -136,7 +134,7 @@ $(document).ready(function () {
     //Botón Entendido/Siguiente del Modal
     $("#Entendido").on("click", function () {
         switch (Secuencia) {
-            case 0:
+            default:
                 Secuencia += 1;
                 Itinerario();
                 break;
@@ -240,7 +238,7 @@ $(document).ready(function () {
             case 0: //Modal con Instrucción General
                 Orden_Aleatorio();
                 $("#Modal_Title").html("Lee atentamente");
-                $("#Modal_Body").html("<p>A continuación se te presentará un texto.</br> Por favor, leelo atentamente.</br> Luego deberás contestar algunas preguntas en relación al mismo</p>");
+                $("#Modal_Body").html("<p>A continuación se te presentará un texto.</br> Por favor, leelo atentamente.</br> Luego deberás contestar algunas preguntas en relación al mismo.</p>");
                 $("#Modal").modal("toggle");
                 break;
             case 1: //Texto 1
@@ -256,7 +254,10 @@ $(document).ready(function () {
                 };
                 Tiempo_Inicio = new moment();
                 break;
-            case 2: $("#Text").hide(); //Cuestionario #1
+            case 2:
+                $("#Increase").attr("disabled", true);
+                $("#Decrease").attr("disabled", true);
+                $("#Text").hide(); //Cuestionario #1
                 $("#Text>h3").html("");
                 $("#Text>p").html("");
                 switch (Orden_de_Presentacion) {
@@ -273,6 +274,14 @@ $(document).ready(function () {
                 $("#Cuestionario_A").hide();
                 $("#Cuestionario_B").hide();
 
+                $("#Increase").attr("disabled", false);
+                $("#Decrease").attr("disabled", false);
+
+                $("#Modal_Title").html("Lee atentamente");
+                $("#Modal_Body").html("<p>A continuación se te presentará otro texto.</br> Por favor, leelo atentamente.</br> Luego deberás contestar algunas preguntas en relación al mismo.</p>");
+                $("#Modal").modal("toggle");
+                break;
+            case 4: //Texto
                 switch (Orden_de_Presentacion) {
                     case "A,B":
                         $("#Text>h3").html("MODELO ESTANDAR EN FÍSICA");
@@ -286,7 +295,11 @@ $(document).ready(function () {
                 $("#Text").show();
                 Tiempo_Inicio = new moment();
                 break;
-            case 4: $("#Text").hide(); //Cuestionario #2
+            case 5:
+                $("#Increase").attr("disabled", true);
+                $("#Decrease").attr("disabled", true);
+
+                $("#Text").hide(); //Cuestionario #2
                 $("#Text>h3").html("");
                 $("#Text>p").html("");
                 switch (Orden_de_Presentacion) {
@@ -299,7 +312,7 @@ $(document).ready(function () {
                 };
                 Tiempo_Inicio = new moment();
                 break;
-            case 5:
+            case 6:
                 $("#Lectura_A_TR").val(Lectura_A_TR);
                 $("#Lectura_B_TR").val(Lectura_B_TR);
                 $("#Cuestionario_A_TR").val(Cuestionario_A_TR);
