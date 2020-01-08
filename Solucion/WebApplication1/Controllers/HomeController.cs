@@ -18,6 +18,8 @@ using System.Net.Mail;
 using System.Text;
 using System.Web.Mvc;
 using SpreadsheetLight;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Comprension.Controllers
 {
@@ -439,17 +441,43 @@ namespace Comprension.Controllers
                 switch (Fila)   //CHEQUEAR COPIA DE CELDAS!!!!
                 {
                     case 2: break;
-                    default: Libro.CopyCell("I2", "I" + Fila);
+                    default:
+                        //Libro.CopyCell(2, 10, Fila, 10, SLPasteTypeValues.Paste);
+                        //Libro.CopyCell("I2", "I" + Fila);
+                             //Libro.CopyCell("Datos", "I2", "I" + Fila);
+                        //Cant. De Años Nivel Educativo, fórmula
+                        string Formula = "= SI(I" + Fila + " = 'Secundario Incompleto'; Nivel_Educativo!$F$3;SI(I" + Fila + " = 'Secundario Completo'; Nivel_Educativo!$F$4;SI(I" + Fila + " = 'Terciario Incompleto'; Nivel_Educativo!$F$5;SI(I" + Fila + " = 'Terciario Completo'; Nivel_Educativo!$F$6;SI(I" + Fila + " = 'Universitario Incompleto'; Nivel_Educativo!$F$7;SI(I" + Fila + " = 'Universitario Completo'; Nivel_Educativo!$F$8;SI(I" + Fila + " = 'Posgrado Incompleto'; Nivel_Educativo!$F$9;SI(I" + Fila + " = 'Posgrado Completo'; Nivel_Educativo!$F$10; 'No hay coincidencia'))))))))";
+
+                        Libro.SetCellValue(Fila, 10, Formula);
+                        string jkl = Libro.GetCellValueAsString(Fila, 10);
                         break;
                 }
-                /*
-               //Cant. De Años Nivel Educativo, fórmula
-                Libro.SetCellValue("J" + Fila,string.Format("= SI(I" + Fila + " = \"Secundario Incompleto\"; Nivel_Educativo!$F$3;SI(I" + Fila + " = \"Secundario Completo\"; Nivel_Educativo!$F$4;SI(I" + Fila + " = \"Terciario Incompleto\"; Nivel_Educativo!$F$5;SI(I" + Fila + " = \"Terciario Completo\"; Nivel_Educativo!$F$6;SI(I" + Fila + " = \"Universitario Incompleto\"; Nivel_Educativo!$F$7;SI(I" + Fila + " = \"Universitario Completo\"; Nivel_Educativo!$F$8;SI(I" + Fila + " = \"Posgrado Incompleto\"; Nivel_Educativo!$F$9;SI(I" + Fila + " = \"Posgrado Completo\"; Nivel_Educativo!$F$10; \"No hay coincidencia\"))))))))"));*/
             }
 
             //Formato del Excel
+            SLStyle Estilo = new SLStyle();
+            Estilo.Alignment.Horizontal = HorizontalAlignmentValues.Center;
+            Estilo.Alignment.Vertical = VerticalAlignmentValues.Center;
 
-            //FALTA EL FORMATO DEL EXCEL
+            Libro.SetColumnStyle(1, 168, Estilo);
+
+            Libro.AutoFitColumn(1, 12);
+            Libro.AutoFitColumn(14, 15);
+            Libro.AutoFitColumn(17, 20);
+            Libro.AutoFitColumn(112, 168);
+
+            SLStyle Estilo_3 = new SLStyle();
+            Estilo_3.Border.BottomBorder.BorderStyle = BorderStyleValues.Medium;
+
+            Libro.SetRowStyle(1, Estilo_3);
+
+            SLStyle Estilo_4 = new SLStyle();
+            Estilo_4.Border.RightBorder.BorderStyle = BorderStyleValues.Medium;
+            Libro.SetColumnStyle(12, Estilo_4);
+            Libro.SetColumnStyle(15, Estilo_4);
+            Libro.SetColumnStyle(18, Estilo_4);
+            Libro.SetColumnStyle(141, Estilo_4);
+            Libro.SetColumnStyle(168, Estilo_4);
 
             //Nombre del Archivo y Descarga
             string Fecha = DateTime.Now.ToString();
@@ -462,17 +490,23 @@ namespace Comprension.Controllers
             string Ruta = Server.MapPath("~/Exportar/" + Nombre_Archivo);
 
             Libro.SaveAs(Ruta);
-            Session["Ruta"] = Ruta;
 
             return File(Ruta, "application/xlsx", Nombre_Archivo);
         }
 
         public void Borrar_Archivos()
         {
-            string [] Archivos = Directory.GetFiles(Server.MapPath("~/Exportar/"));
+            try
+            {
+                string[] Archivos = Directory.GetFiles(Server.MapPath("~/Exportar/"));
 
-            foreach (string Z in Archivos) {
-                System.IO.File.Delete(Z);
+                foreach (string Z in Archivos)
+                {
+                    System.IO.File.Delete(Z);
+                }
+            }
+            catch
+            {
             }
         }
     }
