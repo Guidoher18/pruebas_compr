@@ -234,8 +234,6 @@ $(document).ready(function() {
     }
   });
 
-  //Obtener_Respuesta(); ******************************
-
   //Rodea las palabras con <span> </span>. Cada uno con un Id ascendente comenzando por 0. Modifica el div #text con el texto "rodeado".
   function rodear_palabras_con_span(texto) {
     html = "";

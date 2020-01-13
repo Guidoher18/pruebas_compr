@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Comprension.Models
@@ -469,7 +465,7 @@ namespace Comprension.Models
 
             Sentencia.ExecuteNonQuery();
             Conexion.Close();
-        }
+        } 
 
         public Dictionary<int, Sujeto> LeerBase()
         {
@@ -697,7 +693,7 @@ namespace Comprension.Models
 
                     Sujeto.FechayHora_Entrada = SinNull_string["FechayHora_Entrada"];
                     Sujeto.FechayHora_Salida = SinNull_string["FechayHora_Salida"];
-                    Sujeto.ID = SinNull_int["ID"];
+                    Sujeto.ID = SinNull_int["ID"].ToString();
                     Sujeto.Apellido = SinNull_string["Apellido"];
                     Sujeto.Nombre = SinNull_string["Nombre"];
                     Sujeto.Edad = SinNull_int["Edad"];

@@ -1,42 +1,4 @@
-﻿body {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-body>div {
-    margin-left: 0px!important;
-    margin-right: 0px!important;
-}
-
-.form-control {
-    font-family: 'Arial', 'sans-serif';
-}
-
-input[type="email"] {
-    text-align: center;
-}
-
-input[type="text"],
-input[type="number"] {
-    text-transform: uppercase;
-    text-align: center;
-}
-
-
-/*Botón Acepto*/
-
-input[type="submit"] {
-    font-size: 1.5vw!important;
-    border-radius: .25rem;
-    margin-top: .5rem;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.col-md-4 {
+﻿.col-md-4 {
     width: 33.33vw !important;
     max-width: none !important;
 }
@@ -46,16 +8,22 @@ input[type="submit"] {
     margin-right: 0 !important;
 }
 
-label {
-    margin-bottom: 0.52vh !important;
-    margin-top: 1.311vh;
-    text-align: center;
-    font-weight: 600;
-    font-size: 1.4vw;
+body > div {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
 }
 
-#Container_2,
-#Container_1 {
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Containers */
+#Container_1,
+#Container_2 {
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -74,9 +42,18 @@ label {
     font-size: 1em;
 }
 
-#Container_1>p:last-child,
-#Container_1>p:nth-child(6) {
-    text-align: center;
+/* Container_1 */
+#Container_1 {
+    display: grid;
+}
+
+    #Container_1 > p:last-child,
+    #Container_1 > p:nth-child(6) {
+        text-align: center;
+    }
+
+.Sangria {
+    text-indent: 2.5em;
 }
 
 h2 {
@@ -84,29 +61,49 @@ h2 {
     text-align: center;
 }
 
-#Aclaraciones>p {
-    font-size: 0.56em !important;
-}
-
-.Sangria {
-    text-indent: 2.5em;
-}
-
-select,
-input
-/*[name="Nivel_Educativo"] {*/
-
-{
-    padding-left: 0.3vw!important;
-    padding-right: 0px!important;
-    font-size: 1.4vw!important;
-}
-
-#Container_1 {
-    display: grid;
-}
-
+/* Container_2 */
 .form-control:focus {
     border-color: #007bff;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
 }
+
+label {
+    margin-bottom: 0.52vh !important;
+    margin-top: 1.311vh;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.4vw;
+}
+
+select, input {
+    padding-left: 0.3vw !important;
+    padding-right: 0px !important;
+    font-size: 1.4vw !important;
+}
+
+/* Inputs del formulario*/
+.form-control {
+    font-family: 'Arial', 'sans-serif';
+}
+
+input[type="email"] {
+    text-align: center;
+}
+
+input[type="text"], input[type="number"] {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* Acepto */
+input[type="submit"] {
+    font-size: 1.5vw !important;
+    border-radius: .25rem;
+    margin-top: .5rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*#Aclaraciones>p {
+    font-size: 0.56em !important;
+}*/

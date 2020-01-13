@@ -278,14 +278,10 @@ $(document).ready(function () {
 
     //Simula la animación que se obtiene con el ::hover a partir del Enter
     function clic_boton() {
-        //$('#Siguiente, #Aceptar').css('background-color', '#007bff');
-        //$('#Siguiente, #Aceptar').css('color', 'white !important');
         $('#Siguiente, #Aceptar').removeClass("normal");
         $('#Siguiente, #Aceptar').addClass("clickeado");
         $('#Siguiente, #Aceptar').css('transition', 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out');
         setTimeout(function () {
-            //$('#Siguiente, #Aceptar').css('background-color', 'transparent');
-            //$('#Siguiente, #Aceptar').css('color', '#007bff !important');
             $('#Siguiente, #Aceptar').removeClass("clickeado");
             $('#Siguiente, #Aceptar').addClass("normal");
             $('#Siguiente, #Aceptar').click();
@@ -332,7 +328,6 @@ $(document).ready(function () {
                 $('#Aceptar').css('display', 'none');
                 Consigna_Secuencia(Con_2, Con_3, Ser_Cif);
                 break;
-
         }
     });
 
@@ -736,7 +731,7 @@ $(document).ready(function () {
     var Guardar_Datos_Brutos = function (R1, R2, R3, Consigna_nueva, Cifra_nueva) {
         Datos_Brutos = Datos_Brutos + "Serie " + R1.length + "," + R1 + "," + R2 + "," + R3 + ";";
 
-        if (Errores < 2 && Serie != 9) {
+        function Seguir() {
             Respuesta = '';
 
             Errores = 0;
@@ -747,6 +742,14 @@ $(document).ready(function () {
             Ocultar_Response();
             Consigna_Simple(Consigna_nueva, Cifra_nueva);
             Numero_de_Tarea += 1;
+        }
+
+        if (Modalidad == "Directo" && Errores < 2 && Serie < 9) {
+            Seguir();
+        }
+
+        else if (Modalidad == "Letra" && Errores < 2 && Serie < 8){
+            Seguir();
         }
 
         else {
@@ -904,5 +907,6 @@ $(document).ready(function () {
                 break;
         }
     }
+
     Itinerario_DD(1);
 });

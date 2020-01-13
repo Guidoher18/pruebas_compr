@@ -1,23 +1,17 @@
+form, #Alert, #Response {
+    display: none;
+}
+
+#Alert, #Test > p {
+    text-align: center;
+}
+
+#Alert {
+    height: 7vh;
+}
+
 body {
     background-color: #fbfaf9;
-}
-
-#Test, #Response {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
-}
-
-#Test {
-    /*background-color: lightblue; */
-    /*height:50vh;
-    
-    margin-left: auto!important;
-    margin-right: auto!important;*/
-    margin-top: 23vh;
-    display: flex;
 }
 
 p {
@@ -30,17 +24,21 @@ p {
     display: flex;
 }
 
+/* Test y Response*/
+#Test, #Response {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+#Test {
+    margin-top: 23vh;
+    display: flex;
+}
+
 #Response {
-    /*margin-left: 8.3335vw;
-    margin-right: auto!important;
-    margin-top: 19vh;*/
-    /*position:absolute!important;*/
-    display: none;
-    /*display:none;
-    justify-content:center;
-    align-items:center;x
-    
-    /*background-color: orange;*/
     margin-top: 23vh;
     border-top: 2px solid #181818;
     border-bottom: 2px solid #181818;
@@ -48,12 +46,8 @@ p {
     font-size: 30vh;
 }
 
-form, #Alert {
-    display: none;
-}
-
+/* Botón Aceptar / Siguiente */
 #Aceptar, #Siguiente {
-    /*height:10vh;*/
     font-size: 2.8125vw !important;
     border-color: transparent !important;
     margin-top: 1vh;
@@ -65,6 +59,11 @@ form, #Alert {
     display: flex;
 }
 
+    #Aceptar:hover, #Siguiente:hover {
+        background-color: #007bff !important;
+        color: #fff !important;
+    }
+
 .normal {
     color: #007bff;
     background-color:transparent;
@@ -73,17 +72,4 @@ form, #Alert {
 .clickeado {
     color: #fff;
     background-color: #007bff;
-}
-
-    #Aceptar:hover, #Siguiente:hover {
-        background-color: #007bff !important;
-        color: #fff !important;
-    }
-
-#Alert, #Test > p {
-    text-align: center;
-}
-
-#Alert {
-    height: 7vh;
 }

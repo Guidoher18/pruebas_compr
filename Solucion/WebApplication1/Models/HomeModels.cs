@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Comprension.Models
+﻿namespace Comprension.Models
 {
     public class Sujeto
     {
         public string FechayHora_Entrada { get; set; }
         public string FechayHora_Salida { get; set; }
-        public int ID { get; set; }
+        public string ID { get; set; }
         public string Apellido { get; set; }
         public string Nombre { get; set; }
         public int Edad { get; set; }

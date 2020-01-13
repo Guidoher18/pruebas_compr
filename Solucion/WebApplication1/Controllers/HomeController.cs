@@ -1,25 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Data;
 using Comprension.Models;
-using System.Web.SessionState;
-using System.Web;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Linq;
-using DocumentFormat.OpenXml;
 using System.IO;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
 using System.Web.Mvc;
 using SpreadsheetLight;
-using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Globalization;
 
 namespace Comprension.Controllers
 {
@@ -32,14 +19,14 @@ namespace Comprension.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            if (Request.Browser.IsMobileDevice)
+            /*if (Request.Browser.IsMobileDevice)
             {
                 return View("~/Views/Home/Mobile.cshtml");
             }
             else
-            {
+            {*/
                 return View("~/Views/Home/Consentimiento.cshtml");
-            }
+            //}
         }
 
         /// <summary>
@@ -60,7 +47,8 @@ namespace Comprension.Controllers
             if (Manager.Consultar(Mail) == null)
             {
                 Sujeto Sujeto = new Sujeto();
-                Sujeto.FechayHora_Entrada = DateTime.Now.ToString(); //Fecha y Hora al momento de Aceptar el Concentimiento Informado
+
+                Sujeto.FechayHora_Entrada = Fecha_Hora_ARG(); //Fecha y Hora al momento de Aceptar el Concentimiento Informado
                 Sujeto.Apellido = Apellido.ToUpper();
                 Sujeto.Nombre = Nombre.ToUpper();
                 Sujeto.Edad = Edad;
@@ -121,7 +109,7 @@ namespace Comprension.Controllers
         {
             Sujeto Sujeto = new Sujeto();
 
-            Sujeto.ID = (int)Session["Sujeto.ID"];
+            Sujeto.ID = (string)Session["Sujeto.ID"];
 
             Sujeto.Libros = Libros;
             Sujeto.Orden_de_Presentacion = Orden_de_Presentacion;
@@ -171,9 +159,10 @@ namespace Comprension.Controllers
                 Comprension_B6, string Comprension_B7, string Comprension_B8, string Comprension_B9, string Comprension_B10)
         {
             Sujeto Sujeto = new Sujeto();
-            Sujeto.ID = (int)Session["Suejto.ID"];
+            Sujeto.ID = (string)Session["Suejto.ID"];
 
-            Sujeto.FechayHora_Salida = DateTime.Now.ToString(); //Fecha y Hora al momento de Finalizar Comprensión
+
+            Sujeto.FechayHora_Salida = Fecha_Hora_ARG(); //Fecha y Hora al momento de Finalizar Comprensión
 
             Sujeto.Lectura_A_TR = Lectura_A_TR;
             Sujeto.Lectura_B_TR = Lectura_B_TR;
@@ -214,6 +203,10 @@ namespace Comprension.Controllers
             return View("~/Views/Home/Final.cshtml");
         }
 
+        /// <summary>
+        /// Permite descargar un archivo .xlsx con los datos de la BBDD
+        /// </summary>
+        /// <returns></returns>
         public FileResult Exportar()
         {
             Borrar_Archivos();
@@ -233,7 +226,25 @@ namespace Comprension.Controllers
                 //Datos Sociodemográficos
                 Libro.SetCellValue("A" + Fila, Sujeto.FechayHora_Entrada);
                 Libro.SetCellValue("B" + Fila, Sujeto.FechayHora_Salida);
-                // C Duración
+
+                // C Duración: duración total de la sesión del Sujeto
+                string FechayHoraInicio = Sujeto.FechayHora_Entrada;
+                string FechayHoraSalida = Sujeto.FechayHora_Salida;
+                string Dato = "";
+
+                if (FechayHoraInicio != "" && FechayHoraInicio != null && FechayHoraSalida != "" && FechayHoraSalida != null)
+                {
+                    DateTime F = DateTime.Parse(FechayHoraInicio);
+                    DateTime G = DateTime.Parse(FechayHoraSalida);
+                    Dato = (G.Subtract(F)).ToString();
+                }
+                else
+                {
+                    Dato = "";
+                }
+
+                Libro.SetCellValue("C" + Fila, Dato);
+
                 Libro.SetCellValue("D" + Fila, Sujeto.ID);
                 Libro.SetCellValue("E" + Fila, Sujeto.Apellido);
                 Libro.SetCellValue("F" + Fila, Sujeto.Nombre);
@@ -419,39 +430,6 @@ namespace Comprension.Controllers
                 Libro.SetCellValue("FJ" + Fila, Sujeto.Lectura_B_TR);
                 Libro.SetCellValue("FK" + Fila, Sujeto.Cuestionario_A_TR);
                 Libro.SetCellValue("FL" + Fila, Sujeto.Cuestionario_B_TR);
-
-                //Duración Total de Sesión del Sujeto
-                string FechayHoraInicio = Sujeto.FechayHora_Entrada;
-                string FechayHoraSalida = Sujeto.FechayHora_Salida;
-                string Dato = "";
-
-                if (FechayHoraInicio != "" && FechayHoraInicio != null && FechayHoraSalida != "" && FechayHoraSalida != null)
-                {
-                    DateTime F = DateTime.Parse(FechayHoraInicio);
-                    DateTime G = DateTime.Parse(FechayHoraSalida);
-                    Dato = (G.Subtract(F)).ToString();
-                }
-                else
-                {
-                    Dato = "";
-                }
-
-                Libro.SetCellValue("C" + Fila, Dato);
-
-                switch (Fila)   //CHEQUEAR COPIA DE CELDAS!!!!
-                {
-                    case 2: break;
-                    default:
-                        //Libro.CopyCell(2, 10, Fila, 10, SLPasteTypeValues.Paste);
-                        //Libro.CopyCell("I2", "I" + Fila);
-                             //Libro.CopyCell("Datos", "I2", "I" + Fila);
-                        //Cant. De Años Nivel Educativo, fórmula
-                        string Formula = "= SI(I" + Fila + " = 'Secundario Incompleto'; Nivel_Educativo!$F$3;SI(I" + Fila + " = 'Secundario Completo'; Nivel_Educativo!$F$4;SI(I" + Fila + " = 'Terciario Incompleto'; Nivel_Educativo!$F$5;SI(I" + Fila + " = 'Terciario Completo'; Nivel_Educativo!$F$6;SI(I" + Fila + " = 'Universitario Incompleto'; Nivel_Educativo!$F$7;SI(I" + Fila + " = 'Universitario Completo'; Nivel_Educativo!$F$8;SI(I" + Fila + " = 'Posgrado Incompleto'; Nivel_Educativo!$F$9;SI(I" + Fila + " = 'Posgrado Completo'; Nivel_Educativo!$F$10; 'No hay coincidencia'))))))))";
-
-                        Libro.SetCellValue(Fila, 10, Formula);
-                        string jkl = Libro.GetCellValueAsString(Fila, 10);
-                        break;
-                }
             }
 
             //Formato del Excel
@@ -479,11 +457,13 @@ namespace Comprension.Controllers
             Libro.SetColumnStyle(141, Estilo_4);
             Libro.SetColumnStyle(168, Estilo_4);
 
+            Libro.DeleteRow(SujetosBase.Count() + 2, 1000 - SujetosBase.Count() + 2);
+            Libro.SetActiveCell("A1");
+
             //Nombre del Archivo y Descarga
             string Fecha = DateTime.Now.ToString();
             Fecha = Fecha.Replace("/", "-");
             Fecha = Fecha.Replace(":", ".");
-            //Fecha = Fecha.Remove(15, 3);
             Fecha = Fecha.Replace(" ", "_");
 
             string Nombre_Archivo = "Base_de_Datos_" + Fecha + ".xlsx";
@@ -491,10 +471,15 @@ namespace Comprension.Controllers
 
             Libro.SaveAs(Ruta);
 
+            Libro.Dispose();
+
             return File(Ruta, "application/xlsx", Nombre_Archivo);
         }
 
-        public void Borrar_Archivos()
+        /// <summary>
+        /// Borra todos los Archivos que se encuentran en Exportar/
+        /// </summary>
+        private void Borrar_Archivos()
         {
             try
             {
@@ -509,5 +494,62 @@ namespace Comprension.Controllers
             {
             }
         }
+
+        /// <summary>
+        /// Permite obtener la fecha y hora Argentina UTC-3
+        /// </summary>
+        /// <returns></returns>
+        private string Fecha_Hora_ARG()
+        {
+            CultureInfo Culture = new CultureInfo("es-Es");
+
+            string Fecha = DateTime.UtcNow.ToString("d", Culture); //11/01/2020
+            string Hora = DateTime.UtcNow.ToString("T", Culture);  //12:00:47 UTC
+
+            var Hora_ARG = DateTime.Parse(Hora) - DateTime.Parse("3:00:00"); //Argentina UTC-3
+
+            return Fecha + " " + Hora_ARG; //11/01/2020 09:00:47
+        }
+
+        /* Código con Microsoft.Interopt
+        private void Establecer_Formulas(string Ruta, int Fila_Final)
+        {
+            Excel.Application App;
+            Excel._Workbook Workbook;
+            Excel._Worksheet Sheet;
+            Excel.Range Range;
+
+            App = new Excel.Application();
+
+            App.Visible = false;
+
+            Workbook = App.Workbooks.Open(Ruta);
+
+            Sheet = App.Worksheets[1];
+
+            Sheet.Activate();
+
+            Range = Sheet.get_Range("J2");
+
+            Range.AutoFill(Sheet.get_Range("J2", "J" + Fila_Final), Excel.XlAutoFillType.xlFillDefault);
+
+            Workbook.Save();
+            //Workbook.SaveAs(Ruta, Excel.XlFileFormat.xlWorkbookDefault, AccessMode: Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange);
+
+            Workbook.Close();
+        }
+
+        //https://social.msdn.microsoft.com/Forums/vstudio/en-US/d438c273-6876-4d2b-9f25-842838bce0b4/excel-is-still-running-though-i-quit-and-released-the-object?forum=vsto
+        private void killExcel()
+        {
+            System.Diagnostics.Process[] PROC = System.Diagnostics.Process.GetProcessesByName("EXCEL");
+            foreach (System.Diagnostics.Process PK in PROC)
+            {
+                if (PK.MainWindowTitle.Length == 0)
+                {
+                    PK.Kill();
+                }
+            }
+        }*/
     }
 }

@@ -1,75 +1,15 @@
-#Clear > img {
-    width: 34.2px;
-    height: 4vh;
+.hide {
+    display: none;
 }
 
-#Increase > img {
-    width: 30px;
-    height: 4vh;
+p {
+    font-size: 22px;
 }
 
-#Decrease > img {
-    width: 31.2px;
-    height: 4vh;
-}
-
+/* Botones General */
 button {
     height: 8vh;
 }
-
-#Modal_Si img[src="/icons/clear.png"] {
-    height: 4vh;
-    width: auto;
-    background-color: #0197FA;
-}
-
-#Container {
-    margin-left: 5vw;
-    margin-right: 0px;
-    padding-right: 5vw;
-    /*width: 90vw;*/
-    max-height: 84vh;
-    overflow-y: scroll;
-    font-size: 26px;
-}
-
-.Resaltar:hover {
-    border-bottom: 2px solid #ff0000;
-    border-top: 2px solid #ff0000;
-    cursor: pointer;
-}
-
-/*#Modal_Close>span{
-    border: none;
-}*/
-
-.pointer {
-    cursor: pointer;
-}
-
-.Desde {
-    border-bottom: 2px solid #ff0000;
-    border-top: 2px solid #ff0000;
-}
-
-.Resaltado {
-    background-color: #ffa500;
-}
-
-#Barra_Superior {
-    display: flex;
-    align-items: center;
-}
-
-#Siguiente, #Siguiente_Ejemplo_1 {
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-}
-
-    #Siguiente > img, #Siguiente_Ejemplo_1 > img {
-        height: 6vh;
-    }
 
 .btn-primary {
     background-color: #0197FA !important;
@@ -86,42 +26,62 @@ button {
         border-color: #0070BA !important;
     }
 
-/*#Container::-webkit-scrollbar{
-    display:none;
-}*/
-
-#Pregunta {
-    border-top: 1px solid #000;
+/* Botones Barra Superior */
+#Clear > img {
+    width: 34.2px;
+    height: 4vh;
 }
 
-    #Pregunta > p {
-        display: inline-block;
+#Increase > img {
+    width: 30px;
+    height: 4vh;
+}
+
+#Decrease > img {
+    width: 31.2px;
+    height: 4vh;
+}
+
+#Barra_Superior {
+    display: flex;
+    align-items: center;
+}
+
+/*Botón Inferior*/
+#Siguiente {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+}
+
+    #Siguiente > img {
+        height: 6vh;
     }
 
-#Modal_Si div[class="modal-body"] > img {
-    width: 98%;
+/*Container Textos */
+#Container {
+    margin-left: 5vw;
+    margin-right: 0px;
+    padding-right: 5vw;
+    max-height: 84vh;
+    overflow-y: scroll;
+    font-size: 26px;
 }
 
-.hide {
-    display: none;
-}
 #Text > p {
-    text-indent:3em;
+    text-indent: 3em;
 }
 
+/* Cuestionarios */
 .margen {
-    padding-left:2em;
-}
-select {
-    text-align:center;
-}
-p {
-font-size:22px;
+    padding-left: 2em;
 }
 
 div[class="row"] {
     border-top: 1px solid black;
 }
+
 select {
-    float:left;
+    text-align: center;
+    float: left;
 }
