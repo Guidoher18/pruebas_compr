@@ -58,6 +58,7 @@ namespace Comprension.Controllers
                 Sujeto.Mail = Mail;
 
                 Session["Sujeto"] = Sujeto;
+                Session.Timeout = 60;
                 return View("~/Views/Home/Digitos.cshtml");
             }
             else
@@ -80,8 +81,8 @@ namespace Comprension.Controllers
         [HttpPost]
         public ActionResult CargarRespuestaDigitos(string Respuesta_DD, int Puntaje_DD, int DD_TR, string Respuesta_DL, int Puntaje_DL, int DL_TR)
         {
-
-            var Sujeto = Session["Sujeto"] as Sujeto;
+            Sujeto Sujeto = new Sujeto();
+            Sujeto = Session["Sujeto"] as Sujeto;
 
             Sujeto.Respuesta_DD = Respuesta_DD;
             Sujeto.Puntaje_DD = Puntaje_DD;
@@ -90,6 +91,7 @@ namespace Comprension.Controllers
             Sujeto.Respuesta_DL = Respuesta_DL;
             Sujeto.Puntaje_DL = Puntaje_DL;
             Sujeto.DL_TR = DL_TR;
+            Session.Clear();
 
             HomeManager Manager = new HomeManager();
             Session["Sujeto.ID"] = Manager.Cargar(Sujeto);
@@ -200,7 +202,12 @@ namespace Comprension.Controllers
             HomeManager Manager = new HomeManager();
             Manager.ActualizarComprension(Sujeto);
 
+            Session.Clear();
             return View("~/Views/Home/Final.cshtml");
+        }
+        //BORRAR
+        public ActionResult Comprension() {
+            return View("~/Views/Home/Comprension.cshtml");
         }
 
         /// <summary>

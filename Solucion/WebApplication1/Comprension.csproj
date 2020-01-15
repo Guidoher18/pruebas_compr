@@ -156,6 +156,9 @@
     <Content Include="Audio\beep.wav" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\Comprension.css" />
+    <Content Include="Content\img\Ejemplo_fragmento.jpg" />
+    <Content Include="Content\img\Ejemplo_palabra.jpg" />
+    <Content Include="Content\img\Meme.jpeg" />
     <Content Include="Content\Monitoreo.css" />
     <Content Include="Content\Consentimiento.css" />
     <Content Include="Content\Digitos.css" />

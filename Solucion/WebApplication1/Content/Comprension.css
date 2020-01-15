@@ -26,7 +26,11 @@ button {
         border-color: #0070BA !important;
     }
 
-/* Botones Barra Superior */
+    .btn-primary:hover:disabled {
+        cursor:default;
+    }
+
+ /* Botones Barra Superior */
 #Clear > img {
     width: 34.2px;
     height: 4vh;

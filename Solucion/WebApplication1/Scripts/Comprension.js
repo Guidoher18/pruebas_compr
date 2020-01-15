@@ -13,6 +13,9 @@ $(document).ready(function () {
     var Orden_de_Presentacion = "";
     var Secuencia = 0;
 
+    //Variable sobre las respuestas del Cuestionario
+    var Cant_Respuestas_Vacias_Cuestionario = 0;
+
     //TR
     var Lectura_A_TR = "";
     var Lectura_B_TR = "";
@@ -36,12 +39,39 @@ $(document).ready(function () {
 
     //Botón Siguiente
     $("#Siguiente").on("click", function () {
+
+        function Proximo_Itinerario() { //Reinicia los TR y pasa a la proxima Secuencia
+            Tiempo_Inicio = 0;
+            Tiempo_Fin = 0;
+            Secuencia += 1;
+            Itinerario();
+        }
+
+        var Duration;
+
+        function Obtener_Duracion_TR() {
+            Tiempo_Fin = new moment();
+            Duration = moment
+                .duration(Tiempo_Fin.diff(Tiempo_Inicio))
+                .as("milliseconds");
+        }
+
+        function Mostrar_Modal_Respuestas_Vacias() {
+            $("#Modal_Title").html("¡Cuidado!");
+            switch (Cant_Respuestas_Vacias_Cuestionario) {
+                default:
+                    $("#Modal_Body").html("<p>Dejaste " + Cant_Respuestas_Vacias_Cuestionario.toString() + " preguntas sin responder. <br/> Por favor, contéstalas eligiendo una opción.</p>");
+                    break;
+                case 1:
+                    $("#Modal_Body").html("<p>Dejaste 1 pregunta sin responder. <br/> Por favor, contéstala eligiendo una opción.</p>");
+                    break;
+            }
+            $("#Modal").modal("toggle");
+        }
+
         switch (Secuencia) {
-            case 1:
-                Tiempo_Fin = new moment();
-                var Duration = moment
-                    .duration(Tiempo_Fin.diff(Tiempo_Inicio))
-                    .as("milliseconds");
+            case 1: //Viene de la Lectura del Texto #1
+                Obtener_Duracion_TR();
                 switch (Orden_de_Presentacion) {
                     case "A,B":
                         Lectura_A_TR = Duration.toString();
@@ -50,40 +80,29 @@ $(document).ready(function () {
                         Lectura_B_TR = Duration.toString();
                         break;
                 }
-                Tiempo_Inicio = 0;
-                Tiempo_Fin = 0;
-                Secuencia += 1;
-                Itinerario();
+                Proximo_Itinerario();
                 break;
-            case 2:
+
+            case 2: //Viene del Cuestionario del Texto #1
                 if (Comprobar_Respuestas_Vacias(1)) {
-                    $("#Modal_Title").html("¡Cuidado!");
-                    $("#Modal_Body").html("<p>Dejaste algunas preguntas sin responder. <br/> Por favor, respondelas eligiendo una opción.</p>");
-                    $("#Modal").modal("toggle");
-                    break;
-                };
-                Tiempo_Fin = new moment();
-                var Duration = moment
-                    .duration(Tiempo_Fin.diff(Tiempo_Inicio))
-                    .as("milliseconds");
-                switch (Orden_de_Presentacion) {
-                    case "A,B":
-                        Cuestionario_A_TR = Duration.toString();
-                        break;
-                    case "B,A":
-                        Cuestionario_B_TR = Duration.toString();
-                        break;
+                    Mostrar_Modal_Respuestas_Vacias();
                 }
-                Tiempo_Inicio = 0;
-                Tiempo_Fin = 0;
-                Secuencia += 1;
-                Itinerario();
+                else {
+                    Obtener_Duracion_TR();
+                    switch (Orden_de_Presentacion) {
+                        case "A,B":
+                            Cuestionario_A_TR = Duration.toString();
+                            break;
+                        case "B,A":
+                            Cuestionario_B_TR = Duration.toString();
+                            break;
+                    }
+                    Proximo_Itinerario();
+                }
                 break;
-            case 3:
-                Tiempo_Fin = new moment();
-                var Duration = moment
-                    .duration(Tiempo_Fin.diff(Tiempo_Inicio))
-                    .as("milliseconds");
+
+            case 4: //Viene de la Lectura del Texto #2
+                Obtener_Duracion_TR();
                 switch (Orden_de_Presentacion) {
                     case "A,B":
                         Lectura_B_TR = Duration.toString();
@@ -92,34 +111,25 @@ $(document).ready(function () {
                         Lectura_A_TR = Duration.toString();
                         break;
                 }
-                Tiempo_Inicio = 0;
-                Tiempo_Fin = 0;
-                Secuencia += 1;
-                Itinerario();
+                Proximo_Itinerario();
                 break;
-            case 4:
+
+            case 5:
                 if (Comprobar_Respuestas_Vacias(2)) {
-                    $("#Modal_Title").html("¡Cuidado!");
-                    $("#Modal_Body").html("<p>Dejaste algunas preguntas sin responder. <br/> Por favor, respondelas eligiendo una opción.</p>");
-                    $("#Modal").modal("toggle");
-                    break;
-                };
-                Tiempo_Fin = new moment();
-                var Duration = moment
-                    .duration(Tiempo_Fin.diff(Tiempo_Inicio))
-                    .as("milliseconds");
-                switch (Orden_de_Presentacion) {
-                    case "A,B":
-                        Cuestionario_B_TR = Duration.toString();
-                        break;
-                    case "B,A":
-                        Cuestionario_A_TR = Duration.toString();
-                        break;
+                    Mostrar_Modal_Respuestas_Vacias();
                 }
-                Tiempo_Inicio = 0;
-                Tiempo_Fin = 0;
-                Secuencia += 1;
-                Itinerario();
+                else {
+                    Obtener_Duracion_TR();
+                    switch (Orden_de_Presentacion) {
+                        case "A,B":
+                            Cuestionario_B_TR = Duration.toString();
+                            break;
+                        case "B,A":
+                            Cuestionario_A_TR = Duration.toString();
+                            break;
+                    }
+                    Proximo_Itinerario();
+                }
                 break;
         }
     });
@@ -130,6 +140,10 @@ $(document).ready(function () {
             default:
                 Secuencia += 1;
                 Itinerario();
+                break;
+            case 2:
+                break;
+            case 5:
                 break;
         }
         $("#Modal").toggle();
@@ -175,51 +189,49 @@ $(document).ready(function () {
         }
     }
 
-    function Comprobar_Respuestas_Vacias(a) {
-        if (a == 1) {
-            var g = 0;
+    function Comprobar_Respuestas_Vacias(a) { //a 1 o 2 refiere a si estoy en el Cuestionario del primer o segundo texto según el orden de presentación
+
+        function Recorrer(Selector) {
+            Cant_Respuestas_Vacias_Cuestionario = 0;
+
+            for (i = 0; i < 10; i++) {
+                if ($(Selector + ((i + 1).toString())).val() == "") {
+                    Cant_Respuestas_Vacias_Cuestionario += 1;
+                };
+            }
+        }
+
+        if (a == 1) {   //Cuestionario del Primer Texto
             switch (Orden_de_Presentacion) {
                 case "A,B":
-                    for (i = 0; i < 10; i++) {
-                        if ($("#Comprension_A" + ((i + 1).toString())).val() == "") {
-                            g += 1;
-                        };
-                    }
+                    Recorrer("#Comprension_A");
                     break;
                 case "B,A":
-                    for (i = 0; i < 10; i++) {
-                        if ($("#Comprension_B" + ((i + 1).toString())).val() == "") {
-                            g += 1;
-                        };
-                    }
+                    Recorrer("#Comprension_B");
                     break;
             }
         }
-        else {  
-            var g = 0;
+        else {   //Cuestionario del Segundo Texto
             switch (Orden_de_Presentacion) {
                 case "A,B":
-                    for (i = 0; i < 10; i++) {
-                        if ($("#Comprension_B" + ((i + 1).toString())).val() == "") {
-                            g += 1;
-                        };
-                    }
+                    Recorrer("#Comprension_B");
                     break;
                 case "B,A":
-                    for (i = 0; i < 10; i++) {
-                        if ($("#Comprension_A" + ((i + 1).toString())).val() == "") {
-                            g += 1;
-                        };
-                    }
+                    Recorrer("#Comprension_A");
                     break;
             }
         }
-        if (g !== 0) {
+
+        if (Cant_Respuestas_Vacias_Cuestionario !== 0) {
             return true;   //Hay respuestas vacías
         }
         else {
             return false;  //NO hay respuestas vacías
         }
+    }
+
+    function Ir_Arriba_Scroll() {
+        $("#Container").animate({ scrollTop: 0 }, false);
     }
 
     function Itinerario() {
@@ -230,7 +242,8 @@ $(document).ready(function () {
                 $("#Modal_Body").html("<p>A continuación se te presentará un texto.</br> Por favor, leelo atentamente.</br> Luego deberás contestar algunas preguntas en relación al mismo.</p>");
                 $("#Modal").modal("toggle");
                 break;
-            case 1: //Texto 1
+
+            case 1: //Texto #1
                 switch (Orden_de_Presentacion) {
                     case "A,B":
                         $("#Text>h3").html("MEMORIA HUMANA");
@@ -243,10 +256,12 @@ $(document).ready(function () {
                 };
                 Tiempo_Inicio = new moment();
                 break;
-            case 2:
+
+            case 2: //Cuestionario #1
                 $("#Increase").attr("disabled", true);
                 $("#Decrease").attr("disabled", true);
-                $("#Text").hide(); //Cuestionario #1
+                $("#Text").hide();
+                Ir_Arriba_Scroll();
                 $("#Text>h3").html("");
                 $("#Text>p").html("");
                 switch (Orden_de_Presentacion) {
@@ -259,7 +274,8 @@ $(document).ready(function () {
                 };
                 Tiempo_Inicio = new moment();
                 break;
-            case 3: //Texto 2
+
+            case 3:
                 $("#Cuestionario_A").hide();
                 $("#Cuestionario_B").hide();
 
@@ -270,7 +286,8 @@ $(document).ready(function () {
                 $("#Modal_Body").html("<p>A continuación se te presentará otro texto.</br> Por favor, leelo atentamente.</br> Luego deberás contestar algunas preguntas en relación al mismo.</p>");
                 $("#Modal").modal("toggle");
                 break;
-            case 4: //Texto
+
+            case 4: //Texto #2
                 switch (Orden_de_Presentacion) {
                     case "A,B":
                         $("#Text>h3").html("MODELO ESTANDAR EN FÍSICA");
@@ -284,11 +301,12 @@ $(document).ready(function () {
                 $("#Text").show();
                 Tiempo_Inicio = new moment();
                 break;
-            case 5:
+
+            case 5: //Cuestionario #2
                 $("#Increase").attr("disabled", true);
                 $("#Decrease").attr("disabled", true);
-
-                $("#Text").hide(); //Cuestionario #2
+                $("#Text").hide();
+                Ir_Arriba_Scroll();
                 $("#Text>h3").html("");
                 $("#Text>p").html("");
                 switch (Orden_de_Presentacion) {
@@ -301,6 +319,7 @@ $(document).ready(function () {
                 };
                 Tiempo_Inicio = new moment();
                 break;
+
             case 6:
                 $("#Lectura_A_TR").val(Lectura_A_TR);
                 $("#Lectura_B_TR").val(Lectura_B_TR);
