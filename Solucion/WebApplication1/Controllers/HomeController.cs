@@ -30,7 +30,7 @@ namespace Comprension.Controllers
         }
 
         /// <summary>
-        /// Crea un Sujeto Experimental Nuevo y lo Guarda en Session
+        /// "CrearSujeto" - Crea un Sujeto Experimental Nuevo y lo Guarda en Session
         /// </summary>
         /// <param name="Apellido"></param>
         /// <param name="Nombre"></param>
@@ -40,7 +40,7 @@ namespace Comprension.Controllers
         /// <param name="Lugar_de_Residencia"></param>
         /// <param name="Mail"></param>
         [HttpPost]
-        public ActionResult CrearSujeto(string Apellido, string Nombre, int Edad, string Sexo, string Nivel_Educativo, string Lugar_de_Residencia, string Mail)
+        public ActionResult Digitos(string Apellido, string Nombre, int Edad, string Sexo, string Nivel_Educativo, string Lugar_de_Residencia, string Mail)
         {
             HomeManager Manager = new HomeManager();
 
@@ -69,7 +69,7 @@ namespace Comprension.Controllers
         }
 
         /// <summary>
-        /// Carga al Sujeto almacenado en Session con sus respectivos puntajes y TR de las tareas de Dígitos Directo y Ordenamiento Dígito-Letra
+        /// "CargarRespuestaDigitos" - Carga al Sujeto almacenado en Session con sus respectivos puntajes y TR de las tareas de Dígitos Directo y Ordenamiento Dígito-Letra
         /// </summary>
         /// <param name="Respuesta_DD"></param>
         /// <param name="Puntaje_DD"></param>
@@ -79,7 +79,7 @@ namespace Comprension.Controllers
         /// <param name="DL_TR"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult CargarRespuestaDigitos(string Respuesta_DD, int Puntaje_DD, int DD_TR, string Respuesta_DL, int Puntaje_DL, int DL_TR)
+        public ActionResult Monitoreo(string Respuesta_DD, int Puntaje_DD, int DD_TR, string Respuesta_DL, int Puntaje_DL, int DL_TR)
         {
             Sujeto Sujeto = new Sujeto();
             Sujeto = Session["Sujeto"] as Sujeto;
@@ -100,14 +100,14 @@ namespace Comprension.Controllers
         }
 
         /// <summary>
-        /// Carga las respuestas de Monitoreo
+        /// "CargarRespuestaMonitoreo" - Carga las respuestas de Monitoreo
         /// </summary>
         /// <param name="Libros"></param>
         /// <param name="Orden_de_Presentacion"></param>
         /// <param name="Respuesta_Total"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult CargarRespuestaMonitoreo(string Libros, string Orden_de_Presentacion, string Respuesta_Total)
+        public ActionResult Comprension(string Libros, string Orden_de_Presentacion, string Respuesta_Total)
         {
             Sujeto Sujeto = new Sujeto();
 
@@ -125,7 +125,7 @@ namespace Comprension.Controllers
         }
 
         /// <summary>
-        /// Carga las Respuestas de Comprensión
+        /// "CargarRespuestaComprension" - Carga las Respuestas de Comprensión
         /// </summary>
         /// <param name="Lectura_A_TR"></param>
         /// <param name="Lectura_B_TR"></param>
@@ -155,7 +155,8 @@ namespace Comprension.Controllers
         /// <param name="Comprension_B9"></param>
         /// <param name="Comprension_B10"></param>
         /// <returns></returns>
-        public ActionResult CargarRespuestaComprension(int Lectura_A_TR, int Lectura_B_TR, int Cuestionario_A_TR, int Cuestionario_B_TR, string Comprension_Orden_de_Presentacion, int Puntaje_A_Comprension, int Puntaje_B_Comprension, string Comprension_A1, string Comprension_A2, string Comprension_A3, string Comprension_A4, string Comprension_A5, string
+        [HttpPost]
+        public ActionResult Final(int Lectura_A_TR, int Lectura_B_TR, int Cuestionario_A_TR, int Cuestionario_B_TR, string Comprension_Orden_de_Presentacion, int Puntaje_A_Comprension, int Puntaje_B_Comprension, string Comprension_A1, string Comprension_A2, string Comprension_A3, string Comprension_A4, string Comprension_A5, string
                 Comprension_A6, string Comprension_A7, string Comprension_A8, string Comprension_A9, string Comprension_A10, string
                 Comprension_B1, string Comprension_B2, string Comprension_B3, string Comprension_B4, string Comprension_B5, string
                 Comprension_B6, string Comprension_B7, string Comprension_B8, string Comprension_B9, string Comprension_B10)
@@ -205,10 +206,6 @@ namespace Comprension.Controllers
             Session.Clear();
             return View("~/Views/Home/Final.cshtml");
         }
-        //BORRAR
-        public ActionResult Comprension() {
-            return View("~/Views/Home/Comprension.cshtml");
-        }
 
         /// <summary>
         /// Permite descargar un archivo .xlsx con los datos de la BBDD
@@ -252,7 +249,7 @@ namespace Comprension.Controllers
 
                 Libro.SetCellValue("C" + Fila, Dato);
 
-                Libro.SetCellValue("D" + Fila, Sujeto.ID);
+                Libro.SetCellValue("D" + Fila, Int32.Parse(Sujeto.ID));
                 Libro.SetCellValue("E" + Fila, Sujeto.Apellido);
                 Libro.SetCellValue("F" + Fila, Sujeto.Nombre);
                 Libro.SetCellValue("G" + Fila, Sujeto.Edad);
@@ -484,7 +481,7 @@ namespace Comprension.Controllers
         }
 
         /// <summary>
-        /// Borra todos los Archivos que se encuentran en Exportar/
+        /// Borra todos los Archivos que se encuentran en Exportar
         /// </summary>
         private void Borrar_Archivos()
         {

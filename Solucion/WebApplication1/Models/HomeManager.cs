@@ -31,7 +31,7 @@ namespace Comprension.Models
                 return null;
             }
         }
-
+        
         /// <summary>
         /// Inserta en BBDD a un sujeto
         /// </summary>
@@ -66,11 +66,12 @@ namespace Comprension.Models
             Conexion.Close();
             return a;
         }
-
+        
         /// <summary>
         /// Actualiza al Sujeto que se insertó con el método Cargar. Agrega todos los datos del monitoreo.
         /// </summary>
         /// <param name="Sujeto"></param>
+        [HttpPost]
         public void ActualizarMonitoreo(Sujeto Sujeto)
         {
             //ID, Libros, Orden_de_Presentacion, Respuesta_Monitoreo
@@ -416,6 +417,7 @@ namespace Comprension.Models
             Conexion.Close();
         }
 
+        [HttpPost]
         public void ActualizarComprension(Sujeto Sujeto)
         {
             SqlConnection Conexion = new SqlConnection(ConfigurationManager.AppSettings["ConexionBase"]);

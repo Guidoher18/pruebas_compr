@@ -29,12 +29,14 @@ $(document).ready(function () {
     $("#Increase").on("click", function () {
         var j = $("#Text>p>p").css("font-size");
         $("#Text>p>p").css("font-size", (parseInt(j) + 2).toString() + "px");
+        Habilitar_Siguiente_Lectura();
     });
 
     //Disminuye el tamaño de la letra
     $("#Decrease").on("click", function () {
         var j = $("#Text>p>p").css("font-size");
         $("#Text>p>p").css("font-size", (parseInt(j) - 2).toString() + "px");
+        Habilitar_Siguiente_Lectura();
     });
 
     //Botón Siguiente
@@ -234,7 +236,37 @@ $(document).ready(function () {
         $("#Container").animate({ scrollTop: 0 }, false);
     }
 
+    function Habilitar_Siguiente_Lectura() {
+        var Text = document.getElementById("Text");
+        var Container = document.getElementById("Container");
+        if ($("#Container").scrollTop() > (Text.clientHeight - Container.clientHeight)) {
+            $("#Siguiente").attr("disabled", false);
+        }
+        else {
+            $("#Siguiente").attr("disabled", true);
+        }
+    }
+
+    var Container_ID = document.getElementById("Container");
+    Container_ID.addEventListener('scroll', function (e) {
+        Habilitar_Siguiente_Lectura();
+    });
+
     function Itinerario() {
+
+        function Deshabilitar_Botones(a) {
+            $("#Increase").attr("disabled", a);
+            $("#Decrease").attr("disabled", a);
+        }
+
+        function Reiniciar_Text() {
+            Ir_Arriba_Scroll();
+            $("#Text").hide();            
+            $("#Text>h3").html("");
+            $("#Text>p").html("");
+
+        }
+
         switch (Secuencia) {
             case 0: //Modal con Instrucción General
                 Orden_Aleatorio();
@@ -244,6 +276,7 @@ $(document).ready(function () {
                 break;
 
             case 1: //Texto #1
+                $("#Siguiente").attr("disabled", true);
                 switch (Orden_de_Presentacion) {
                     case "A,B":
                         $("#Text>h3").html("MEMORIA HUMANA");
@@ -258,12 +291,8 @@ $(document).ready(function () {
                 break;
 
             case 2: //Cuestionario #1
-                $("#Increase").attr("disabled", true);
-                $("#Decrease").attr("disabled", true);
-                $("#Text").hide();
-                Ir_Arriba_Scroll();
-                $("#Text>h3").html("");
-                $("#Text>p").html("");
+                Deshabilitar_Botones(true);
+                Reiniciar_Text();
                 switch (Orden_de_Presentacion) {
                     case "A,B":
                         $("#Cuestionario_A").show();
@@ -279,8 +308,7 @@ $(document).ready(function () {
                 $("#Cuestionario_A").hide();
                 $("#Cuestionario_B").hide();
 
-                $("#Increase").attr("disabled", false);
-                $("#Decrease").attr("disabled", false);
+                Deshabilitar_Botones(false);
 
                 $("#Modal_Title").html("Lee atentamente");
                 $("#Modal_Body").html("<p>A continuación se te presentará otro texto.</br> Por favor, leelo atentamente.</br> Luego deberás contestar algunas preguntas en relación al mismo.</p>");
@@ -288,6 +316,7 @@ $(document).ready(function () {
                 break;
 
             case 4: //Texto #2
+                $("#Siguiente").attr("disabled", true);
                 switch (Orden_de_Presentacion) {
                     case "A,B":
                         $("#Text>h3").html("MODELO ESTANDAR EN FÍSICA");
@@ -303,12 +332,8 @@ $(document).ready(function () {
                 break;
 
             case 5: //Cuestionario #2
-                $("#Increase").attr("disabled", true);
-                $("#Decrease").attr("disabled", true);
-                $("#Text").hide();
-                Ir_Arriba_Scroll();
-                $("#Text>h3").html("");
-                $("#Text>p").html("");
+                Deshabilitar_Botones(true);
+                Reiniciar_Text();
                 switch (Orden_de_Presentacion) {
                     case "A,B":
                         $("#Cuestionario_B").show();
