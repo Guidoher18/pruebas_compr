@@ -25,7 +25,7 @@ namespace Comprension.Controllers
             }
             else
             {*/
-                return View("~/Views/Home/Consentimiento.cshtml");
+            return View("~/Views/Home/Consentimiento.cshtml");
             //}
         }
 
@@ -58,7 +58,7 @@ namespace Comprension.Controllers
                 Sujeto.Mail = Mail;
 
                 Session["Sujeto"] = Sujeto;
-                Session.Timeout = 60;
+               
                 return View("~/Views/Home/Digitos.cshtml");
             }
             else
@@ -91,10 +91,9 @@ namespace Comprension.Controllers
             Sujeto.Respuesta_DL = Respuesta_DL;
             Sujeto.Puntaje_DL = Puntaje_DL;
             Sujeto.DL_TR = DL_TR;
-            Session.Clear();
 
             HomeManager Manager = new HomeManager();
-            Session["Sujeto.ID"] = Manager.Cargar(Sujeto);
+            Session["ID"] = Manager.Cargar(Sujeto);
 
             return View("~/Views/Home/Monitoreo.cshtml");
         }
@@ -111,7 +110,7 @@ namespace Comprension.Controllers
         {
             Sujeto Sujeto = new Sujeto();
 
-            Sujeto.ID = (string)Session["Sujeto.ID"];
+            Sujeto.ID = (string)Session["ID"];
 
             Sujeto.Libros = Libros;
             Sujeto.Orden_de_Presentacion = Orden_de_Presentacion;
@@ -162,8 +161,8 @@ namespace Comprension.Controllers
                 Comprension_B6, string Comprension_B7, string Comprension_B8, string Comprension_B9, string Comprension_B10)
         {
             Sujeto Sujeto = new Sujeto();
-            Sujeto.ID = (string)Session["Suejto.ID"];
 
+            Sujeto.ID = (string)Session["ID"];
 
             Sujeto.FechayHora_Salida = Fecha_Hora_ARG(); //Fecha y Hora al momento de Finalizar Comprensión
 
@@ -203,7 +202,6 @@ namespace Comprension.Controllers
             HomeManager Manager = new HomeManager();
             Manager.ActualizarComprension(Sujeto);
 
-            Session.Clear();
             return View("~/Views/Home/Final.cshtml");
         }
 
@@ -238,13 +236,15 @@ namespace Comprension.Controllers
 
                 if (FechayHoraInicio != "" && FechayHoraInicio != null && FechayHoraSalida != "" && FechayHoraSalida != null)
                 {
-                    DateTime F = DateTime.Parse(FechayHoraInicio);
-                    DateTime G = DateTime.Parse(FechayHoraSalida);
-                    Dato = (G.Subtract(F)).ToString();
-                }
-                else
-                {
-                    Dato = "";
+                    try
+                    {
+                        CultureInfo Culture = new CultureInfo("es-Es");
+                        DateTime F = DateTime.Parse(FechayHoraInicio, Culture);
+                        DateTime G = DateTime.Parse(FechayHoraSalida, Culture);
+
+                        Dato = (G.Subtract(F)).ToString();
+                    }
+                    catch (System.FormatException){ }
                 }
 
                 Libro.SetCellValue("C" + Fila, Dato);
@@ -465,7 +465,7 @@ namespace Comprension.Controllers
             Libro.SetActiveCell("A1");
 
             //Nombre del Archivo y Descarga
-            string Fecha = DateTime.Now.ToString();
+            string Fecha = Fecha_Hora_ARG();        //11/01/2020 09:00:47
             Fecha = Fecha.Replace("/", "-");
             Fecha = Fecha.Replace(":", ".");
             Fecha = Fecha.Replace(" ", "_");
@@ -509,8 +509,50 @@ namespace Comprension.Controllers
 
             string Fecha = DateTime.UtcNow.ToString("d", Culture); //11/01/2020
             string Hora = DateTime.UtcNow.ToString("T", Culture);  //12:00:47 UTC
+            string Hora_ARG;
 
-            var Hora_ARG = DateTime.Parse(Hora) - DateTime.Parse("3:00:00"); //Argentina UTC-3
+            //Las 00, 01 y 02 en UTC corresponden a las 21, 22 y 23 del día anterior en UTC -3 ARG
+            char[] charSeparators = new char[] { ':' };
+            string[] Tiempo_Partido = Hora.Split(charSeparators, StringSplitOptions.None); //[12, 00, 47]
+
+            // a es el string de la hora correspondiente UTC --> UTC -3 [00 --> 21, 01--> 22, 02 --> 23]
+            void Restar_Hora_Fecha (string a){ 
+                Fecha = DateTime.UtcNow.AddDays(-1).ToString("d", Culture);
+                Hora_ARG = a + ":" + Tiempo_Partido[1] + ":" + Tiempo_Partido[2];
+            }
+
+            switch (Tiempo_Partido[0]) {
+                default: int b = Int32.Parse(Tiempo_Partido[0]) - 3;
+                    Hora_ARG = b.ToString() + ":" + Tiempo_Partido[1] + ":" + Tiempo_Partido[2];    //Argentina UTC-3
+
+                    if (b < 10)
+                    {
+                        Hora_ARG = "0" + Hora_ARG;    //Argentina UTC-3
+                    }
+                    break;
+
+                case "0":
+                    Restar_Hora_Fecha("21");
+                    break;
+
+                case "00": Restar_Hora_Fecha("21");
+                    break;
+
+                case "1":
+                    Restar_Hora_Fecha("22");
+                    break;
+
+                case "01": Restar_Hora_Fecha("22");
+                    break;
+
+                case "2":
+                    Restar_Hora_Fecha("23");
+                    break;
+
+                case "02":
+                    Restar_Hora_Fecha("23");
+                    break;
+            }
 
             return Fecha + " " + Hora_ARG; //11/01/2020 09:00:47
         }

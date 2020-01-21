@@ -156,6 +156,7 @@
     <Content Include="Audio\beep.wav" />
     <Content Include="Content\Comprension.css" />
     <Content Include="Content\Error.css" />
+    <Content Include="Content\Final.css" />
     <Content Include="Content\img\Ejemplo_fragmento.jpg" />
     <Content Include="Content\img\Ejemplo_palabra.jpg" />
     <Content Include="Content\img\Meme.jpeg" />
@@ -201,6 +202,7 @@
     <Content Include="Views\Home\Comprension.cshtml" />
     <Content Include="Views\Home\Monitoreo.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
