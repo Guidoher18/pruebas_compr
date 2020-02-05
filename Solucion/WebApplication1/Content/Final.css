@@ -4,3 +4,11 @@
     align-items: center;
     height: 100vh;
 }
+
+#Container{
+    text-align:center;
+}
+
+    #Container > img {
+        height:380px;
+    }

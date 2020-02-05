@@ -18,8 +18,8 @@
 
         <div id="Pregunta">
             <p>¿Existe alguna información incorrecta o incoherente?</p>
-            <input type="radio" name="Incoherente" id="Si" value="Si"><label id="Si_Label">&nbsp;Si</label><!--&nbsp;Si</input>-->
-            <input type="radio" name="Incoherente" id="No" value="No"><label id="No_Label">&nbsp;No</label><!--</input>-->
+            <input type="radio" name="Incoherente" id="Si" value="Si"><label id="Si_Label">&nbsp;Si</label>
+            <input type="radio" name="Incoherente" id="No" value="No"><label id="No_Label">&nbsp;No</label>
         </div>
 
         <button type="button" class="btn btn-primary col-md-12" id="Siguiente" disabled>
@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    <form action="@Url.Action("Comprension","Home")" method="post">
+    <form action="@Url.Action("CargarMonitoreo","Home")" method="post">
         <input type="text" id="Libros" name="Libros" />
         <input type="text" id="Orden_de_Presentacion" name="Orden_de_Presentacion" />
         <input type="text" id="Respuesta_Total" name="Respuesta_Total" />

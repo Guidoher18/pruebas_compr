@@ -1,0 +1,29 @@
+﻿body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#Container{
+    text-align:center;
+}
+
+    #Container > img {
+        height:230px;
+    }
+
+    #Container > a {
+        font-size: 2.8125vw;
+        cursor:pointer;
+        color: #007bff;
+        background-color:transparent;
+        border: none;
+    }
+
+        #Container > a:hover {
+        color: #fff;
+        background-color: #007bff;
+        border:none;
+        text-decoration:none;
+        }

@@ -58,7 +58,7 @@ namespace Comprension.Controllers
                 Sujeto.Mail = Mail;
 
                 Session["Sujeto"] = Sujeto;
-               
+
                 return View("~/Views/Home/Digitos.cshtml");
             }
             else
@@ -79,7 +79,7 @@ namespace Comprension.Controllers
         /// <param name="DL_TR"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Monitoreo(string Respuesta_DD, int Puntaje_DD, int DD_TR, string Respuesta_DL, int Puntaje_DL, int DL_TR)
+        public ActionResult CargarDigitos(string Respuesta_DD, int Puntaje_DD, int DD_TR, string Respuesta_DL, int Puntaje_DL, int DL_TR)
         {
             Sujeto Sujeto = new Sujeto();
             Sujeto = Session["Sujeto"] as Sujeto;
@@ -95,6 +95,12 @@ namespace Comprension.Controllers
             HomeManager Manager = new HomeManager();
             Session["ID"] = Manager.Cargar(Sujeto);
 
+            ViewBag.Vista = "Monitoreo";
+            return View("~/Views/Home/Animo.cshtml");
+        }
+
+        public ActionResult Monitoreo()
+        {
             return View("~/Views/Home/Monitoreo.cshtml");
         }
 
@@ -106,7 +112,7 @@ namespace Comprension.Controllers
         /// <param name="Respuesta_Total"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Comprension(string Libros, string Orden_de_Presentacion, string Respuesta_Total)
+        public ActionResult CargarMonitoreo(string Libros, string Orden_de_Presentacion, string Respuesta_Total)
         {
             Sujeto Sujeto = new Sujeto();
 
@@ -120,6 +126,11 @@ namespace Comprension.Controllers
 
             Manager.ActualizarMonitoreo(Sujeto);
 
+            ViewBag.Vista = "Comprension";
+            return View("~/Views/Home/Animo.cshtml");
+        }
+
+        public ActionResult Comprension() {
             return View("~/Views/Home/Comprension.cshtml");
         }
 
@@ -244,7 +255,7 @@ namespace Comprension.Controllers
 
                         Dato = (G.Subtract(F)).ToString();
                     }
-                    catch (System.FormatException){ }
+                    catch (System.FormatException) { }
                 }
 
                 Libro.SetCellValue("C" + Fila, Dato);
@@ -516,7 +527,7 @@ namespace Comprension.Controllers
             string[] Tiempo_Partido = Hora.Split(charSeparators, StringSplitOptions.None); //[12, 00, 47]
 
             // a es el string de la hora correspondiente UTC --> UTC -3 [00 --> 21, 01--> 22, 02 --> 23]
-            void Restar_Hora_Fecha (string a){ 
+            void Restar_Hora_Fecha(string a) {
                 Fecha = DateTime.UtcNow.AddDays(-1).ToString("d", Culture);
                 Hora_ARG = a + ":" + Tiempo_Partido[1] + ":" + Tiempo_Partido[2];
             }

@@ -809,7 +809,7 @@ $(document).ready(function () {
                 $('button').removeAttr('id');
                 $('button').attr('id', 'Aceptar');
                 $('button').html('Aceptar');
-                Consigna_Boton('Te vamos a presentar una serie de letras y números </br> de a uno por vez. Tu objetivo es intentar retener la serie. <br> Luego de que aparezca la palabra "recuerdo" deberás escribir, con tu teclado, primero las letras en orden alfabético </br>y luego los dígitos en orden ascendente.', 'Vamos a hacer unos ensayos de prueba', 'Va a aparecer una serie de dos ítems, letras y números. </br> Tendrás que recordarlos y escribir con tu teclado, primero las letras y luego los números.', '6,S');
+                Consigna_Boton('Ahora, te vamos a presentar una serie de letras y números </br> de a uno por vez. Tu objetivo es intentar retener la serie. <br> Luego de que aparezca la palabra "Recuerdo" deberás escribir, con tu teclado, primero las letras en orden alfabético </br>y luego los dígitos en orden ascendente.', 'Vamos a hacer unos ensayos de prueba', 'Va a aparecer una serie de dos ítems, letras y números. </br> Tendrás que recordarlos y escribir con tu teclado, primero las letras y luego los números.', '6,S');
                 Numero_de_Tarea += 1;
                 break;
 

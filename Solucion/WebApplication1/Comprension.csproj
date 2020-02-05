@@ -156,10 +156,12 @@
     <Content Include="Audio\beep.wav" />
     <Content Include="Content\Comprension.css" />
     <Content Include="Content\Error.css" />
+    <Content Include="Content\Animo.css" />
     <Content Include="Content\Final.css" />
     <Content Include="Content\img\Ejemplo_fragmento.jpg" />
     <Content Include="Content\img\Ejemplo_palabra.jpg" />
     <Content Include="Content\img\Meme.jpeg" />
+    <Content Include="Content\img\OK.png" />
     <Content Include="Content\Monitoreo.css" />
     <Content Include="Content\Consentimiento.css" />
     <Content Include="Content\Digitos.css" />
@@ -203,6 +205,7 @@
     <Content Include="Views\Home\Monitoreo.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <Content Include="Views\Home\Animo.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

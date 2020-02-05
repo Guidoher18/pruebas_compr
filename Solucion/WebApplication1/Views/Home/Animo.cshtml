@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Ánimo";
+    Layout = "../Shared/Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="Stylesheet" type="text/css" href="~/Content/Animo.css" />
+}
+
+<div id="Container">
+    <h1>¡Muy Bien!</h1>
+    <img src="~/Content/img/OK.png"/>
+    <br />
+    <h1>Ahora vas a realizar otra tarea...</h1>
+    <h1>¡Prestá Atención!</h1>
+    <br />
+    <a class="btn-primary btn-primary form-control" href="@Url.Action(@ViewBag.Vista,"Home")">Siguiente</a>
+</div>
