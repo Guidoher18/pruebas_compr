@@ -567,46 +567,5 @@ namespace Comprension.Controllers
 
             return Fecha + " " + Hora_ARG; //11/01/2020 09:00:47
         }
-
-        /* Código con Microsoft.Interopt
-        private void Establecer_Formulas(string Ruta, int Fila_Final)
-        {
-            Excel.Application App;
-            Excel._Workbook Workbook;
-            Excel._Worksheet Sheet;
-            Excel.Range Range;
-
-            App = new Excel.Application();
-
-            App.Visible = false;
-
-            Workbook = App.Workbooks.Open(Ruta);
-
-            Sheet = App.Worksheets[1];
-
-            Sheet.Activate();
-
-            Range = Sheet.get_Range("J2");
-
-            Range.AutoFill(Sheet.get_Range("J2", "J" + Fila_Final), Excel.XlAutoFillType.xlFillDefault);
-
-            Workbook.Save();
-            //Workbook.SaveAs(Ruta, Excel.XlFileFormat.xlWorkbookDefault, AccessMode: Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange);
-
-            Workbook.Close();
-        }
-
-        //https://social.msdn.microsoft.com/Forums/vstudio/en-US/d438c273-6876-4d2b-9f25-842838bce0b4/excel-is-still-running-though-i-quit-and-released-the-object?forum=vsto
-        private void killExcel()
-        {
-            System.Diagnostics.Process[] PROC = System.Diagnostics.Process.GetProcessesByName("EXCEL");
-            foreach (System.Diagnostics.Process PK in PROC)
-            {
-                if (PK.MainWindowTitle.Length == 0)
-                {
-                    PK.Kill();
-                }
-            }
-        }*/
     }
 }
