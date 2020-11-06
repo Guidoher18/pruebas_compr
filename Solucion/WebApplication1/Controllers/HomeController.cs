@@ -26,7 +26,7 @@ namespace Comprension.Controllers
             else
             {*/
             return View("~/Views/Home/Consentimiento.cshtml");
-            //}
+            //}          
         }
 
         /// <summary>

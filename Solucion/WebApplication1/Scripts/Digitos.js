@@ -389,10 +389,12 @@ $(document).ready(function () {
 
     var Secuencia = function (y) {                //Reproduce el Beep antes de f(x)Mostrar la secuencia
         Habilitar_Respuesta = 0;
-        audio.play();
         setTimeout(function () {
-            Mostrar(y);
-        }, 2500)
+            audio.play();
+            setTimeout(function () {
+                Mostrar(y);
+            }, 2000)
+        },0);
     };
 
     var Mostrar = function (k) {                  //Parametros es la lista que contiene los números a mostrar
@@ -430,6 +432,9 @@ $(document).ready(function () {
     };
 
     //Funciones encadenadas que permiten mostrar la secuencia de hasta nueve números durando 2seg c/u y dejando un intervalo de 1seg entre números
+
+    var tiempoEntreItems = 1100; // 1000ms son del ítem que se presenta a eso se le suma tiempo entre los items
+   
     var A = function (Serie, a, b, c, d, e, f, g, h, i) {
         $('#Test>p').html(a);
         setTimeout(function () {
@@ -442,7 +447,7 @@ $(document).ready(function () {
                         break;
                 }
             }, 1000);
-        }, 2000);
+        }, tiempoEntreItems);
     };
 
     var B = function (Serie, b, c, d, e, f, g, h, i) {
@@ -456,7 +461,7 @@ $(document).ready(function () {
                     default: C(Serie, c, d, e, f, g, h, i);
                 }
             }, 1000);
-        }, 2000);
+        }, tiempoEntreItems);
     };
 
     var C = function (Serie, c, d, e, f, g, h, i) {
@@ -470,7 +475,7 @@ $(document).ready(function () {
                     default: D(Serie, d, e, f, g, h, i);
                 }
             }, 1000);
-        }, 2000);
+        }, tiempoEntreItems);
     };
 
     var D = function (Serie, d, e, f, g, h, i) {
@@ -484,7 +489,7 @@ $(document).ready(function () {
                     default: E(Serie, e, f, g, h, i);
                 }
             }, 1000);
-        }, 2000);
+        }, tiempoEntreItems);
     };
 
     var E = function (Serie, e, f, g, h, i) {
@@ -498,7 +503,7 @@ $(document).ready(function () {
                     default: F(Serie, f, g, h, i);
                 }
             }, 1000);
-        }, 2000);
+        }, tiempoEntreItems);
     };
 
     var F = function (Serie, f, g, h, i) {
@@ -512,7 +517,7 @@ $(document).ready(function () {
                     default: G(Serie, g, h, i);
                 }
             }, 1000);
-        }, 2000);
+        }, tiempoEntreItems);
     };
 
     var G = function (Serie, g, h, i) {
@@ -526,7 +531,7 @@ $(document).ready(function () {
                     default: H(Serie, h, i);
                 }
             }, 1000);
-        }, 2000);
+        }, tiempoEntreItems);
     };
 
     var H = function (Serie, h, i) {
@@ -540,7 +545,7 @@ $(document).ready(function () {
                     default: I(i);
                 }
             }, 1000);
-        }, 2000);
+        }, tiempoEntreItems);
     };
 
     var I = function (i) {
@@ -553,7 +558,7 @@ $(document).ready(function () {
                         break;
                 }
             }, 1000);
-        }, 2000);
+        }, tiempoEntreItems);
     }
 
     var Recuerdo = function () {
@@ -573,7 +578,7 @@ $(document).ready(function () {
                     }
 
                     Habilitar_Respuesta = 1;
-                }, 2000);
+                }, tiempoEntreItems);
                 break;
             case 1: Siguiente_Tarea();
                 break;
