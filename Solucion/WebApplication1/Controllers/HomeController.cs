@@ -40,7 +40,7 @@ namespace Comprension.Controllers
         /// <param name="Lugar_de_Residencia"></param>
         /// <param name="Mail"></param>
         [HttpPost]
-        public ActionResult Digitos(string Apellido, string Nombre, int Edad, string Sexo, string Nivel_Educativo, string Lugar_de_Residencia, string Mail)
+        public ActionResult Digitos(string Apellido, string Nombre, int Edad, string Sexo, string Nivel_Educativo, string Ultimos_DNI, string Lugar_de_Residencia, string Mail)
         {
             HomeManager Manager = new HomeManager();
 
@@ -48,12 +48,13 @@ namespace Comprension.Controllers
             {
                 Sujeto Sujeto = new Sujeto();
 
-                Sujeto.FechayHora_Entrada = Fecha_Hora_ARG(); //Fecha y Hora al momento de Aceptar el Concentimiento Informado
+                Sujeto.FechayHora_Entrada_Digitos = Fecha_Hora_ARG(); //Fecha y Hora al momento de Aceptar el Concentimiento Informado
                 Sujeto.Apellido = Apellido.ToUpper();
                 Sujeto.Nombre = Nombre.ToUpper();
                 Sujeto.Edad = Edad;
                 Sujeto.Sexo = Sexo;
                 Sujeto.Nivel_Educativo = Nivel_Educativo;
+                Sujeto.Ultimos_DNI = Ultimos_DNI;
                 Sujeto.Lugar_de_Residencia = Lugar_de_Residencia;
                 Sujeto.Mail = Mail;
 
@@ -92,12 +93,45 @@ namespace Comprension.Controllers
             Sujeto.Puntaje_DL = Puntaje_DL;
             Sujeto.DL_TR = DL_TR;
 
-            HomeManager Manager = new HomeManager();
-            Session["ID"] = Manager.Cargar(Sujeto);
+            Sujeto.FechayHora_Salida_Digitos = Fecha_Hora_ARG();
+            Sujeto.Completo_Digitos = "Si";
+            Sujeto.Completo_Monitoreo = "No";
+            Sujeto.Completo_Comprension = "No";
 
-            ViewBag.Vista = "Monitoreo";
-            return View("~/Views/Home/Animo.cshtml");
+            HomeManager Manager = new HomeManager();
+            Manager.Cargar(Sujeto);
+
+            ViewBag.Parte = "Primera Parte";
+            return View("~/Views/Home/FinalParcial.cshtml");
         }
+
+
+
+
+
+
+        public ActionResult FinalParcial() {
+            ViewBag.Parte = "Primera Parte";
+            return View();
+        }
+
+        public ActionResult ContinuarEjercicios()
+        {
+            ViewBag.Parte = "Segunda Parte";
+            return View();
+        }
+
+
+
+        //PARA BORRAR!!!!! - FINAL TOTAL
+        public ActionResult Fin()
+        {
+            return View("~/Views/Home/Final.cshtml");
+        }
+
+
+        //AGREGAR ESTO !!!!!
+        //ViewBag.Vista = "Monitoreo";
 
         public ActionResult Monitoreo()
         {
@@ -129,6 +163,10 @@ namespace Comprension.Controllers
             ViewBag.Vista = "Comprension";
             return View("~/Views/Home/Animo.cshtml");
         }
+
+
+
+
 
         public ActionResult Comprension() {
             return View("~/Views/Home/Comprension.cshtml");
@@ -175,7 +213,7 @@ namespace Comprension.Controllers
 
             Sujeto.ID = (string)Session["ID"];
 
-            Sujeto.FechayHora_Salida = Fecha_Hora_ARG(); //Fecha y Hora al momento de Finalizar Comprensión
+            Sujeto.FechayHora_Salida_Digitos = Fecha_Hora_ARG(); //Fecha y Hora al momento de Finalizar Comprensión
 
             Sujeto.Lectura_A_TR = Lectura_A_TR;
             Sujeto.Lectura_B_TR = Lectura_B_TR;
@@ -237,12 +275,12 @@ namespace Comprension.Controllers
                 int Fila = i + 1;
 
                 //Datos Sociodemográficos
-                Libro.SetCellValue("A" + Fila, Sujeto.FechayHora_Entrada);
-                Libro.SetCellValue("B" + Fila, Sujeto.FechayHora_Salida);
+                Libro.SetCellValue("A" + Fila, Sujeto.FechayHora_Entrada_Digitos);
+                Libro.SetCellValue("B" + Fila, Sujeto.FechayHora_Salida_Digitos);
 
                 // C Duración: duración total de la sesión del Sujeto
-                string FechayHoraInicio = Sujeto.FechayHora_Entrada;
-                string FechayHoraSalida = Sujeto.FechayHora_Salida;
+                string FechayHoraInicio = Sujeto.FechayHora_Entrada_Digitos;
+                string FechayHoraSalida = Sujeto.FechayHora_Salida_Digitos;
                 string Dato = "";
 
                 if (FechayHoraInicio != "" && FechayHoraInicio != null && FechayHoraSalida != "" && FechayHoraSalida != null)

@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = ViewBag.Parte;
+    Layout = "../Shared/Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="Stylesheet" type="text/css" href="~/Content/Animo.css" />
+}
+
+<div id="Container">
+    <h1>¡Gracias por ingresar nuevamente!</h1>
+    <br />
+    <h3>A continuación, podrás completar la <span>@ViewBag.Parte</span> de los Ejercicios.</h3>
+    <br />
+    <h3>Primero, vamos a verificar tu información.</h3>
+    <br />
+    <h4>Ingresá tu e-mail <br />(el mismo que utilizaste para el <em>Consentimiento Informado</em>)
+    <br /> 
+    y los Últimos 3 dígitos del DNI
+    </h4>
+    <form action="@Url.Action("Digitos","Home")" method="post" class="col-md-7">
+        <div class="row">
+            <input type="email" class="form-control col" name="Mail" placeholder="ejemplo@mail.com" required /><span> &nbsp;</span>
+            <input name="digitos_DNI" class="form-control col-2" type="text" pattern="\d{3}" placeholder="123"required/>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Comprobar" id="continuarSubmit" />
+    </form>
+</div>

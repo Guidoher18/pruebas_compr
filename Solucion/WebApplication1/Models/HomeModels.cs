@@ -2,14 +2,18 @@
 {
     public class Sujeto
     {
-        public string FechayHora_Entrada { get; set; }
-        public string FechayHora_Salida { get; set; }
+        public string Completo_Digitos { get; set; }
+        public string Completo_Monitoreo { get; set; }
+        public string Completo_Comprension { get; set; }
+        public string FechayHora_Entrada_Digitos { get; set; }
+        public string FechayHora_Salida_Digitos { get; set; }
         public string ID { get; set; }
         public string Apellido { get; set; }
         public string Nombre { get; set; }
         public int Edad { get; set; }
         public string Sexo { get; set; }
         public string Nivel_Educativo { get; set; }
+        public string Ultimos_DNI { get; set; }
         public string Lugar_de_Residencia { get; set; }
         public string Mail { get; set; }
 

@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Final de la " + ViewBag.Parte;
+    Layout = "../Shared/Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="Stylesheet" type="text/css" href="~/Content/Animo.css" />
+}
+
+<div id="Container">
+    <h1>¡Muy Bien!</h1>
+    <img src="~/Content/img/OK.png"/>
+    <br />
+    <h1>Finalizaste la <span>@ViewBag.Parte</span> de los Ejercicios</h1>
+    <h1>¡Pronto recibirás otro link para continuar con el resto!</h1>
+    <br />
+    <a class="btn-primary btn-primary form-control" href="https://www.google.com">Salir a Google</a>
+</div>

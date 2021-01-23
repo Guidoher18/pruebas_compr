@@ -38,19 +38,24 @@ namespace Comprension.Models
         /// <param name="Sujeto"></param>
         /// <returns></returns>
         [HttpPost]
-        public string Cargar(Sujeto Sujeto)
+        public void Cargar(Sujeto Sujeto)
         {
             SqlConnection Conexion = new SqlConnection(ConfigurationManager.AppSettings["ConexionBase"]);
             Conexion.Open();
             SqlCommand Sentencia = Conexion.CreateCommand();
-            Sentencia.CommandText = "INSERT INTO Resultados (FechayHora_Entrada, Apellido, Nombre, Edad, Sexo, Nivel_Educativo, Lugar_de_Residencia, Mail, Respuesta_DD, Puntaje_DD, DD_TR, Respuesta_DL, Puntaje_DL, DL_TR) OUTPUT INSERTED.ID VALUES(@FechayHora_Entrada, @Apellido, @Nombre, @Edad, @Sexo, @Nivel_Educativo, @Lugar_de_Residencia, @Mail, @Respuesta_DD, @Puntaje_DD, @DD_TR, @Respuesta_DL, @Puntaje_DL, @DL_TR)";
+            Sentencia.CommandText = "INSERT INTO Resultados (Completo_Digitos, Completo_Monitoreo, Completo_Comprension, FechayHora_Entrada_Digitos, FechayHora_Salida_Digitos, Apellido, Nombre, Edad, Sexo, Nivel_Educativo, Ultimos_DNI, Lugar_de_Residencia, Mail, Respuesta_DD, Puntaje_DD, DD_TR, Respuesta_DL, Puntaje_DL, DL_TR) OUTPUT INSERTED.ID VALUES(@Completo_Digitos, @Completo_Monitoreo, @Completo_Comprension, @FechayHora_Entrada_Digitos, @FechayHora_Salida_Digitos, @Apellido, @Nombre, @Edad, @Sexo, @Nivel_Educativo, @Ultimos_DNI, @Lugar_de_Residencia, @Mail, @Respuesta_DD, @Puntaje_DD, @DD_TR, @Respuesta_DL, @Puntaje_DL, @DL_TR)";
 
-            Sentencia.Parameters.AddWithValue("@FechayHora_Entrada", Sujeto.FechayHora_Entrada);
+            Sentencia.Parameters.AddWithValue("@Completo_Digitos", Sujeto.Completo_Digitos);
+            Sentencia.Parameters.AddWithValue("@Completo_Monitoreo", Sujeto.Completo_Monitoreo);
+            Sentencia.Parameters.AddWithValue("@Completo_Comprension", Sujeto.Completo_Comprension);
+            Sentencia.Parameters.AddWithValue("@FechayHora_Entrada_Digitos", Sujeto.FechayHora_Entrada_Digitos);
+            Sentencia.Parameters.AddWithValue("@FechayHora_Salida_Digitos", Sujeto.FechayHora_Salida_Digitos);
             Sentencia.Parameters.AddWithValue("@Apellido", Sujeto.Apellido);
             Sentencia.Parameters.AddWithValue("@Nombre", Sujeto.Nombre);
             Sentencia.Parameters.AddWithValue("@Edad", Sujeto.Edad);
             Sentencia.Parameters.AddWithValue("@Sexo", Sujeto.Sexo);
             Sentencia.Parameters.AddWithValue("@Nivel_Educativo", Sujeto.Nivel_Educativo);
+            Sentencia.Parameters.AddWithValue("@Ultimos_DNI", Sujeto.Ultimos_DNI);
             Sentencia.Parameters.AddWithValue("@Lugar_de_Residencia", Sujeto.Lugar_de_Residencia);
             Sentencia.Parameters.AddWithValue("@Mail", Sujeto.Mail);
 
@@ -62,9 +67,8 @@ namespace Comprension.Models
             Sentencia.Parameters.AddWithValue("@Puntaje_DL", Sujeto.Puntaje_DL);
             Sentencia.Parameters.AddWithValue("@DL_TR", Sujeto.DL_TR);
 
-            var a = Sentencia.ExecuteScalar().ToString();
+            Sentencia.ExecuteScalar().ToString();
             Conexion.Close();
-            return a;
         }
         
         /// <summary>
@@ -428,7 +432,7 @@ namespace Comprension.Models
 
             Sentencia.CommandText = "UPDATE Resultados SET FechayHora_Salida = @FechayHora_Salida, Lectura_A_TR = @Lectura_A_TR, Lectura_B_TR = @Lectura_B_TR, Cuestionario_A_TR = @Cuestionario_A_TR, Cuestionario_B_TR = @Cuestionario_B_TR, Comprension_Orden_de_Presentacion = @Comprension_Orden_de_Presentacion,Puntaje_A_Comprension = @Puntaje_A_Comprension, Puntaje_B_Comprension = @Puntaje_B_Comprension, Comprension_A1 = @Comprension_A1, Comprension_A2 = @Comprension_A2, Comprension_A3 = @Comprension_A3, Comprension_A4 = @Comprension_A4, Comprension_A5 = @Comprension_A5, Comprension_A6 = @Comprension_A6, Comprension_A7 = @Comprension_A7, Comprension_A8 = @Comprension_A8, Comprension_A9 = @Comprension_A9, Comprension_A10 = @Comprension_A10, Comprension_B1 = @Comprension_B1, Comprension_B2 = @Comprension_B2, Comprension_B3 = @Comprension_B3, Comprension_B4 = @Comprension_B4, Comprension_B5 = @Comprension_B5, Comprension_B6 = @Comprension_B6, Comprension_B7 = @Comprension_B7, Comprension_B8 = @Comprension_B8, Comprension_B9 = @Comprension_B9, Comprension_B10 = @Comprension_B10 WHERE ID = @ID";
 
-            Sentencia.Parameters.AddWithValue("@FechayHora_Salida", Sujeto.FechayHora_Salida);
+            Sentencia.Parameters.AddWithValue("@FechayHora_Salida", Sujeto.FechayHora_Salida_Digitos);
 
             Sentencia.Parameters.AddWithValue("@Lectura_A_TR", Sujeto.Lectura_A_TR);
             Sentencia.Parameters.AddWithValue("@Lectura_B_TR", Sujeto.Lectura_B_TR);
@@ -492,8 +496,8 @@ namespace Comprension.Models
                     Dictionary<string, string> SinNull_string = new Dictionary<string, string>();
 
                     string[] Propiedades_string = {
-                        "FechayHora_Entrada",
-                        "FechayHora_Salida",
+                        "FechayHora_Entrada_Digitos",
+                        "FechayHora_Salida_Digitos",
                         "Apellido",
                         "Nombre",
                         "Sexo",
@@ -693,8 +697,8 @@ namespace Comprension.Models
 
                     Sujeto Sujeto = new Sujeto();
 
-                    Sujeto.FechayHora_Entrada = SinNull_string["FechayHora_Entrada"];
-                    Sujeto.FechayHora_Salida = SinNull_string["FechayHora_Salida"];
+                    Sujeto.FechayHora_Entrada_Digitos = SinNull_string["FechayHora_Entrada_Digitos"];
+                    Sujeto.FechayHora_Salida_Digitos = SinNull_string["FechayHora_Salida_Digitos"];
                     Sujeto.ID = SinNull_int["ID"].ToString();
                     Sujeto.Apellido = SinNull_string["Apellido"];
                     Sujeto.Nombre = SinNull_string["Nombre"];

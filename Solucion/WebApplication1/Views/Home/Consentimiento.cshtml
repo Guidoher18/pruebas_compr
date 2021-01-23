@@ -32,7 +32,7 @@
     </div>
     <div id="Container_2" class="col col-md-4">
         <form action="@Url.Action("Digitos","Home")" method="post">
-            <div id="ApellidoyNombre" class="form-row">
+            <div id="ApellidoyNombre" class="form-row form-group">
                 <div class="col">
                     <label>Apellido</label>
                     <input type="text" class="form-control" name="Apellido" required />
@@ -42,7 +42,7 @@
                     <input type="text" class="form-control" name="Nombre" required />
                 </div>
             </div>
-            <div class="form-row">
+            <div class="form-row form-group">
                 <div class="col-md-2">
                     <label>Edad</label>
                     <input type="number" name="Edad" min="1" max="99" class="form-control" required />
@@ -84,8 +84,8 @@
                     </select>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="col">
+            <div class="row" id="EducacionDNI">
+                <div class="col-7">
                     <label>Nivel Educativo</label>
                     <select name="Nivel_Educativo" class="form-control" required>
                         <option value="Secundario Incompleto"> Secundario Incompleto</option>
@@ -97,6 +97,10 @@
                         <option value="Posgrado Incompleto"> Posgrado Incompleto</option>
                         <option value="Posgrado Completo"> Posgrado Completo</option>
                     </select>
+                </div>
+                <div class="col-5" id="digitos_DNI" >
+                    <label>Últimos 3 del DNI</label>
+                    <input class="form-control" name="Ultimos_DNI"type="text" pattern="\d{3}" required />
                 </div>
             </div>
             <label>E-mail</label>
