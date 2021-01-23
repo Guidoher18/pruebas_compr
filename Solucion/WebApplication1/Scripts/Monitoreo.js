@@ -156,7 +156,7 @@ $(document).ready(function () {
                 } else {
                     $("#Modal_Title").html("Resaltá la información incoherente");
                     $("#Modal_Body").html(
-                        "<p>¡Cuidado! El texto anterior, contenía información errónea o incoherente. Leelo nuevamente, respondé Sí, y no te olvides de resaltar dicha información. Luego, hace clic en Siguiente (>)</p>"
+                        "<p><strong>¡Cuidado!</strong> El texto anterior, contenía información errónea o incoherente. Leelo nuevamente, respondé Sí, y no te olvides de resaltar dicha información. Luego, hace clic en Siguiente (>)</p>"
                     );
 
                     $("#Modal_2").modal("toggle");
@@ -168,7 +168,7 @@ $(document).ready(function () {
                 } else {
                     $("#Modal_Title").html("Texto Coherente");
                     $("#Modal_Body").html(
-                        "<p>¡Cuidado! El texto anterior, NO contenía información errónea o incoherente. Leelo nuevamente, respondé No, y hace clic en Siguiente (>).</p>"
+                        "<p><strong>¡Cuidado!</strong> El texto anterior, NO contenía información errónea o incoherente. Leelo nuevamente, respondé No, y hace clic en Siguiente (>).</p>"
                     );
                     $("#Modal_4").modal("toggle");
                 }

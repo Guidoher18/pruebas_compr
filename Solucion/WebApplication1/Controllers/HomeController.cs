@@ -12,6 +12,8 @@ namespace Comprension.Controllers
 {
     public class HomeController : Controller
     {
+        //PRIMERA PARTE - DIGITOS
+
         /// <summary>
         /// Si accede desde un dispositivo Móvil: No puede Ingresar al Consentimiento
         /// Si accede desde una computadora de Escritorio: Accede al Consentimiento
@@ -84,6 +86,8 @@ namespace Comprension.Controllers
         {
             Sujeto Sujeto = new Sujeto();
             Sujeto = Session["Sujeto"] as Sujeto;
+            
+            Sujeto.FechayHora_Salida_Digitos = Fecha_Hora_ARG();
 
             Sujeto.Respuesta_DD = Respuesta_DD;
             Sujeto.Puntaje_DD = Puntaje_DD;
@@ -93,7 +97,6 @@ namespace Comprension.Controllers
             Sujeto.Puntaje_DL = Puntaje_DL;
             Sujeto.DL_TR = DL_TR;
 
-            Sujeto.FechayHora_Salida_Digitos = Fecha_Hora_ARG();
             Sujeto.Completo_Digitos = "Si";
             Sujeto.Completo_Monitoreo = "No";
             Sujeto.Completo_Comprension = "No";
@@ -105,37 +108,37 @@ namespace Comprension.Controllers
             return View("~/Views/Home/FinalParcial.cshtml");
         }
 
-
-
-
-
-
-        public ActionResult FinalParcial() {
-            ViewBag.Parte = "Primera Parte";
-            return View();
-        }
-
-        public ActionResult ContinuarEjercicios()
-        {
-            ViewBag.Parte = "Segunda Parte";
-            return View();
-        }
-
-
-
-        //PARA BORRAR!!!!! - FINAL TOTAL
-        public ActionResult Fin()
-        {
-            return View("~/Views/Home/Final.cshtml");
-        }
-
-
-        //AGREGAR ESTO !!!!!
-        //ViewBag.Vista = "Monitoreo";
+        //SEGUNDA PARTE - MONITOREO
 
         public ActionResult Monitoreo()
         {
-            return View("~/Views/Home/Monitoreo.cshtml");
+            ViewBag.Parte = "Segunda Parte";
+            ViewBag.Action = "Comprobar";
+            return View("~/Views/Home/ContinuarEjercicios.cshtml");
+        }
+
+        public ActionResult Comprobar(string Mail, string digitos_DNI) {
+            try {
+                HomeManager Manager = new HomeManager();
+                Sujeto Sujeto = Manager.ConsultarDatos(Mail);
+
+                if (digitos_DNI == Sujeto.Ultimos_DNI &&
+                    Sujeto.Completo_Digitos == "Si" &&
+                    Sujeto.Completo_Monitoreo == "No" &&
+                    Sujeto.Completo_Comprension == "No")
+                {
+                    Session["ID"] = Sujeto.ID;
+                    Session["FechayHora_Entrada_Monitoreo"] = Fecha_Hora_ARG();
+                    return View("~/Views/Home/Monitoreo.cshtml");
+                }
+                else
+                {
+                    return View("~/Views/Home/Error.cshtml");
+                }
+            }
+            catch (NullReferenceException) {
+                return View("~/Views/Home/Error.cshtml");
+            }
         }
 
         /// <summary>
@@ -149,28 +152,60 @@ namespace Comprension.Controllers
         public ActionResult CargarMonitoreo(string Libros, string Orden_de_Presentacion, string Respuesta_Total)
         {
             Sujeto Sujeto = new Sujeto();
-
+            
+            Sujeto.FechayHora_Salida_Monitoreo = Fecha_Hora_ARG();
+            Sujeto.FechayHora_Entrada_Monitoreo = (string)Session["FechayHora_Entrada_Monitoreo"];
+            
             Sujeto.ID = (string)Session["ID"];
 
             Sujeto.Libros = Libros;
             Sujeto.Orden_de_Presentacion = Orden_de_Presentacion;
             Sujeto.Respuesta_Monitoreo = Respuesta_Total;
 
+            Sujeto.Completo_Monitoreo = "Si";
+
             HomeManager Manager = new HomeManager();
 
             Manager.ActualizarMonitoreo(Sujeto);
 
-            ViewBag.Vista = "Comprension";
-            return View("~/Views/Home/Animo.cshtml");
+            ViewBag.Parte = "Segunda Parte";
+            return View("~/Views/Home/FinalParcial.cshtml");
         }
 
-
-
-
-
-        public ActionResult Comprension() {
-            return View("~/Views/Home/Comprension.cshtml");
+        public ActionResult Comprension()
+        {
+            ViewBag.Parte = "Tercera Parte";
+            ViewBag.Action = "Verificar";
+            return View("~/Views/Home/ContinuarEjercicios.cshtml");
         }
+
+        public ActionResult Verificar(string Mail, string digitos_DNI)
+        {
+            try
+            {
+                HomeManager Manager = new HomeManager();
+                Sujeto Sujeto = Manager.ConsultarDatos(Mail);
+
+                if (digitos_DNI == Sujeto.Ultimos_DNI &&
+                    Sujeto.Completo_Digitos == "Si" &&
+                    Sujeto.Completo_Monitoreo == "Si" &&
+                    Sujeto.Completo_Comprension == "No")
+                {
+                    Session["ID"] = Sujeto.ID;
+                    Session["FechayHora_Entrada_Comprension"] = Fecha_Hora_ARG();
+                    return View("~/Views/Home/Comprension.cshtml");
+                }
+                else
+                {
+                    return View("~/Views/Home/Error.cshtml");
+                }
+            }
+            catch (NullReferenceException)
+            {
+                return View("~/Views/Home/Error.cshtml");
+            }
+        }
+
 
         /// <summary>
         /// "CargarRespuestaComprension" - Carga las Respuestas de Comprensión
@@ -211,9 +246,11 @@ namespace Comprension.Controllers
         {
             Sujeto Sujeto = new Sujeto();
 
-            Sujeto.ID = (string)Session["ID"];
+            Sujeto.FechayHora_Salida_Comprension = Fecha_Hora_ARG();
+            Sujeto.FechayHora_Entrada_Comprension = (string)Session["FechayHora_Entrada_Monitoreo"];
+            Sujeto.Completo_Comprension = "Si";
 
-            Sujeto.FechayHora_Salida_Digitos = Fecha_Hora_ARG(); //Fecha y Hora al momento de Finalizar Comprensión
+            Sujeto.ID = (string)Session["ID"];
 
             Sujeto.Lectura_A_TR = Lectura_A_TR;
             Sujeto.Lectura_B_TR = Lectura_B_TR;
@@ -605,5 +642,36 @@ namespace Comprension.Controllers
 
             return Fecha + " " + Hora_ARG; //11/01/2020 09:00:47
         }
+
+
+
+
+
+
+        //PARA BORRAR!
+        public ActionResult FinalParcial()
+        {
+            ViewBag.Parte = "Primera Parte";
+            return View();
+        }
+
+        public ActionResult ContinuarEjercicios()
+        {
+            ViewBag.Parte = "Segunda Parte";
+            return View();
+        }
+
+
+
+        //PARA BORRAR!!!!! - FINAL TOTAL
+        public ActionResult Fin()
+        {
+            return View("~/Views/Home/Final.cshtml");
+        }
+
+
+
+
+
     }
 }

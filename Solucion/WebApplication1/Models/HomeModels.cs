@@ -7,6 +7,10 @@
         public string Completo_Comprension { get; set; }
         public string FechayHora_Entrada_Digitos { get; set; }
         public string FechayHora_Salida_Digitos { get; set; }
+        public string FechayHora_Entrada_Monitoreo { get; set; }
+        public string FechayHora_Salida_Monitoreo { get; set; }
+        public string FechayHora_Entrada_Comprension { get; set; }
+        public string FechayHora_Salida_Comprension { get; set; }
         public string ID { get; set; }
         public string Apellido { get; set; }
         public string Nombre { get; set; }

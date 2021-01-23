@@ -18,11 +18,12 @@
     <br /> 
     y los Últimos 3 dígitos del DNI
     </h4>
-    <form action="@Url.Action("Digitos","Home")" method="post" class="col-md-7">
+    <form action="@Url.Action(ViewBag.Action,"Home")" method="post" class="col-md-7">
         <div class="row">
             <input type="email" class="form-control col" name="Mail" placeholder="ejemplo@mail.com" required /><span> &nbsp;</span>
             <input name="digitos_DNI" class="form-control col-2" type="text" pattern="\d{3}" placeholder="123"required/>
         </div>
+        <br />
         <input type="submit" class="btn btn-primary" value="Comprobar" id="continuarSubmit" />
     </form>
 </div>

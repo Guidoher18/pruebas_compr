@@ -70,7 +70,66 @@ namespace Comprension.Models
             Sentencia.ExecuteScalar().ToString();
             Conexion.Close();
         }
-        
+
+        /// <summary>
+        /// Permite Consultar en BBDD si el Mail y el DNI corresponden a un sujeto registrado y trae sus datos
+        /// </summary>
+        /// <param name="Mail"></param>
+        /// <returns>Devuelve el Sujeto correspondiente a ese Mail</returns>
+        public Sujeto ConsultarDatos(string Mail) {
+            Sujeto Sujeto = new Sujeto();
+
+            SqlConnection Conexion = new SqlConnection(ConfigurationManager.AppSettings["ConexionBase"]);
+            Conexion.Open();
+            SqlCommand Sentencia = Conexion.CreateCommand();
+            Sentencia.CommandText = "SELECT * FROM Resultados WHERE Mail = '" + Mail + "'";
+            try
+            {
+                SqlDataReader reader = Sentencia.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    //Quito los null de las variables int y string por separado
+
+                    //Almacena un Sujeto sin propiedades Null luego de la ConsultaSql
+                    Dictionary<string, string> SinNull_string = new Dictionary<string, string>();
+
+                    string[] Propiedades_string = {"Completo_Digitos", "Completo_Monitoreo", "Completo_Comprension", "Ultimos_DNI"};
+
+                    //Reemplaza los Null por "" y los almacena en el diccionario SinNull
+                    foreach (string X in Propiedades_string)
+                    {
+                        if (reader[X] != null && reader[X] != DBNull.Value)
+                        {
+                            SinNull_string.Add(X, (string)reader[X]);
+                        }
+                        else
+                        {
+                            SinNull_string.Add(X, "");
+                        }
+                    }
+
+                    Sujeto.ID = reader["ID"].ToString();
+                    Sujeto.Completo_Digitos = SinNull_string["Completo_Digitos"];
+                    Sujeto.Completo_Monitoreo = SinNull_string["Completo_Monitoreo"];
+                    Sujeto.Completo_Comprension = SinNull_string["Completo_Comprension"];
+                    Sujeto.Ultimos_DNI = SinNull_string["Ultimos_DNI"];
+                    Sujeto.Mail = Mail;
+                }
+                reader.Close();
+                Conexion.Close();
+                return Sujeto;
+            }
+            catch (InvalidOperationException) {
+                return null;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Actualiza al Sujeto que se insertó con el método Cargar. Agrega todos los datos del monitoreo.
         /// </summary>
@@ -288,7 +347,12 @@ namespace Comprension.Models
 
             SqlCommand Sentencia = Conexion.CreateCommand();
 
-            Sentencia.CommandText = "UPDATE Resultados SET Libros = @Libros, Orden_de_Presentacion = @Orden_de_Presentacion, Respuesta_Monitoreo = @Respuesta_Monitoreo, A1_SN = @A1_SN, A2_SN = @A2_SN, A3_SN = @A3_SN, A4_SN = @A4_SN, A5_SN = @A5_SN, A6_SN = @A6_SN, A7_SN = @A7_SN, A8_SN = @A8_SN, A9_SN = @A9_SN, A10_SN = @A10_SN, A11_SN = @A11_SN, A12_SN = @A12_SN, A13_SN = @A13_SN, A14_SN = @A14_SN, A15_SN = @A15_SN, B1_SN = @B1_SN, B2_SN = @B2_SN, B3_SN = @B3_SN, B4_SN = @B4_SN, B5_SN = @B5_SN, B6_SN = @B6_SN, B7_SN = @B7_SN, B8_SN = @B8_SN, B9_SN = @B9_SN, B10_SN = @B10_SN, B11_SN = @B11_SN, B12_SN = @B12_SN, B13_SN = @B13_SN, B14_SN = @B14_SN, B15_SN = @B15_SN, A1_Respuesta = @A1_Respuesta, A2_Respuesta = @A2_Respuesta, A3_Respuesta = @A3_Respuesta, A4_Respuesta = @A4_Respuesta, A5_Respuesta = @A5_Respuesta, A6_Respuesta = @A6_Respuesta, A7_Respuesta = @A7_Respuesta, A8_Respuesta = @A8_Respuesta, A9_Respuesta = @A9_Respuesta, A10_Respuesta = @A10_Respuesta, A11_Respuesta = @A11_Respuesta, A12_Respuesta = @A12_Respuesta, A13_Respuesta = @A13_Respuesta, A14_Respuesta = @A14_Respuesta, A15_Respuesta = @A15_Respuesta, B1_Respuesta = @B1_Respuesta, B2_Respuesta = @B2_Respuesta, B3_Respuesta = @B3_Respuesta, B4_Respuesta = @B4_Respuesta, B5_Respuesta = @B5_Respuesta, B6_Respuesta = @B6_Respuesta, B7_Respuesta = @B7_Respuesta, B8_Respuesta = @B8_Respuesta, B9_Respuesta = @B9_Respuesta, B10_Respuesta = @B10_Respuesta, B11_Respuesta = @B11_Respuesta, B12_Respuesta = @B12_Respuesta, B13_Respuesta = @B13_Respuesta, B14_Respuesta = @B14_Respuesta, B15_Respuesta = @B15_Respuesta, A1_Respuesta_Indice = @A1_Respuesta_Indice, A2_Respuesta_Indice = @A2_Respuesta_Indice, A3_Respuesta_Indice = @A3_Respuesta_Indice, A4_Respuesta_Indice = @A4_Respuesta_Indice, A5_Respuesta_Indice = @A5_Respuesta_Indice, A6_Respuesta_Indice = @A6_Respuesta_Indice, A7_Respuesta_Indice = @A7_Respuesta_Indice, A8_Respuesta_Indice = @A8_Respuesta_Indice, A9_Respuesta_Indice = @A9_Respuesta_Indice, A10_Respuesta_Indice = @A10_Respuesta_Indice, A11_Respuesta_Indice = @A11_Respuesta_Indice, A12_Respuesta_Indice = @A12_Respuesta_Indice, A13_Respuesta_Indice = @A13_Respuesta_Indice, A14_Respuesta_Indice = @A14_Respuesta_Indice, A15_Respuesta_Indice = @A15_Respuesta_Indice, B1_Respuesta_Indice = @B1_Respuesta_Indice, B2_Respuesta_Indice = @B2_Respuesta_Indice, B3_Respuesta_Indice = @B3_Respuesta_Indice, B4_Respuesta_Indice = @B4_Respuesta_Indice, B5_Respuesta_Indice = @B5_Respuesta_Indice, B6_Respuesta_Indice = @B6_Respuesta_Indice, B7_Respuesta_Indice = @B7_Respuesta_Indice, B8_Respuesta_Indice = @B8_Respuesta_Indice, B9_Respuesta_Indice = @B9_Respuesta_Indice, B10_Respuesta_Indice = @B10_Respuesta_Indice, B11_Respuesta_Indice = @B11_Respuesta_Indice, B12_Respuesta_Indice = @B12_Respuesta_Indice, B13_Respuesta_Indice = @B13_Respuesta_Indice, B14_Respuesta_Indice = @B14_Respuesta_Indice, B15_Respuesta_Indice = @B15_Respuesta_Indice, A1_TR = @A1_TR, A2_TR = @A2_TR, A3_TR = @A3_TR, A4_TR = @A4_TR, A5_TR = @A5_TR, A6_TR = @A6_TR, A7_TR = @A7_TR, A8_TR = @A8_TR, A9_TR = @A9_TR, A10_TR = @A10_TR, A11_TR = @A11_TR, A12_TR = @A12_TR, A13_TR = @A13_TR, A14_TR = @A14_TR, A15_TR = @A15_TR, B1_TR = @B1_TR, B2_TR = @B2_TR, B3_TR = @B3_TR, B4_TR = @B4_TR, B5_TR = @B5_TR, B6_TR = @B6_TR, B7_TR = @B7_TR, B8_TR = @B8_TR, B9_TR = @B9_TR, B10_TR = @B10_TR, B11_TR = @B11_TR, B12_TR = @B12_TR, B13_TR = @B13_TR, B14_TR = @B14_TR, B15_TR = @B15_TR WHERE ID = @ID";
+            Sentencia.CommandText = "UPDATE Resultados SET Completo_Monitoreo = @Completo_Monitoreo, FechayHora_Entrada_Monitoreo = @FechayHora_Entrada_Monitoreo, FechayHora_Salida_Monitoreo = @FechayHora_Salida_Monitoreo, Libros = @Libros, Orden_de_Presentacion = @Orden_de_Presentacion, Respuesta_Monitoreo = @Respuesta_Monitoreo, A1_SN = @A1_SN, A2_SN = @A2_SN, A3_SN = @A3_SN, A4_SN = @A4_SN, A5_SN = @A5_SN, A6_SN = @A6_SN, A7_SN = @A7_SN, A8_SN = @A8_SN, A9_SN = @A9_SN, A10_SN = @A10_SN, A11_SN = @A11_SN, A12_SN = @A12_SN, A13_SN = @A13_SN, A14_SN = @A14_SN, A15_SN = @A15_SN, B1_SN = @B1_SN, B2_SN = @B2_SN, B3_SN = @B3_SN, B4_SN = @B4_SN, B5_SN = @B5_SN, B6_SN = @B6_SN, B7_SN = @B7_SN, B8_SN = @B8_SN, B9_SN = @B9_SN, B10_SN = @B10_SN, B11_SN = @B11_SN, B12_SN = @B12_SN, B13_SN = @B13_SN, B14_SN = @B14_SN, B15_SN = @B15_SN, A1_Respuesta = @A1_Respuesta, A2_Respuesta = @A2_Respuesta, A3_Respuesta = @A3_Respuesta, A4_Respuesta = @A4_Respuesta, A5_Respuesta = @A5_Respuesta, A6_Respuesta = @A6_Respuesta, A7_Respuesta = @A7_Respuesta, A8_Respuesta = @A8_Respuesta, A9_Respuesta = @A9_Respuesta, A10_Respuesta = @A10_Respuesta, A11_Respuesta = @A11_Respuesta, A12_Respuesta = @A12_Respuesta, A13_Respuesta = @A13_Respuesta, A14_Respuesta = @A14_Respuesta, A15_Respuesta = @A15_Respuesta, B1_Respuesta = @B1_Respuesta, B2_Respuesta = @B2_Respuesta, B3_Respuesta = @B3_Respuesta, B4_Respuesta = @B4_Respuesta, B5_Respuesta = @B5_Respuesta, B6_Respuesta = @B6_Respuesta, B7_Respuesta = @B7_Respuesta, B8_Respuesta = @B8_Respuesta, B9_Respuesta = @B9_Respuesta, B10_Respuesta = @B10_Respuesta, B11_Respuesta = @B11_Respuesta, B12_Respuesta = @B12_Respuesta, B13_Respuesta = @B13_Respuesta, B14_Respuesta = @B14_Respuesta, B15_Respuesta = @B15_Respuesta, A1_Respuesta_Indice = @A1_Respuesta_Indice, A2_Respuesta_Indice = @A2_Respuesta_Indice, A3_Respuesta_Indice = @A3_Respuesta_Indice, A4_Respuesta_Indice = @A4_Respuesta_Indice, A5_Respuesta_Indice = @A5_Respuesta_Indice, A6_Respuesta_Indice = @A6_Respuesta_Indice, A7_Respuesta_Indice = @A7_Respuesta_Indice, A8_Respuesta_Indice = @A8_Respuesta_Indice, A9_Respuesta_Indice = @A9_Respuesta_Indice, A10_Respuesta_Indice = @A10_Respuesta_Indice, A11_Respuesta_Indice = @A11_Respuesta_Indice, A12_Respuesta_Indice = @A12_Respuesta_Indice, A13_Respuesta_Indice = @A13_Respuesta_Indice, A14_Respuesta_Indice = @A14_Respuesta_Indice, A15_Respuesta_Indice = @A15_Respuesta_Indice, B1_Respuesta_Indice = @B1_Respuesta_Indice, B2_Respuesta_Indice = @B2_Respuesta_Indice, B3_Respuesta_Indice = @B3_Respuesta_Indice, B4_Respuesta_Indice = @B4_Respuesta_Indice, B5_Respuesta_Indice = @B5_Respuesta_Indice, B6_Respuesta_Indice = @B6_Respuesta_Indice, B7_Respuesta_Indice = @B7_Respuesta_Indice, B8_Respuesta_Indice = @B8_Respuesta_Indice, B9_Respuesta_Indice = @B9_Respuesta_Indice, B10_Respuesta_Indice = @B10_Respuesta_Indice, B11_Respuesta_Indice = @B11_Respuesta_Indice, B12_Respuesta_Indice = @B12_Respuesta_Indice, B13_Respuesta_Indice = @B13_Respuesta_Indice, B14_Respuesta_Indice = @B14_Respuesta_Indice, B15_Respuesta_Indice = @B15_Respuesta_Indice, A1_TR = @A1_TR, A2_TR = @A2_TR, A3_TR = @A3_TR, A4_TR = @A4_TR, A5_TR = @A5_TR, A6_TR = @A6_TR, A7_TR = @A7_TR, A8_TR = @A8_TR, A9_TR = @A9_TR, A10_TR = @A10_TR, A11_TR = @A11_TR, A12_TR = @A12_TR, A13_TR = @A13_TR, A14_TR = @A14_TR, A15_TR = @A15_TR, B1_TR = @B1_TR, B2_TR = @B2_TR, B3_TR = @B3_TR, B4_TR = @B4_TR, B5_TR = @B5_TR, B6_TR = @B6_TR, B7_TR = @B7_TR, B8_TR = @B8_TR, B9_TR = @B9_TR, B10_TR = @B10_TR, B11_TR = @B11_TR, B12_TR = @B12_TR, B13_TR = @B13_TR, B14_TR = @B14_TR, B15_TR = @B15_TR WHERE ID = @ID";
+
+            Sentencia.Parameters.AddWithValue("@Completo_Monitoreo", Sujeto.Completo_Monitoreo);
+            
+            Sentencia.Parameters.AddWithValue("@FechayHora_Entrada_Monitoreo", Sujeto.FechayHora_Entrada_Monitoreo);
+            Sentencia.Parameters.AddWithValue("@FechayHora_Salida_Monitoreo", Sujeto.FechayHora_Salida_Monitoreo);
 
             Sentencia.Parameters.AddWithValue("@Libros", Sujeto.Libros);
             Sentencia.Parameters.AddWithValue("@Orden_de_Presentacion", Sujeto.Orden_de_Presentacion);
@@ -430,9 +494,12 @@ namespace Comprension.Models
 
             SqlCommand Sentencia = Conexion.CreateCommand();
 
-            Sentencia.CommandText = "UPDATE Resultados SET FechayHora_Salida = @FechayHora_Salida, Lectura_A_TR = @Lectura_A_TR, Lectura_B_TR = @Lectura_B_TR, Cuestionario_A_TR = @Cuestionario_A_TR, Cuestionario_B_TR = @Cuestionario_B_TR, Comprension_Orden_de_Presentacion = @Comprension_Orden_de_Presentacion,Puntaje_A_Comprension = @Puntaje_A_Comprension, Puntaje_B_Comprension = @Puntaje_B_Comprension, Comprension_A1 = @Comprension_A1, Comprension_A2 = @Comprension_A2, Comprension_A3 = @Comprension_A3, Comprension_A4 = @Comprension_A4, Comprension_A5 = @Comprension_A5, Comprension_A6 = @Comprension_A6, Comprension_A7 = @Comprension_A7, Comprension_A8 = @Comprension_A8, Comprension_A9 = @Comprension_A9, Comprension_A10 = @Comprension_A10, Comprension_B1 = @Comprension_B1, Comprension_B2 = @Comprension_B2, Comprension_B3 = @Comprension_B3, Comprension_B4 = @Comprension_B4, Comprension_B5 = @Comprension_B5, Comprension_B6 = @Comprension_B6, Comprension_B7 = @Comprension_B7, Comprension_B8 = @Comprension_B8, Comprension_B9 = @Comprension_B9, Comprension_B10 = @Comprension_B10 WHERE ID = @ID";
+            Sentencia.CommandText = "UPDATE Resultados SET Completo_Comprension = @Completo_Comprension, FechayHora_Entrada_Comprension = @FechayHora_Entrada_Comprension, FechayHora_Salida_Comprension = @FechayHora_Salida_Comprension, Lectura_A_TR = @Lectura_A_TR, Lectura_B_TR = @Lectura_B_TR, Cuestionario_A_TR = @Cuestionario_A_TR, Cuestionario_B_TR = @Cuestionario_B_TR, Comprension_Orden_de_Presentacion = @Comprension_Orden_de_Presentacion,Puntaje_A_Comprension = @Puntaje_A_Comprension, Puntaje_B_Comprension = @Puntaje_B_Comprension, Comprension_A1 = @Comprension_A1, Comprension_A2 = @Comprension_A2, Comprension_A3 = @Comprension_A3, Comprension_A4 = @Comprension_A4, Comprension_A5 = @Comprension_A5, Comprension_A6 = @Comprension_A6, Comprension_A7 = @Comprension_A7, Comprension_A8 = @Comprension_A8, Comprension_A9 = @Comprension_A9, Comprension_A10 = @Comprension_A10, Comprension_B1 = @Comprension_B1, Comprension_B2 = @Comprension_B2, Comprension_B3 = @Comprension_B3, Comprension_B4 = @Comprension_B4, Comprension_B5 = @Comprension_B5, Comprension_B6 = @Comprension_B6, Comprension_B7 = @Comprension_B7, Comprension_B8 = @Comprension_B8, Comprension_B9 = @Comprension_B9, Comprension_B10 = @Comprension_B10 WHERE ID = @ID";
 
-            Sentencia.Parameters.AddWithValue("@FechayHora_Salida", Sujeto.FechayHora_Salida_Digitos);
+            Sentencia.Parameters.AddWithValue("@Completo_Comprension", Sujeto.Completo_Comprension);
+
+            Sentencia.Parameters.AddWithValue("@FechayHora_Entrada_Comprension", Sujeto.FechayHora_Entrada_Comprension);
+            Sentencia.Parameters.AddWithValue("@FechayHora_Salida_Comprension", Sujeto.FechayHora_Salida_Comprension);
 
             Sentencia.Parameters.AddWithValue("@Lectura_A_TR", Sujeto.Lectura_A_TR);
             Sentencia.Parameters.AddWithValue("@Lectura_B_TR", Sujeto.Lectura_B_TR);
