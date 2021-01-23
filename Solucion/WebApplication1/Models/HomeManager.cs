@@ -48,8 +48,10 @@ namespace Comprension.Models
             Sentencia.Parameters.AddWithValue("@Completo_Digitos", Sujeto.Completo_Digitos);
             Sentencia.Parameters.AddWithValue("@Completo_Monitoreo", Sujeto.Completo_Monitoreo);
             Sentencia.Parameters.AddWithValue("@Completo_Comprension", Sujeto.Completo_Comprension);
+
             Sentencia.Parameters.AddWithValue("@FechayHora_Entrada_Digitos", Sujeto.FechayHora_Entrada_Digitos);
             Sentencia.Parameters.AddWithValue("@FechayHora_Salida_Digitos", Sujeto.FechayHora_Salida_Digitos);
+            
             Sentencia.Parameters.AddWithValue("@Apellido", Sujeto.Apellido);
             Sentencia.Parameters.AddWithValue("@Nombre", Sujeto.Nombre);
             Sentencia.Parameters.AddWithValue("@Edad", Sujeto.Edad);
@@ -90,7 +92,7 @@ namespace Comprension.Models
                 while (reader.Read())
                 {
 
-                    //Quito los null de las variables int y string por separado
+                    //Quito los null de las variables string
 
                     //Almacena un Sujeto sin propiedades Null luego de la ConsultaSql
                     Dictionary<string, string> SinNull_string = new Dictionary<string, string>();

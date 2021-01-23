@@ -39,6 +39,7 @@ namespace Comprension.Controllers
         /// <param name="Edad"></param>
         /// <param name="Sexo"></param>
         /// <param name="Nivel_Educativo"></param>
+        /// <param name="Ultimos_DNI"></param>
         /// <param name="Lugar_de_Residencia"></param>
         /// <param name="Mail"></param>
         [HttpPost]
@@ -113,11 +114,17 @@ namespace Comprension.Controllers
         public ActionResult Monitoreo()
         {
             ViewBag.Parte = "Segunda Parte";
-            ViewBag.Action = "Comprobar";
+            ViewBag.Action = "MonitoreoTest";
             return View("~/Views/Home/ContinuarEjercicios.cshtml");
         }
 
-        public ActionResult Comprobar(string Mail, string digitos_DNI) {
+        /// <summary>
+        /// Comprueba si el Mail y los Últimos del DNI son correctos antes de continuar
+        /// </summary>
+        /// <param name="Mail"></param>
+        /// <param name="digitos_DNI"></param>
+        /// <returns></returns>
+        public ActionResult MonitoreoTest(string Mail, string digitos_DNI) {
             try {
                 HomeManager Manager = new HomeManager();
                 Sujeto Sujeto = Manager.ConsultarDatos(Mail);
@@ -172,14 +179,22 @@ namespace Comprension.Controllers
             return View("~/Views/Home/FinalParcial.cshtml");
         }
 
+        //TERCERA PARTE - COMPRENSION
+
         public ActionResult Comprension()
         {
             ViewBag.Parte = "Tercera Parte";
-            ViewBag.Action = "Verificar";
+            ViewBag.Action = "ComprensionTest";
             return View("~/Views/Home/ContinuarEjercicios.cshtml");
         }
-
-        public ActionResult Verificar(string Mail, string digitos_DNI)
+        
+        /// <summary>
+        /// Verifica si el Mail y los Últimos del DNI son correctos antes de continuar
+        /// </summary>
+        /// <param name="Mail"></param>
+        /// <param name="digitos_DNI"></param>
+        /// <returns></returns>
+        public ActionResult ComprensionTest(string Mail, string digitos_DNI)
         {
             try
             {
@@ -205,7 +220,6 @@ namespace Comprension.Controllers
                 return View("~/Views/Home/Error.cshtml");
             }
         }
-
 
         /// <summary>
         /// "CargarRespuestaComprension" - Carga las Respuestas de Comprensión
