@@ -325,215 +325,224 @@ namespace Comprension.Controllers
 
                 int Fila = i + 1;
 
-                //Datos Sociodemográficos
-                Libro.SetCellValue("A" + Fila, Sujeto.FechayHora_Entrada_Digitos);
-                Libro.SetCellValue("B" + Fila, Sujeto.FechayHora_Salida_Digitos);
+                Libro.SetCellValue("A" + Fila, Sujeto.Completo_Digitos);
+                Libro.SetCellValue("B" + Fila, Sujeto.Completo_Monitoreo);
+                Libro.SetCellValue("C" + Fila, Sujeto.Completo_Comprension);
 
-                // C Duración: duración total de la sesión del Sujeto
+                //FechayHora_Dígitos
+                Libro.SetCellValue("D" + Fila, Sujeto.FechayHora_Entrada_Digitos);
+                Libro.SetCellValue("E" + Fila, Sujeto.FechayHora_Salida_Digitos);
+
+                //Duración_Dígitos
                 string FechayHoraInicio = Sujeto.FechayHora_Entrada_Digitos;
                 string FechayHoraSalida = Sujeto.FechayHora_Salida_Digitos;
-                string Dato = "";
+                Libro.SetCellValue("F" + Fila, Obtener_Duracion(FechayHoraInicio, FechayHoraSalida));
 
-                if (FechayHoraInicio != "" && FechayHoraInicio != null && FechayHoraSalida != "" && FechayHoraSalida != null)
-                {
-                    try
-                    {
-                        CultureInfo Culture = new CultureInfo("es-Es");
-                        DateTime F = DateTime.Parse(FechayHoraInicio, Culture);
-                        DateTime G = DateTime.Parse(FechayHoraSalida, Culture);
+                //FechayHora_Monitoreo
+                Libro.SetCellValue("G" + Fila, Sujeto.FechayHora_Entrada_Monitoreo);
+                Libro.SetCellValue("H" + Fila, Sujeto.FechayHora_Salida_Monitoreo);
 
-                        Dato = (G.Subtract(F)).ToString();
-                    }
-                    catch (System.FormatException) { }
-                }
+                //Duración_Monitoreo
+                FechayHoraInicio = Sujeto.FechayHora_Entrada_Monitoreo;
+                FechayHoraSalida = Sujeto.FechayHora_Salida_Monitoreo;
+                Libro.SetCellValue("I" + Fila, Obtener_Duracion(FechayHoraInicio, FechayHoraSalida));
 
-                Libro.SetCellValue("C" + Fila, Dato);
+                //FechayHora_Comprension
+                Libro.SetCellValue("J" + Fila, Sujeto.FechayHora_Entrada_Comprension);
+                Libro.SetCellValue("K" + Fila, Sujeto.FechayHora_Salida_Comprension);
 
-                Libro.SetCellValue("D" + Fila, Int32.Parse(Sujeto.ID));
-                Libro.SetCellValue("E" + Fila, Sujeto.Apellido);
-                Libro.SetCellValue("F" + Fila, Sujeto.Nombre);
-                Libro.SetCellValue("G" + Fila, Sujeto.Edad);
-                Libro.SetCellValue("H" + Fila, Sujeto.Sexo);
-                Libro.SetCellValue("I" + Fila, Sujeto.Nivel_Educativo);
-                //J Nivel_Educativo_Años
-                Libro.SetCellValue("K" + Fila, Sujeto.Lugar_de_Residencia);
-                Libro.SetCellValue("L" + Fila, Sujeto.Mail);
+                //Duración_Comprension
+                FechayHoraInicio = Sujeto.FechayHora_Entrada_Comprension;
+                FechayHoraSalida = Sujeto.FechayHora_Salida_Comprension;
+                Libro.SetCellValue("L" + Fila, Obtener_Duracion(FechayHoraInicio, FechayHoraSalida));
+
+                //Datos Sociodemográficos
+                Libro.SetCellValue("M" + Fila, Int32.Parse(Sujeto.ID));
+                Libro.SetCellValue("N" + Fila, Sujeto.Apellido);
+                Libro.SetCellValue("O" + Fila, Sujeto.Nombre);
+                Libro.SetCellValue("P" + Fila, Sujeto.Edad);
+                Libro.SetCellValue("Q" + Fila, Sujeto.Sexo);
+                Libro.SetCellValue("R" + Fila, Sujeto.Nivel_Educativo);
+                //S Nivel_Educativo_Años
+                Libro.SetCellValue("T" + Fila, Sujeto.Ultimos_DNI);
+                Libro.SetCellValue("U" + Fila, Sujeto.Lugar_de_Residencia);
+                Libro.SetCellValue("V" + Fila, Sujeto.Mail);
 
                 //Dígitos Directos
-                Libro.SetCellValue("M" + Fila, Sujeto.Respuesta_DD);
-                Libro.SetCellValue("N" + Fila, Sujeto.Puntaje_DD);
-                Libro.SetCellValue("O" + Fila, Sujeto.DD_TR);
+                Libro.SetCellValue("W" + Fila, Sujeto.Respuesta_DD);
+                Libro.SetCellValue("X" + Fila, Sujeto.Puntaje_DD);
+                Libro.SetCellValue("Y" + Fila, Sujeto.DD_TR);
 
                 //Dígito-Letra
-                Libro.SetCellValue("P" + Fila, Sujeto.Respuesta_DL);
-                Libro.SetCellValue("Q" + Fila, Sujeto.Puntaje_DL);
-                Libro.SetCellValue("R" + Fila, Sujeto.DL_TR);
+                Libro.SetCellValue("Z" + Fila, Sujeto.Respuesta_DL);
+                Libro.SetCellValue("AA" + Fila, Sujeto.Puntaje_DL);
+                Libro.SetCellValue("AB" + Fila, Sujeto.DL_TR);
 
                 //Monitoreo
-                Libro.SetCellValue("S" + Fila, Sujeto.Libros);
-                Libro.SetCellValue("T" + Fila, Sujeto.Orden_de_Presentacion);
-                Libro.SetCellValue("U" + Fila, Sujeto.Respuesta_Monitoreo);
+                Libro.SetCellValue("AC" + Fila, Sujeto.Libros);
+                Libro.SetCellValue("AD" + Fila, Sujeto.Orden_de_Presentacion);
+                Libro.SetCellValue("AE" + Fila, Sujeto.Respuesta_Monitoreo);
 
                 //Respuesta Si, No
-                Libro.SetCellValue("V" + Fila, Sujeto.A1_SN);
-                Libro.SetCellValue("W" + Fila, Sujeto.A1_Respuesta);
-                Libro.SetCellValue("X" + Fila, Sujeto.A2_SN);
-                Libro.SetCellValue("Y" + Fila, Sujeto.A2_Respuesta);
-                Libro.SetCellValue("Z" + Fila, Sujeto.A3_SN);
-                Libro.SetCellValue("AA" + Fila, Sujeto.A3_Respuesta);
-                Libro.SetCellValue("AB" + Fila, Sujeto.A4_SN);
-                Libro.SetCellValue("AC" + Fila, Sujeto.A4_Respuesta);
-                Libro.SetCellValue("AD" + Fila, Sujeto.A5_SN);
-                Libro.SetCellValue("AE" + Fila, Sujeto.A5_Respuesta);
-                Libro.SetCellValue("AF" + Fila, Sujeto.A6_SN);
-                Libro.SetCellValue("AG" + Fila, Sujeto.A6_Respuesta);
-                Libro.SetCellValue("AH" + Fila, Sujeto.A7_SN);
-                Libro.SetCellValue("AI" + Fila, Sujeto.A7_Respuesta);
-                Libro.SetCellValue("AJ" + Fila, Sujeto.A8_SN);
-                Libro.SetCellValue("AK" + Fila, Sujeto.A8_Respuesta);
-                Libro.SetCellValue("AL" + Fila, Sujeto.A9_SN);
-                Libro.SetCellValue("AM" + Fila, Sujeto.A9_Respuesta);
-                Libro.SetCellValue("AN" + Fila, Sujeto.A10_SN);
-                Libro.SetCellValue("AO" + Fila, Sujeto.A10_Respuesta);
-                Libro.SetCellValue("AP" + Fila, Sujeto.A11_SN);
-                Libro.SetCellValue("AQ" + Fila, Sujeto.A11_Respuesta);
-                Libro.SetCellValue("AR" + Fila, Sujeto.A12_SN);
-                Libro.SetCellValue("AS" + Fila, Sujeto.A12_Respuesta);
-                Libro.SetCellValue("AT" + Fila, Sujeto.A13_SN);
-                Libro.SetCellValue("AU" + Fila, Sujeto.A13_Respuesta);
-                Libro.SetCellValue("AV" + Fila, Sujeto.A14_SN);
-                Libro.SetCellValue("AW" + Fila, Sujeto.A14_Respuesta);
-                Libro.SetCellValue("AX" + Fila, Sujeto.A15_SN);
-                Libro.SetCellValue("AY" + Fila, Sujeto.A15_Respuesta);
+                Libro.SetCellValue("AF" + Fila, Sujeto.A1_SN);
+                Libro.SetCellValue("AG" + Fila, Sujeto.A1_Respuesta);
+                Libro.SetCellValue("AH" + Fila, Sujeto.A2_SN);
+                Libro.SetCellValue("AI" + Fila, Sujeto.A2_Respuesta);
+                Libro.SetCellValue("AJ" + Fila, Sujeto.A3_SN);
+                Libro.SetCellValue("AK" + Fila, Sujeto.A3_Respuesta);
+                Libro.SetCellValue("AL" + Fila, Sujeto.A4_SN);
+                Libro.SetCellValue("AM" + Fila, Sujeto.A4_Respuesta);
+                Libro.SetCellValue("AN" + Fila, Sujeto.A5_SN);
+                Libro.SetCellValue("AO" + Fila, Sujeto.A5_Respuesta);
+                Libro.SetCellValue("AP" + Fila, Sujeto.A6_SN);
+                Libro.SetCellValue("AQ" + Fila, Sujeto.A6_Respuesta);
+                Libro.SetCellValue("AR" + Fila, Sujeto.A7_SN);
+                Libro.SetCellValue("AS" + Fila, Sujeto.A7_Respuesta);
+                Libro.SetCellValue("AT" + Fila, Sujeto.A8_SN);
+                Libro.SetCellValue("AU" + Fila, Sujeto.A8_Respuesta);
+                Libro.SetCellValue("AV" + Fila, Sujeto.A9_SN);
+                Libro.SetCellValue("AW" + Fila, Sujeto.A9_Respuesta);
+                Libro.SetCellValue("AX" + Fila, Sujeto.A10_SN);
+                Libro.SetCellValue("AY" + Fila, Sujeto.A10_Respuesta);
+                Libro.SetCellValue("AZ" + Fila, Sujeto.A11_SN);
+                Libro.SetCellValue("BA" + Fila, Sujeto.A11_Respuesta);
+                Libro.SetCellValue("BB" + Fila, Sujeto.A12_SN);
+                Libro.SetCellValue("BC" + Fila, Sujeto.A12_Respuesta);
+                Libro.SetCellValue("BD" + Fila, Sujeto.A13_SN);
+                Libro.SetCellValue("BE" + Fila, Sujeto.A13_Respuesta);
+                Libro.SetCellValue("BF" + Fila, Sujeto.A14_SN);
+                Libro.SetCellValue("BG" + Fila, Sujeto.A14_Respuesta);
+                Libro.SetCellValue("BH" + Fila, Sujeto.A15_SN);
+                Libro.SetCellValue("BI" + Fila, Sujeto.A15_Respuesta);
 
-                Libro.SetCellValue("AZ" + Fila, Sujeto.B1_SN);
-                Libro.SetCellValue("BA" + Fila, Sujeto.B1_Respuesta);
-                Libro.SetCellValue("BB" + Fila, Sujeto.B2_SN);
-                Libro.SetCellValue("BC" + Fila, Sujeto.B2_Respuesta);
-                Libro.SetCellValue("BD" + Fila, Sujeto.B3_SN);
-                Libro.SetCellValue("BE" + Fila, Sujeto.B3_Respuesta);
-                Libro.SetCellValue("BF" + Fila, Sujeto.B4_SN);
-                Libro.SetCellValue("BG" + Fila, Sujeto.B4_Respuesta);
-                Libro.SetCellValue("BH" + Fila, Sujeto.B5_SN);
-                Libro.SetCellValue("BI" + Fila, Sujeto.B5_Respuesta);
-                Libro.SetCellValue("BJ" + Fila, Sujeto.B6_SN);
-                Libro.SetCellValue("BK" + Fila, Sujeto.B6_Respuesta);
-                Libro.SetCellValue("BL" + Fila, Sujeto.B7_SN);
-                Libro.SetCellValue("BM" + Fila, Sujeto.B7_Respuesta);
-                Libro.SetCellValue("BN" + Fila, Sujeto.B8_SN);
-                Libro.SetCellValue("BO" + Fila, Sujeto.B8_Respuesta);
-                Libro.SetCellValue("BP" + Fila, Sujeto.B9_SN);
-                Libro.SetCellValue("BQ" + Fila, Sujeto.B9_Respuesta);
-                Libro.SetCellValue("BR" + Fila, Sujeto.B10_SN);
-                Libro.SetCellValue("BS" + Fila, Sujeto.B10_Respuesta);
-                Libro.SetCellValue("BT" + Fila, Sujeto.B11_SN);
-                Libro.SetCellValue("BU" + Fila, Sujeto.B11_Respuesta);
-                Libro.SetCellValue("BV" + Fila, Sujeto.B12_SN);
-                Libro.SetCellValue("BW" + Fila, Sujeto.B12_Respuesta);
-                Libro.SetCellValue("BX" + Fila, Sujeto.B13_SN);
-                Libro.SetCellValue("BY" + Fila, Sujeto.B13_Respuesta);
-                Libro.SetCellValue("BZ" + Fila, Sujeto.B14_SN);
-                Libro.SetCellValue("CA" + Fila, Sujeto.B14_Respuesta);
-                Libro.SetCellValue("CB" + Fila, Sujeto.B15_SN);
-                Libro.SetCellValue("CC" + Fila, Sujeto.B15_Respuesta);
+                Libro.SetCellValue("BJ" + Fila, Sujeto.B1_SN);
+                Libro.SetCellValue("BK" + Fila, Sujeto.B1_Respuesta);
+                Libro.SetCellValue("BL" + Fila, Sujeto.B2_SN);
+                Libro.SetCellValue("BM" + Fila, Sujeto.B2_Respuesta);
+                Libro.SetCellValue("BN" + Fila, Sujeto.B3_SN);
+                Libro.SetCellValue("BO" + Fila, Sujeto.B3_Respuesta);
+                Libro.SetCellValue("BP" + Fila, Sujeto.B4_SN);
+                Libro.SetCellValue("BQ" + Fila, Sujeto.B4_Respuesta);
+                Libro.SetCellValue("BR" + Fila, Sujeto.B5_SN);
+                Libro.SetCellValue("BS" + Fila, Sujeto.B5_Respuesta);
+                Libro.SetCellValue("BT" + Fila, Sujeto.B6_SN);
+                Libro.SetCellValue("BU" + Fila, Sujeto.B6_Respuesta);
+                Libro.SetCellValue("BV" + Fila, Sujeto.B7_SN);
+                Libro.SetCellValue("BW" + Fila, Sujeto.B7_Respuesta);
+                Libro.SetCellValue("BX" + Fila, Sujeto.B8_SN);
+                Libro.SetCellValue("BY" + Fila, Sujeto.B8_Respuesta);
+                Libro.SetCellValue("BZ" + Fila, Sujeto.B9_SN);
+                Libro.SetCellValue("CA" + Fila, Sujeto.B9_Respuesta);
+                Libro.SetCellValue("CB" + Fila, Sujeto.B10_SN);
+                Libro.SetCellValue("CC" + Fila, Sujeto.B10_Respuesta);
+                Libro.SetCellValue("CD" + Fila, Sujeto.B11_SN);
+                Libro.SetCellValue("CE" + Fila, Sujeto.B11_Respuesta);
+                Libro.SetCellValue("CF" + Fila, Sujeto.B12_SN);
+                Libro.SetCellValue("CG" + Fila, Sujeto.B12_Respuesta);
+                Libro.SetCellValue("CH" + Fila, Sujeto.B13_SN);
+                Libro.SetCellValue("CI" + Fila, Sujeto.B13_Respuesta);
+                Libro.SetCellValue("CJ" + Fila, Sujeto.B14_SN);
+                Libro.SetCellValue("CK" + Fila, Sujeto.B14_Respuesta);
+                Libro.SetCellValue("CL" + Fila, Sujeto.B15_SN);
+                Libro.SetCellValue("CM" + Fila, Sujeto.B15_Respuesta);
 
                 //Índice de la Selección hecha
-                Libro.SetCellValue("CD" + Fila, Sujeto.A1_Respuesta_Indice);
-                Libro.SetCellValue("CE" + Fila, Sujeto.A2_Respuesta_Indice);
-                Libro.SetCellValue("CF" + Fila, Sujeto.A3_Respuesta_Indice);
-                Libro.SetCellValue("CG" + Fila, Sujeto.A4_Respuesta_Indice);
-                Libro.SetCellValue("CH" + Fila, Sujeto.A5_Respuesta_Indice);
-                Libro.SetCellValue("CI" + Fila, Sujeto.A6_Respuesta_Indice);
-                Libro.SetCellValue("CJ" + Fila, Sujeto.A7_Respuesta_Indice);
-                Libro.SetCellValue("CK" + Fila, Sujeto.A8_Respuesta_Indice);
-                Libro.SetCellValue("CL" + Fila, Sujeto.A9_Respuesta_Indice);
-                Libro.SetCellValue("CM" + Fila, Sujeto.A10_Respuesta_Indice);
-                Libro.SetCellValue("CN" + Fila, Sujeto.A11_Respuesta_Indice);
-                Libro.SetCellValue("CO" + Fila, Sujeto.A12_Respuesta_Indice);
-                Libro.SetCellValue("CP" + Fila, Sujeto.A13_Respuesta_Indice);
-                Libro.SetCellValue("CQ" + Fila, Sujeto.A14_Respuesta_Indice);
-                Libro.SetCellValue("CR" + Fila, Sujeto.A15_Respuesta_Indice);
+                Libro.SetCellValue("CN" + Fila, Sujeto.A1_Respuesta_Indice);
+                Libro.SetCellValue("CO" + Fila, Sujeto.A2_Respuesta_Indice);
+                Libro.SetCellValue("CP" + Fila, Sujeto.A3_Respuesta_Indice);
+                Libro.SetCellValue("CQ" + Fila, Sujeto.A4_Respuesta_Indice);
+                Libro.SetCellValue("CR" + Fila, Sujeto.A5_Respuesta_Indice);
+                Libro.SetCellValue("CS" + Fila, Sujeto.A6_Respuesta_Indice);
+                Libro.SetCellValue("CT" + Fila, Sujeto.A7_Respuesta_Indice);
+                Libro.SetCellValue("CU" + Fila, Sujeto.A8_Respuesta_Indice);
+                Libro.SetCellValue("CV" + Fila, Sujeto.A9_Respuesta_Indice);
+                Libro.SetCellValue("CW" + Fila, Sujeto.A10_Respuesta_Indice);
+                Libro.SetCellValue("CX" + Fila, Sujeto.A11_Respuesta_Indice);
+                Libro.SetCellValue("CY" + Fila, Sujeto.A12_Respuesta_Indice);
+                Libro.SetCellValue("CZ" + Fila, Sujeto.A13_Respuesta_Indice);
+                Libro.SetCellValue("DA" + Fila, Sujeto.A14_Respuesta_Indice);
+                Libro.SetCellValue("DB" + Fila, Sujeto.A15_Respuesta_Indice);
 
-                Libro.SetCellValue("CS" + Fila, Sujeto.B1_Respuesta_Indice);
-                Libro.SetCellValue("CT" + Fila, Sujeto.B2_Respuesta_Indice);
-                Libro.SetCellValue("CU" + Fila, Sujeto.B3_Respuesta_Indice);
-                Libro.SetCellValue("CV" + Fila, Sujeto.B4_Respuesta_Indice);
-                Libro.SetCellValue("CW" + Fila, Sujeto.B5_Respuesta_Indice);
-                Libro.SetCellValue("CX" + Fila, Sujeto.B6_Respuesta_Indice);
-                Libro.SetCellValue("CY" + Fila, Sujeto.B7_Respuesta_Indice);
-                Libro.SetCellValue("CZ" + Fila, Sujeto.B8_Respuesta_Indice);
-                Libro.SetCellValue("DA" + Fila, Sujeto.B9_Respuesta_Indice);
-                Libro.SetCellValue("DB" + Fila, Sujeto.B10_Respuesta_Indice);
-                Libro.SetCellValue("DC" + Fila, Sujeto.B11_Respuesta_Indice);
-                Libro.SetCellValue("DD" + Fila, Sujeto.B12_Respuesta_Indice);
-                Libro.SetCellValue("DE" + Fila, Sujeto.B13_Respuesta_Indice);
-                Libro.SetCellValue("DF" + Fila, Sujeto.B14_Respuesta_Indice);
-                Libro.SetCellValue("DG" + Fila, Sujeto.B15_Respuesta_Indice);
+                Libro.SetCellValue("DC" + Fila, Sujeto.B1_Respuesta_Indice);
+                Libro.SetCellValue("DD" + Fila, Sujeto.B2_Respuesta_Indice);
+                Libro.SetCellValue("DE" + Fila, Sujeto.B3_Respuesta_Indice);
+                Libro.SetCellValue("DF" + Fila, Sujeto.B4_Respuesta_Indice);
+                Libro.SetCellValue("DG" + Fila, Sujeto.B5_Respuesta_Indice);
+                Libro.SetCellValue("DH" + Fila, Sujeto.B6_Respuesta_Indice);
+                Libro.SetCellValue("DI" + Fila, Sujeto.B7_Respuesta_Indice);
+                Libro.SetCellValue("DJ" + Fila, Sujeto.B8_Respuesta_Indice);
+                Libro.SetCellValue("DK" + Fila, Sujeto.B9_Respuesta_Indice);
+                Libro.SetCellValue("DL" + Fila, Sujeto.B10_Respuesta_Indice);
+                Libro.SetCellValue("DM" + Fila, Sujeto.B11_Respuesta_Indice);
+                Libro.SetCellValue("DN" + Fila, Sujeto.B12_Respuesta_Indice);
+                Libro.SetCellValue("DO" + Fila, Sujeto.B13_Respuesta_Indice);
+                Libro.SetCellValue("DP" + Fila, Sujeto.B14_Respuesta_Indice);
+                Libro.SetCellValue("DQ" + Fila, Sujeto.B15_Respuesta_Indice);
 
                 //TR de cada una de las Respuestas
-                Libro.SetCellValue("DH" + Fila, Sujeto.A1_TR);
-                Libro.SetCellValue("DI" + Fila, Sujeto.A2_TR);
-                Libro.SetCellValue("DJ" + Fila, Sujeto.A3_TR);
-                Libro.SetCellValue("DK" + Fila, Sujeto.A4_TR);
-                Libro.SetCellValue("DL" + Fila, Sujeto.A5_TR);
-                Libro.SetCellValue("DM" + Fila, Sujeto.A6_TR);
-                Libro.SetCellValue("DN" + Fila, Sujeto.A7_TR);
-                Libro.SetCellValue("DO" + Fila, Sujeto.A8_TR);
-                Libro.SetCellValue("DP" + Fila, Sujeto.A9_TR);
-                Libro.SetCellValue("DQ" + Fila, Sujeto.A10_TR);
-                Libro.SetCellValue("DR" + Fila, Sujeto.A11_TR);
-                Libro.SetCellValue("DS" + Fila, Sujeto.A12_TR);
-                Libro.SetCellValue("DT" + Fila, Sujeto.A13_TR);
-                Libro.SetCellValue("DU" + Fila, Sujeto.A14_TR);
-                Libro.SetCellValue("DV" + Fila, Sujeto.A15_TR);
+                Libro.SetCellValue("DR" + Fila, Sujeto.A1_TR);
+                Libro.SetCellValue("DS" + Fila, Sujeto.A2_TR);
+                Libro.SetCellValue("DT" + Fila, Sujeto.A3_TR);
+                Libro.SetCellValue("DU" + Fila, Sujeto.A4_TR);
+                Libro.SetCellValue("DV" + Fila, Sujeto.A5_TR);
+                Libro.SetCellValue("DW" + Fila, Sujeto.A6_TR);
+                Libro.SetCellValue("DX" + Fila, Sujeto.A7_TR);
+                Libro.SetCellValue("DY" + Fila, Sujeto.A8_TR);
+                Libro.SetCellValue("DZ" + Fila, Sujeto.A9_TR);
+                Libro.SetCellValue("EA" + Fila, Sujeto.A10_TR);
+                Libro.SetCellValue("EB" + Fila, Sujeto.A11_TR);
+                Libro.SetCellValue("EC" + Fila, Sujeto.A12_TR);
+                Libro.SetCellValue("ED" + Fila, Sujeto.A13_TR);
+                Libro.SetCellValue("EE" + Fila, Sujeto.A14_TR);
+                Libro.SetCellValue("EF" + Fila, Sujeto.A15_TR);
 
-                Libro.SetCellValue("DW" + Fila, Sujeto.B1_TR);
-                Libro.SetCellValue("DX" + Fila, Sujeto.B2_TR);
-                Libro.SetCellValue("DY" + Fila, Sujeto.B3_TR);
-                Libro.SetCellValue("DZ" + Fila, Sujeto.B4_TR);
-                Libro.SetCellValue("EA" + Fila, Sujeto.B5_TR);
-                Libro.SetCellValue("EB" + Fila, Sujeto.B6_TR);
-                Libro.SetCellValue("EC" + Fila, Sujeto.B7_TR);
-                Libro.SetCellValue("ED" + Fila, Sujeto.B8_TR);
-                Libro.SetCellValue("EE" + Fila, Sujeto.B9_TR);
-                Libro.SetCellValue("EF" + Fila, Sujeto.B10_TR);
-                Libro.SetCellValue("EG" + Fila, Sujeto.B11_TR);
-                Libro.SetCellValue("EH" + Fila, Sujeto.B12_TR);
-                Libro.SetCellValue("EI" + Fila, Sujeto.B13_TR);
-                Libro.SetCellValue("EJ" + Fila, Sujeto.B14_TR);
-                Libro.SetCellValue("EK" + Fila, Sujeto.B15_TR);
+                Libro.SetCellValue("EG" + Fila, Sujeto.B1_TR);
+                Libro.SetCellValue("EH" + Fila, Sujeto.B2_TR);
+                Libro.SetCellValue("EI" + Fila, Sujeto.B3_TR);
+                Libro.SetCellValue("EJ" + Fila, Sujeto.B4_TR);
+                Libro.SetCellValue("EK" + Fila, Sujeto.B5_TR);
+                Libro.SetCellValue("EL" + Fila, Sujeto.B6_TR);
+                Libro.SetCellValue("EM" + Fila, Sujeto.B7_TR);
+                Libro.SetCellValue("EN" + Fila, Sujeto.B8_TR);
+                Libro.SetCellValue("EO" + Fila, Sujeto.B9_TR);
+                Libro.SetCellValue("EP" + Fila, Sujeto.B10_TR);
+                Libro.SetCellValue("EQ" + Fila, Sujeto.B11_TR);
+                Libro.SetCellValue("ER" + Fila, Sujeto.B12_TR);
+                Libro.SetCellValue("ES" + Fila, Sujeto.B13_TR);
+                Libro.SetCellValue("ET" + Fila, Sujeto.B14_TR);
+                Libro.SetCellValue("EU" + Fila, Sujeto.B15_TR);
 
                 //Comprensión
-                Libro.SetCellValue("EL" + Fila, Sujeto.Comprension_Orden_de_Presentacion);
+                Libro.SetCellValue("EV" + Fila, Sujeto.Comprension_Orden_de_Presentacion);
 
-                Libro.SetCellValue("EM" + Fila, Sujeto.Comprension_A1);
-                Libro.SetCellValue("EN" + Fila, Sujeto.Comprension_A2);
-                Libro.SetCellValue("EO" + Fila, Sujeto.Comprension_A3);
-                Libro.SetCellValue("EP" + Fila, Sujeto.Comprension_A4);
-                Libro.SetCellValue("EQ" + Fila, Sujeto.Comprension_A5);
-                Libro.SetCellValue("ER" + Fila, Sujeto.Comprension_A6);
-                Libro.SetCellValue("ES" + Fila, Sujeto.Comprension_A7);
-                Libro.SetCellValue("ET" + Fila, Sujeto.Comprension_A8);
-                Libro.SetCellValue("EU" + Fila, Sujeto.Comprension_A9);
-                Libro.SetCellValue("EV" + Fila, Sujeto.Comprension_A10);
+                Libro.SetCellValue("EW" + Fila, Sujeto.Comprension_A1);
+                Libro.SetCellValue("EX" + Fila, Sujeto.Comprension_A2);
+                Libro.SetCellValue("EY" + Fila, Sujeto.Comprension_A3);
+                Libro.SetCellValue("EZ" + Fila, Sujeto.Comprension_A4);
+                Libro.SetCellValue("FA" + Fila, Sujeto.Comprension_A5);
+                Libro.SetCellValue("FB" + Fila, Sujeto.Comprension_A6);
+                Libro.SetCellValue("FC" + Fila, Sujeto.Comprension_A7);
+                Libro.SetCellValue("FD" + Fila, Sujeto.Comprension_A8);
+                Libro.SetCellValue("FE" + Fila, Sujeto.Comprension_A9);
+                Libro.SetCellValue("FF" + Fila, Sujeto.Comprension_A10);
 
-                Libro.SetCellValue("EW" + Fila, Sujeto.Comprension_B1);
-                Libro.SetCellValue("EX" + Fila, Sujeto.Comprension_B2);
-                Libro.SetCellValue("EY" + Fila, Sujeto.Comprension_B3);
-                Libro.SetCellValue("EZ" + Fila, Sujeto.Comprension_B4);
-                Libro.SetCellValue("FA" + Fila, Sujeto.Comprension_B5);
-                Libro.SetCellValue("FB" + Fila, Sujeto.Comprension_B6);
-                Libro.SetCellValue("FC" + Fila, Sujeto.Comprension_B7);
-                Libro.SetCellValue("FD" + Fila, Sujeto.Comprension_B8);
-                Libro.SetCellValue("FE" + Fila, Sujeto.Comprension_B9);
-                Libro.SetCellValue("FF" + Fila, Sujeto.Comprension_B10);
+                Libro.SetCellValue("FG" + Fila, Sujeto.Comprension_B1);
+                Libro.SetCellValue("FH" + Fila, Sujeto.Comprension_B2);
+                Libro.SetCellValue("FI" + Fila, Sujeto.Comprension_B3);
+                Libro.SetCellValue("FJ" + Fila, Sujeto.Comprension_B4);
+                Libro.SetCellValue("FK" + Fila, Sujeto.Comprension_B5);
+                Libro.SetCellValue("FL" + Fila, Sujeto.Comprension_B6);
+                Libro.SetCellValue("FM" + Fila, Sujeto.Comprension_B7);
+                Libro.SetCellValue("FN" + Fila, Sujeto.Comprension_B8);
+                Libro.SetCellValue("FO" + Fila, Sujeto.Comprension_B9);
+                Libro.SetCellValue("FP" + Fila, Sujeto.Comprension_B10);
 
-                Libro.SetCellValue("FG" + Fila, Sujeto.Puntaje_A_Comprension);
-                Libro.SetCellValue("FH" + Fila, Sujeto.Puntaje_B_Comprension);
-                Libro.SetCellValue("FI" + Fila, Sujeto.Lectura_A_TR);
-                Libro.SetCellValue("FJ" + Fila, Sujeto.Lectura_B_TR);
-                Libro.SetCellValue("FK" + Fila, Sujeto.Cuestionario_A_TR);
-                Libro.SetCellValue("FL" + Fila, Sujeto.Cuestionario_B_TR);
+                Libro.SetCellValue("FQ" + Fila, Sujeto.Puntaje_A_Comprension);
+                Libro.SetCellValue("FR" + Fila, Sujeto.Puntaje_B_Comprension);
+                Libro.SetCellValue("FS" + Fila, Sujeto.Lectura_A_TR);
+                Libro.SetCellValue("FT" + Fila, Sujeto.Lectura_B_TR);
+                Libro.SetCellValue("FU" + Fila, Sujeto.Cuestionario_A_TR);
+                Libro.SetCellValue("FV" + Fila, Sujeto.Cuestionario_B_TR);
             }
 
             //Formato del Excel
@@ -541,12 +550,12 @@ namespace Comprension.Controllers
             Estilo.Alignment.Horizontal = HorizontalAlignmentValues.Center;
             Estilo.Alignment.Vertical = VerticalAlignmentValues.Center;
 
-            Libro.SetColumnStyle(1, 168, Estilo);
+            Libro.SetColumnStyle(1, 178, Estilo);
 
-            Libro.AutoFitColumn(1, 12);
-            Libro.AutoFitColumn(14, 15);
-            Libro.AutoFitColumn(17, 20);
-            Libro.AutoFitColumn(112, 168);
+            Libro.AutoFitColumn(1, 22);
+            Libro.AutoFitColumn(24, 25);
+            Libro.AutoFitColumn(27, 30);
+            Libro.AutoFitColumn(122, 178);
 
             SLStyle Estilo_3 = new SLStyle();
             Estilo_3.Border.BottomBorder.BorderStyle = BorderStyleValues.Medium;
@@ -555,11 +564,18 @@ namespace Comprension.Controllers
 
             SLStyle Estilo_4 = new SLStyle();
             Estilo_4.Border.RightBorder.BorderStyle = BorderStyleValues.Medium;
+
+            Libro.SetColumnStyle(1, Estilo_4);
+            Libro.SetColumnStyle(2, Estilo_4);
+            Libro.SetColumnStyle(3, Estilo_4);
+            Libro.SetColumnStyle(6, Estilo_4);
+            Libro.SetColumnStyle(9, Estilo_4);
             Libro.SetColumnStyle(12, Estilo_4);
-            Libro.SetColumnStyle(15, Estilo_4);
-            Libro.SetColumnStyle(18, Estilo_4);
-            Libro.SetColumnStyle(141, Estilo_4);
-            Libro.SetColumnStyle(168, Estilo_4);
+            Libro.SetColumnStyle(22, Estilo_4);
+            Libro.SetColumnStyle(25, Estilo_4);
+            Libro.SetColumnStyle(28, Estilo_4);
+            Libro.SetColumnStyle(151, Estilo_4);
+            Libro.SetColumnStyle(178, Estilo_4);
 
             Libro.DeleteRow(SujetosBase.Count() + 2, 1000 - SujetosBase.Count() + 2);
             Libro.SetActiveCell("A1");
@@ -578,6 +594,30 @@ namespace Comprension.Controllers
             Libro.Dispose();
 
             return File(Ruta, "application/xlsx", Nombre_Archivo);
+        }
+
+        public string Obtener_Duracion(string FechayHoraInicio, string FechayHoraSalida) {
+            string Dato = "";
+
+            if (FechayHoraInicio != "" && FechayHoraInicio != null && FechayHoraSalida != "" && FechayHoraSalida != null)
+            {
+                try
+                {
+                    CultureInfo Culture = new CultureInfo("es-Es");
+                    DateTime F = DateTime.Parse(FechayHoraInicio, Culture);
+                    DateTime G = DateTime.Parse(FechayHoraSalida, Culture);
+
+                    Dato = (G.Subtract(F)).ToString();
+                    return Dato;
+                }
+                catch (System.FormatException)
+                {
+                    return Dato;
+                }
+            }
+            else {
+                return Dato;
+            }
         }
 
         /// <summary>
@@ -656,36 +696,5 @@ namespace Comprension.Controllers
 
             return Fecha + " " + Hora_ARG; //11/01/2020 09:00:47
         }
-
-
-
-
-
-
-        //PARA BORRAR!
-        public ActionResult FinalParcial()
-        {
-            ViewBag.Parte = "Primera Parte";
-            return View();
-        }
-
-        public ActionResult ContinuarEjercicios()
-        {
-            ViewBag.Parte = "Segunda Parte";
-            return View();
-        }
-
-
-
-        //PARA BORRAR!!!!! - FINAL TOTAL
-        public ActionResult Fin()
-        {
-            return View("~/Views/Home/Final.cshtml");
-        }
-
-
-
-
-
     }
 }

@@ -208,7 +208,6 @@
     <Content Include="Views\Home\Animo.cshtml" />
     <Content Include="Views\Home\FinalParcial.cshtml" />
     <Content Include="Views\Home\ContinuarEjercicios.cshtml" />
-    <Content Include="Views\Home\CorroborarDatos.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

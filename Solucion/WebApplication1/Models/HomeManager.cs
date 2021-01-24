@@ -565,12 +565,20 @@ namespace Comprension.Models
                     Dictionary<string, string> SinNull_string = new Dictionary<string, string>();
 
                     string[] Propiedades_string = {
+                        "Completo_Digitos",
+                        "Completo_Monitoreo",
+                        "Completo_Comprension",
                         "FechayHora_Entrada_Digitos",
                         "FechayHora_Salida_Digitos",
+                        "FechayHora_Entrada_Monitoreo",
+                        "FechayHora_Salida_Monitoreo",
+                        "FechayHora_Entrada_Comprension",
+                        "FechayHora_Salida_Comprension",
                         "Apellido",
                         "Nombre",
                         "Sexo",
                         "Nivel_Educativo",
+                        "Ultimos_DNI",
                         "Lugar_de_Residencia",
                         "Mail",
                         "Respuesta_DD",
@@ -766,14 +774,26 @@ namespace Comprension.Models
 
                     Sujeto Sujeto = new Sujeto();
 
+                    Sujeto.Completo_Digitos = SinNull_string["Completo_Digitos"];
+                    Sujeto.Completo_Monitoreo = SinNull_string["Completo_Monitoreo"];
+                    Sujeto.Completo_Comprension = SinNull_string["Completo_Comprension"];
+
                     Sujeto.FechayHora_Entrada_Digitos = SinNull_string["FechayHora_Entrada_Digitos"];
                     Sujeto.FechayHora_Salida_Digitos = SinNull_string["FechayHora_Salida_Digitos"];
+
+                    Sujeto.FechayHora_Entrada_Monitoreo = SinNull_string["FechayHora_Entrada_Monitoreo"];
+                    Sujeto.FechayHora_Salida_Monitoreo = SinNull_string["FechayHora_Salida_Monitoreo"];
+
+                    Sujeto.FechayHora_Entrada_Comprension = SinNull_string["FechayHora_Entrada_Comprension"];
+                    Sujeto.FechayHora_Salida_Comprension = SinNull_string["FechayHora_Salida_Comprension"];
+
                     Sujeto.ID = SinNull_int["ID"].ToString();
                     Sujeto.Apellido = SinNull_string["Apellido"];
                     Sujeto.Nombre = SinNull_string["Nombre"];
                     Sujeto.Edad = SinNull_int["Edad"];
                     Sujeto.Sexo = SinNull_string["Sexo"];
                     Sujeto.Nivel_Educativo = SinNull_string["Nivel_Educativo"];
+                    Sujeto.Ultimos_DNI = SinNull_string["Ultimos_DNI"];
                     Sujeto.Lugar_de_Residencia = SinNull_string["Lugar_de_Residencia"];
                     Sujeto.Mail = SinNull_string["Mail"];
 
