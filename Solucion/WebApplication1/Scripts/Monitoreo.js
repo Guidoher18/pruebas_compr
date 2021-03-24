@@ -212,12 +212,8 @@ $(document).ready(function () {
     $("#Entendido").on("click", function () {
         switch (Secuencia) {
             case 0: //Modal #1 Bienvenido de nuevo... ¿Cuántos libros lees...?
-                for (var i = 0; i < 5; i++) {
-                    var a = "#L" + (i + 1).toString();
-                    if ($(a).prop("checked")) {
-                        Libros = $(a).attr("VALUE");
-                    }
-                }
+                Libros = $('input[type="radio"]:checked').attr("value");
+
                 if (Libros != "") {
                     $("#Modal_1").hide();
                     Secuencia += 1;
