@@ -332,22 +332,8 @@ ASALocalRun/
 # Carpetas y archivos a ignorar
 [Pp]ara_[Bb]orrar/
 [Pp]arar_[Bb]orrar/
-Views/_ViewStart.cshtml
-Textos Comprension 2\302\260 Parte.docx
-dist/
-.vscode/
-Comprension (Monitoreo)/
-Comprension (Monitoreo)/Comprension3.js
-Comprension (Monitoreo)/Por las dudas backup.html
-Entrenamiento en Monitoreo de alto conocimiento previo.docx
-Entrenamiento en Monitoreo de bajo conocimiento previo.docx
-Explicación.txt
-Nivel Educativo en años.PNG
-Prueba_Comprensión.pptx
-Textos Comprension 2° Parte.docx
-para borrar.xlsx
-Formula_SI.docx
-Variables.xlsx
 Solucion/WebApplication1/Exportar/*.xlsx
-LINK JPG.pptx
-Audio/
+
+
+Optimizacion Script + velocidad/
+Archivos y Carpetas Previos a la Solución/
